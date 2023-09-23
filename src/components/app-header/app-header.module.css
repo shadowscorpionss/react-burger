@@ -1,0 +1,24 @@
+
+.panel{    
+    padding: 16px 320px;   
+}
+
+.wrapper{
+    display:grid;
+    grid-template-columns: max-content auto max-content auto  max-content;
+
+}
+
+.linkBlock{
+    padding: 16px 20px;
+    display: inline-flex;    
+}
+
+.linkBlock p{
+    white-space: nowrap;
+}
+
+.logo{    
+    padding: 8px 0;
+}
+
