@@ -1,0 +1,19 @@
+div.tabs {
+    display: flex;
+}
+
+.ingredients {     
+    height: calc(100vh - 236px);
+    overflow-y: scroll;
+}
+
+.listItem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    list-style-type: none;
+}
+
+.any {
+    background-color: var(--background-alt);
+}
