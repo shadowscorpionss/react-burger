@@ -15,11 +15,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.title {
-    flex-direction: column;
-    break-inside: avoid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}

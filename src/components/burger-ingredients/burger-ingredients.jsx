@@ -51,11 +51,11 @@ function BurgerIngredients({ingdata}) {
   return (
     <section>
       <div className={burgerIngredientsStyles.tabs}>
-        <ScrollTab type="tbun">Булка</ScrollTab>        
-        <ScrollTab type="tsauce">Соус</ScrollTab>        
-        <ScrollTab type="tmain">Начинка</ScrollTab>                
+        <ScrollTab type="tbun">Булки</ScrollTab>        
+        <ScrollTab type="tsauce">Соусы</ScrollTab>        
+        <ScrollTab type="tmain">Начинки</ScrollTab>                
       </div>
-      <div className="custom-scrollbar">
+      <div className={`${burgerIngredientsStyles.ingredients} custom-scroll`}>
         <SectionOf 
             id="buns" 
             filter="bun" 
