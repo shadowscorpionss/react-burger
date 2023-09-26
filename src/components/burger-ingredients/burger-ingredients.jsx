@@ -3,6 +3,9 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useRef} from "react";
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import BurgerIngredient from "./burger-ingredient";
+import PropTypes from "prop-types";
+import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
+
 
 function BurgerIngredients({ingdata}) {
   //saves state current tab
@@ -90,5 +93,9 @@ function BurgerIngredients({ingdata}) {
     </section>
   );
 };
+
+BurgerIngredients.propTypes = {
+  ingdata: PropTypes.arrayOf(IngredientPropType).isRequired
+}
 
 export default BurgerIngredients;

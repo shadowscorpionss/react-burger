@@ -16,12 +16,12 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header><AppHeader/></header>
+        <AppHeader/>
         <main>
           <div className={appStyles.grid}>
             <section className={appStyles.column}>
               <h2 className="text text_type_main-large">Соберите бургер</h2>
-              <div className={`${appStyles.cellContent}`}>
+              <div className={appStyles.cellContent}>
                 <BurgerIngredients ingdata={this.state.ingdata}/>
               </div>
             </section>
@@ -32,7 +32,7 @@ class App extends React.Component {
             </section>
           </div>
         </main>
-        <footer></footer>
+        <footer />
       </div>
     );
   }

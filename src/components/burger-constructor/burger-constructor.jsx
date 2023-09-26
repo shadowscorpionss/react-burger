@@ -1,5 +1,8 @@
 import {ConstructorElement, CurrencyIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
+import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
+import PropTypes from "prop-types";
+import { useMemo } from "react";
 
 function ingredientsList(array) {
   return array.map(item => (
@@ -19,11 +22,14 @@ function BurgerConstructor({ingdata}) {
   const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
 
   //total
-  let total = 0;
-  notBunArr.forEach(el => {
-    total += el.price;
+  const total = useMemo (()=>{
+    let s=0;
+    notBunArr.forEach(el => {
+      s += el.price;
+    });
+    s+=randomBun.price;
+    return s;
   });
-  total += randomBun.price;
 
   return (
     <section className={burgerConstructorStyles.constructor}>
@@ -55,7 +61,7 @@ function BurgerConstructor({ingdata}) {
             &nbsp;
           </span>
 
-          <Button type="primary" size="large">Оформить заказ</Button>
+          <Button type="primary" size="large" htmlType="button">Оформить заказ</Button>
         </div>
       </div>
 
@@ -64,4 +70,7 @@ function BurgerConstructor({ingdata}) {
   );
 }
 
+BurgerConstructor.propTypes = {
+  ingdata: PropTypes.arrayOf(IngredientPropType).isRequired
+} 
 export default BurgerConstructor;
