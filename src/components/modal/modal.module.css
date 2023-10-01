@@ -36,14 +36,15 @@
 
 .modal .header {
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: flex-start;    
     margin-top: 40px ;
     margin-left: 40px;
     margin-right: 40px;    
     min-height: 64px;
     white-space: nowrap;
 }
+
+
 
 .modal .closeButton {
     position: absolute;
