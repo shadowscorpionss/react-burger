@@ -1,4 +1,4 @@
-import Style from "./order-confirm-modal.module.css";
+import orderConfirmStyles from "./order-confirm-modal.module.css";
 import doneImage from "../../images/done.png";
 import PropTypes from "prop-types";
 
@@ -7,28 +7,28 @@ function OrderConfirm(props) {
   const {orderId, messages} = props;
 
   return (
-    <div className={Style.orderCard}>
-      <div className={Style.topSpace}>&nbsp;</div>
-      <div className={Style.orderId}>
+    <div className={orderConfirmStyles.orderCard}>
+      <div className={orderConfirmStyles.topSpace}>&nbsp;</div>
+      <div className={orderConfirmStyles.orderId}>
         <p className=" text text_type_digits-large ">{orderId}</p>
       </div>
-      <div className={Style.orderIdSpace}>&nbsp;</div>
-      <div className={Style.orderIdLabel}>
+      <div className={orderConfirmStyles.orderIdSpace}>&nbsp;</div>
+      <div className={orderConfirmStyles.orderIdLabel}>
         <p className="text text_type_main-medium">идентификатор заказа</p>
       </div>
-      <div className={Style.imageTopSpace}>&nbsp;</div>
-      <div className={Style.image}>
+      <div className={orderConfirmStyles.imageTopSpace}>&nbsp;</div>
+      <div className={orderConfirmStyles.image}>
         <img src={doneImage}/></div>
-      <div className={Style.imageBottomSpace}>&nbsp;</div>
-      <div className={Style.message1}>
+      <div className={orderConfirmStyles.imageBottomSpace}>&nbsp;</div>
+      <div className={orderConfirmStyles.message1}>
         <p className="text text_type_main-default">{messages[0]}</p>
       </div>
-      <div className={Style.messageSpace}>&nbsp;</div>
+      <div className={orderConfirmStyles.messageSpace}>&nbsp;</div>
 
-      <div className={Style.message2}>
+      <div className={orderConfirmStyles.message2}>
         <p className="text text_type_main-default text_color_inactive ">{messages[1]}</p>
       </div>
-      <div className={Style.bottomSpace}>&nbsp;</div>
+      <div className={orderConfirmStyles.bottomSpace}>&nbsp;</div>
       
     </div>
   )
