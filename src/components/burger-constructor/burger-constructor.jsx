@@ -16,10 +16,7 @@ function ingredientsList(array) {
 }
 
 function BurgerConstructor({ingdata}) {
-  const [showModal,
-    toggleModal,
-    openModal,
-    closeModal] = useToggle(false);
+  const { isOpened: showModal, open:openModal, close:closeModal} = useToggle(false);
 
   //random 7 elements (not bun)
   const notBunArr = [...ingdata.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random()).slice(0, 7);

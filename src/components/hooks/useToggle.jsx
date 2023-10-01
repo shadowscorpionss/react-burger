@@ -22,5 +22,5 @@ export const useToggle = (initialValue) => {
       };
   
   
-    return [ isOpened, toggle, open, close];
+    return { isOpened, toggle, open, close};
   };
