@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import {useMemo} from "react";
 import {useToggle} from "../hooks/useToggle";
 import Modal from "../modal/modal";
-import OrderConfirm from "../modal/order-confirm-modal";
+import OrderDetails from "../order-details/order-details";
 
 function ingredientsList(array) {
   return array.map(item => (
@@ -71,7 +71,7 @@ function BurgerConstructor({ingdata}) {
           </span>
           <Button type="primary" size="large" htmlType="button" onClick={openModal}>Оформить заказ</Button>
           {showModal && <Modal title="&nbsp;" onClose={closeModal}>
-            <OrderConfirm orderId={rndNum} messages={messages}/>
+            <OrderDetails orderId={rndNum} messages={messages}/>
           </Modal>}
         </div>
       </div>

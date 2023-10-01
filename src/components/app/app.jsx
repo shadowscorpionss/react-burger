@@ -4,6 +4,7 @@ import appStyles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import utdata from "../../utils/data";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { ingredientsApi } from "../../utils/api";
 
 function App (){
   const [state, setState] = useState({
@@ -16,7 +17,7 @@ function App (){
   function getData() {
     setState({ ...state, hasError: false, isLoading: true });
 
-    fetch("https://norma.nomoreparties.space/api/ingredients")
+    fetch(ingredientsApi)
       .then(response => response.json())
       .then(obj => setState({ ...state, ingdata: obj.data, hasError: !obj.success,  isLoading: false }))
       .catch(err => {

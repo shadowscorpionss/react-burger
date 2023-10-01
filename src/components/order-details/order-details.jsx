@@ -1,8 +1,8 @@
-import orderConfirmStyles from "./order-confirm-modal.module.css";
+import orderConfirmStyles from "./order-details.module.css";
 import doneImage from "../../images/done.png";
 import PropTypes from "prop-types";
 
-function OrderConfirm(props) {
+function OrderDetails(props) {
 
   const {orderId, messages} = props;
 
@@ -35,7 +35,7 @@ function OrderConfirm(props) {
 
 }
 
-OrderConfirm.propTypes = PropTypes
+OrderDetails.propTypes = PropTypes
   .shape({
   orderId: PropTypes.string.isRequired,
   messages: PropTypes
@@ -44,4 +44,4 @@ OrderConfirm.propTypes = PropTypes
 })
   .isRequired;
 
-export default OrderConfirm;
+export default OrderDetails;

@@ -1,9 +1,10 @@
 import React from "react"
-import Style from "./ingredient-card.module.css"
+import Style from "./ingredient-details.module.css"
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
 
-function IngredientCard (props) {
+function IngredientDetails (props) {
  const {image_large, image,name, calories, proteins,fat,carbohydrates}=props
+ console.log(props.description)
   return (
     <div className={Style.ingredientCard}>
       <div className={Style.c1}>
@@ -41,6 +42,6 @@ function IngredientCard (props) {
   )
 }
 
-IngredientCard.propTypes = IngredientPropType.isRequired;
+IngredientDetails.propTypes = IngredientPropType.isRequired;
 
-export default IngredientCard;
+export default IngredientDetails;

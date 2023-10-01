@@ -1,7 +1,7 @@
 import burgerIngredientStyles from "./burger-ingredient.module.css";
 import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
-import IngredientCard from "../modal/ingredient-card";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useState } from "react";
 import Modal from "../modal/modal";
 import { useToggle } from "../hooks/useToggle";
@@ -31,7 +31,7 @@ function BurgerIngredient({ingredient}) {
         <p className="text text_type_main-small">{name}</p>
       </div>
       {showModal && <Modal title="Детали ингредиента" onClose={closeModal}>
-        <IngredientCard {...ingredient}/>
+        <IngredientDetails {...ingredient}/>
       </Modal>}
     </li>
 
