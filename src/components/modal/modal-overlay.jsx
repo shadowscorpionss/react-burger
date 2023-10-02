@@ -4,16 +4,14 @@ import PropTypes from "prop-types";
 import overlayStyles from "./modal-overlay.module.css";
 
 const ModalOverlay = props => {
-    const { children, onClick } = props
     return (
         <>
-            <div className={overlayStyles.modalOverlay} onClick={onClick}>{children}</div>
+            <div className={overlayStyles.modalOverlay} onClick={props.onClick} />
         </>
     );
 };
 
-ModalOverlay.propTypes = {
-    children: PropTypes.element.isRequired,
+ModalOverlay.propTypes = {    
     onClick: PropTypes.func.isRequired
 };
 

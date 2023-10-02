@@ -5,10 +5,9 @@ import PropTypes from "prop-types";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 
+const modalPortal = document.getElementById("modal-root");
+
 const Modal = props => {
-
-  const modalPortal = document.getElementById("modal-root");
-
   const closeOnEscapeKeyDown = e => {
 
     if (e.key === "Escape") {
@@ -42,34 +41,30 @@ const Modal = props => {
 
   return (ReactDom.createPortal((
     <div className={modalStyles.modal}>
-      <ModalOverlay onClick={onOverlayClose}>
-        <div className={modalStyles.container} onClick={e => e.stopPropagation()}>
-          <div className={modalStyles.header}>
-            <div className={modalStyles.closeButton}>
-              <CloseIcon type="button" onClick={onClose}></CloseIcon>
-            </div>
-            <h4 className="text text_type_main-large">
-              {title}
-            </h4>
+      <ModalOverlay onClick={onOverlayClose} />
+      <div className={modalStyles.container} onClick={e => e.stopPropagation()}>
+        <div className={modalStyles.header}>
+          <div className={modalStyles.closeButton}>
+            <CloseIcon type="button" onClick={onClose}></CloseIcon>
           </div>
-          <div className={modalStyles.content}>
-            {children}
-          </div>
+          <h4 className="text text_type_main-large">
+            {title}
+          </h4>
         </div>
-      </ModalOverlay>
+        <div className={modalStyles.content}>
+          {children}
+        </div>
+      </div>      
     </div>
 
   ), modalPortal))
 
 }
 
-Modal.propTypes = PropTypes.shape({
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired,
+Modal.propTypes = {
+  title: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  title: PropTypes.string
-}).isRequired;
+  children: PropTypes.node.isRequired,
+}
 
 export default Modal;

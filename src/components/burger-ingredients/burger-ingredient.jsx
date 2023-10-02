@@ -20,9 +20,7 @@ function BurgerIngredient({ingredient}) {
 
     <li className={`${burgerIngredientStyles.ingredient} mb-8 `}>
       <div onClick={incrementCountAndShow}>
-        {!!elCount &&
-        <Counter count={elCount} size="default"/>
-        }        
+        {!!elCount && <Counter count={elCount} size="default"/>}        
         <img src={image} alt={name} className="ml-4 mr-4 mb-1"/>
         <div className={`${burgerIngredientStyles.currency} mb-1`}>
           <p className="text text_type_digits-default ">{price}&nbsp;</p>
@@ -30,9 +28,10 @@ function BurgerIngredient({ingredient}) {
         </div>
         <p className="text text_type_main-small">{name}</p>
       </div>
-      {showModal && <Modal title="Детали ингредиента" onClose={closeModal}>
+      {showModal && 
+      (<Modal title="Детали ингредиента" onClose={closeModal}>
         <IngredientDetails {...ingredient}/>
-      </Modal>}
+      </Modal>)}
     </li>
 
   )

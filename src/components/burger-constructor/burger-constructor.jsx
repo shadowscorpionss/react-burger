@@ -70,9 +70,10 @@ function BurgerConstructor({ingdata}) {
             &nbsp;
           </span>
           <Button type="primary" size="large" htmlType="button" onClick={openModal}>Оформить заказ</Button>
-          {showModal && <Modal title="&nbsp;" onClose={closeModal}>
+          {showModal && 
+          (<Modal title="&nbsp;" onClose={closeModal}>
             <OrderDetails orderId={rndNum} messages={messages}/>
-          </Modal>}
+          </Modal>)}
         </div>
       </div>
 
