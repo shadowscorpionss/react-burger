@@ -1,0 +1,88 @@
+.orderCard {
+    
+    
+    grid-auto-rows: 1fr; 
+    grid-auto-columns: 1fr;   
+    grid-template-columns: max-content; 
+    grid-template-rows: minmax(60px, auto) max-content minmax(32px,auto) max-content minmax(60px,auto) minmax(max-content,auto) minmax(60px,auto) max-content minmax (8px,auto) max-content minmax(60px,auto);
+    align-items: center;    
+
+    
+    grid-template-areas:
+        "topSpace",
+        "orderId",
+        "orderIdSpace",
+        "orderIdLabel",
+        "imageTopSpace",
+        "image",
+        "imageBottomSpace",
+        "message1",
+        "messageSpace",
+        "message2",
+        "bottomSpace";
+}
+
+.topSpace,
+.orderId,
+.orderIdSpace,
+.orderIdLabel,
+.imageTopSpace,
+.image,
+.imageBottomSpace,
+.message1,
+.messageSpace,
+.message2,
+.bottomSpace{
+    display: flex;
+    justify-content: center;
+    
+    /* border: 1px dashed; */
+}
+
+
+.topSpace {
+    grid-area: topSpace;
+
+}
+
+.orderId {
+    grid-area: orderId;
+}
+
+.orderIdSpace {
+    grid-area: orderIdSpace;
+}
+
+.orderIdLabel {
+    grid-area: orderIdLabel;
+}
+
+.imageTopSpace {
+    grid-area: imageTopSpace;
+}
+
+.image {
+    grid-area: image;
+    padding: 3rem;
+}
+
+.imageBottomSpace {
+    grid-area: imageBottomSpace;
+}
+
+.message1 {
+    grid-area: message1;
+}
+
+.messageSpace {
+    grid-area: messageSpace;
+}
+
+.message2 {
+    grid-area: message2;
+
+}
+
+.bottomSpace {
+    grid-area: bottomSpace;
+}

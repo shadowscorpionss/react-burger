@@ -2,7 +2,10 @@ import {ConstructorElement, CurrencyIcon, Button} from "@ya.praktikum/react-deve
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
 import PropTypes from "prop-types";
-import { useMemo } from "react";
+import {useMemo} from "react";
+import {useToggle} from "../hooks/useToggle";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 function ingredientsList(array) {
   return array.map(item => (
@@ -13,6 +16,8 @@ function ingredientsList(array) {
 }
 
 function BurgerConstructor({ingdata}) {
+  const { isOpened: showModal, open:openModal, close:closeModal} = useToggle(false);
+
   //random 7 elements (not bun)
   const notBunArr = [...ingdata.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random()).slice(0, 7);
   //buns
@@ -22,15 +27,19 @@ function BurgerConstructor({ingdata}) {
   const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
 
   //total
-  const total = useMemo (()=>{
-    let s=0;
+  const total = useMemo(() => {
+    let s = 0;
     notBunArr.forEach(el => {
       s += el.price;
     });
-    s+=randomBun.price;
+    s += randomBun.price;
     return s;
   });
 
+  const messages = ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"];
+  const digits = 6;
+  const pw = Math.pow(10,digits);
+  const rndNum = Math.floor(Math.random() * pw).toString().padStart(digits,"0"); 
   return (
     <section className={burgerConstructorStyles.constructor}>
       <div>
@@ -60,8 +69,11 @@ function BurgerConstructor({ingdata}) {
             className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon/>
             &nbsp;
           </span>
-
-          <Button type="primary" size="large" htmlType="button">Оформить заказ</Button>
+          <Button type="primary" size="large" htmlType="button" onClick={openModal}>Оформить заказ</Button>
+          {showModal && 
+          (<Modal title="&nbsp;" onClose={closeModal}>
+            <OrderDetails orderId={rndNum} messages={messages}/>
+          </Modal>)}
         </div>
       </div>
 
@@ -71,6 +83,8 @@ function BurgerConstructor({ingdata}) {
 }
 
 BurgerConstructor.propTypes = {
-  ingdata: PropTypes.arrayOf(IngredientPropType).isRequired
-} 
+  ingdata: PropTypes
+    .arrayOf(IngredientPropType)
+    .isRequired
+}
 export default BurgerConstructor;

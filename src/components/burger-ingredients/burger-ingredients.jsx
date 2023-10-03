@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useRef} from "react";
-import burgerIngredientsStyles from './burger-ingredients.module.css';
+import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import BurgerIngredient from "./burger-ingredient";
 import PropTypes from "prop-types";
 import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
@@ -26,11 +26,13 @@ function BurgerIngredients({ingdata}) {
   };
 
   //generates section of items 
-  function SectionOf({sid, filter, sectionClass, title, refFunction }){
+  function SectionOf({sid, filter, sectionClass, title, tabName }){
     return (
       <section
         className={sectionClass}
-        ref={refFunction}>
+        ref={el => componentsRef.selectEl = {
+          ...componentsRef.selectEl,
+          [tabName]: el}}>
         <h2 className="text text_type_main-medium mb-6" id={sid}>{title}</h2>
         <ul className={`${burgerIngredientsStyles.listItem} pl-4 pr-4`}>
           {
@@ -50,44 +52,33 @@ function BurgerIngredients({ingdata}) {
             {props.children}
       </Tab>);
   }
+  
+  const sections =["bun","sauce","main"];
+  const titles=["Булки","Соусы","Начинки"];
+
+  const sectionProps = useMemo( ()=> sections.map((s,i)=> ({
+    sid:s+"s",
+    filter: s,
+    title: titles[i],
+    tabName: s+"Tab",
+    sectionClass: ""
+  }) ), [sections, titles]);
 
   return (
     <section>
       <div className={burgerIngredientsStyles.tabs}>
-        <ScrollTab type="tbun">Булки</ScrollTab>        
-        <ScrollTab type="tsauce">Соусы</ScrollTab>        
-        <ScrollTab type="tmain">Начинки</ScrollTab>                
+        { sectionProps.map((t,i) =>{
+          return <ScrollTab type={t.tabName} key={i}>{t.title}</ScrollTab>  
+        })}              
       </div>
       <div className={`${burgerIngredientsStyles.ingredients} custom-scroll`}>
-        <SectionOf 
-            id="buns" 
-            filter="bun" 
-            className={`${burgerIngredientsStyles.any}`}
-            title="Булки"
-            refFunction={el => componentsRef.selectEl = {
-              ...componentsRef.selectEl,
-              tbun: el
-            }}/>
-
-          <SectionOf 
-            id="mains"          
-            filter="sauce"
-            className={`${burgerIngredientsStyles.any}`}
-            title="Соусы"
-            refFunction={el => componentsRef.selectEl = {
-              ...componentsRef.selectEl,
-              tsauce: el
-            }}/>
-
-          <SectionOf 
-            id="sauces"
-            filter="main"
-            className={`${burgerIngredientsStyles.any}`}
-            title="Начинки"
-            refFunction={el => componentsRef.selectEl = {
-              ...componentsRef.selectEl,
-              tmain: el
-            }}/>
+        { sectionProps.map((s,i)=> {
+          return <SectionOf 
+            className={burgerIngredientsStyles.any}            
+            key={i}
+            {...s}                        
+            />
+        })}        
       </div>
     
     </section>

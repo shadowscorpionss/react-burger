@@ -1,0 +1,82 @@
+.ingredientCard {
+    margin:0;
+    padding:0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
+    align-items: center;
+    justify-content: center;
+    max-height: 22em;
+}
+
+.c1,
+.c2,
+.c3,
+.c4,
+.c5,
+.c6,
+.c7,
+.c8,
+.c9,
+.c10 {
+    display: flex;
+    justify-content: center;
+}
+
+.c1 {
+    grid-area: 1 / 1 / 2 / 5;
+    align-items: center;
+}
+
+.c2 {
+    grid-area: 2 / 1 / 3 / 5;
+}
+
+.c3 {
+    grid-area: 3 / 1 / 4 / 2;
+
+}
+
+.c4 {
+    grid-area: 4 / 1 / 5 / 2;
+
+}
+
+.c5 {
+    grid-area: 3 / 2 / 4 / 3;
+
+}
+
+.c6 {
+    grid-area: 4 / 2 / 5 / 3;
+
+}
+
+.c7 {
+    grid-area: 3 / 3 / 4 / 4;
+
+}
+
+.c8 {
+    grid-area: 4 / 3 / 5 / 4;
+
+}
+
+.c9 {
+    grid-area: 3 / 4 / 4 / 5;
+}
+
+.c10 {
+    grid-area: 4 / 4 / 5 / 5;
+
+}
+
+.c2 p {
+    white-space: nowrap;
+}
+
+.c1 img {
+    position: relative;    
+}
