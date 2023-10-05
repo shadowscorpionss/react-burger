@@ -1,5 +1,4 @@
-.constructor {
-    max-width: 560px;
+.constructor {    
     display: grid;
     grid-template-rows: auto 1fr;    
     margin-top: 40px;
@@ -66,3 +65,7 @@
     justify-content: right;
 }
 
+.splitter {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+}

@@ -72,26 +72,33 @@ function BurgerConstructor() {
   return (
     <section className={burgerConstructorStyles.constructor}>
       <div className={burgerConstructorStyles.a}>
-        
-        <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-            style={{
-            backgroundColor: "green"
-          }}/>
-          
+          <div className={burgerConstructorStyles.splitter}>
+            <div></div>
+            <div><ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${bun.name} (верх)`}
+                price={bun.price}
+                thumbnail={bun.image}
+                style={{
+                backgroundColor: "green"
+              }}/></div>
+            
+          </div>
           <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
             {ingredientsList(ingredients, removeIngredient)}
           </ul>
-           <ConstructorElement
+          <div className={burgerConstructorStyles.splitter}>
+            <div></div>
+            <div><ConstructorElement
               type="bottom"
               isLocked={true}
               text={`${bun.name} (низ)`}
               price={bun.price}
-              thumbnail={bun.image}/>
+              thumbnail={bun.image}/></div>
+
+           
+            </div>
       </div>
       <div className={burgerConstructorStyles.currency}>
         <div className={burgerConstructorStyles.orderButton}>
