@@ -3,15 +3,16 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
 import PropTypes from "prop-types";
 import {useContext, useMemo, useState} from "react";
-import {useToggle} from "../hooks/useToggle";
+import {useToggle} from "../../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { ConstructorContext, OrderContext } from "../../utils/context";
 import { postOrder } from "../../utils/api";
+import { CLEAR_DATA, REMOVE_INGREDIENT } from "../../actions/constructor";
 
 function ingredientsList(array, onCloseHandler) {
   return array.map(item => (
-    <li key={`ingredient_${item._id}_${new Date().getTime()}`} className={`${burgerConstructorStyles.listItem} `}>
+    <li key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>
         <DragIcon /> <div className="mr-2" />
         <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={()=>onCloseHandler(item)}/>
     </li>
@@ -27,7 +28,7 @@ function BurgerConstructor() {
   const {setOrderId} = useContext(OrderContext);
   
   //structured data
-  const bun = useMemo( ()=> constructorData.data.find(el=> el.type==="bun"),[constructorData]) ;
+  const bun = useMemo( ()=> constructorData.data.find(el=> el.type==="bun") ?? {price:0, name:'', image:undefined},[constructorData]) ;
   const ingredients = useMemo( ()=> constructorData.data.filter(el=> el.type!=="bun"),[constructorData]);
   const ingredientsIds = useMemo(()=> [bun._id,...ingredients.map(el=>el._id),bun._id], [constructorData]);
 
@@ -48,9 +49,13 @@ function BurgerConstructor() {
 
   //methods
   function removeIngredient(item){     
-    constructorDispatcher({type: "REMOVE_INGREDIENT", item: item});
+    constructorDispatcher({type: REMOVE_INGREDIENT, item: item});
   }
   
+  function clearOrder (){
+    constructorDispatcher({type: CLEAR_DATA});
+  }
+
   function makeOrder (){    
     postOrder(ingredientsIds)
     .then(obj=>{
@@ -62,14 +67,16 @@ function BurgerConstructor() {
         setMessages(["Что-то пошло не так", message]);
       
       setOrderId(order.number);
-
-      openModal();
+      clearOrder();
     })
     .catch(err=>{
       const {message}=err;
       setMessages(["Ошибка выполнения запроса", message]);
-      openModal()
-    });
+      
+    })
+    .finally(()=>{
+      openModal();
+    })
   }
 
   //render
@@ -84,9 +91,7 @@ function BurgerConstructor() {
                 text={`${bun.name} (верх)`}
                 price={bun.price}
                 thumbnail={bun.image}
-                style={{
-                backgroundColor: "green"
-              }}/></div>
+                /></div>
             
           </div>
           <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
@@ -110,7 +115,7 @@ function BurgerConstructor() {
             className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon/>
             &nbsp;
           </span>
-          <Button type="primary" size="large" htmlType="button" onClick={makeOrder}>Оформить заказ</Button>
+          <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={makeOrder}>Оформить заказ</Button>
           {showModal && 
           (<Modal title="&nbsp;" onClose={closeModal}>
             

@@ -5,30 +5,36 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {getIngredients} from "../../utils/api";
 import { DataContext, ConstructorContext, OrderContext } from "../../utils/context";
+import { ADD_INGREDIENT, CLEAR_DATA, GENERATE_DATA, REMOVE_INGREDIENT } from "../../actions/constructor";
+import {v4 as uuid4} from "uuid";
 
+function addUniqueId(item){
+  return {...item, uniqueId:uuid4()};
+}
 
 function constructorReducer(state, action){
     console.log(action.type);
     switch(action.type){
-      case "GENERATE_DATA":
+      case GENERATE_DATA:
           const data= action.payload;
          //random random elements (not bun)  
           const randomShuffledIngredients = [...data.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random())
           const minCount = 1;
           const randomIngredientsLength = Math.floor((randomShuffledIngredients.length-minCount) * Math.random())+minCount;
-          const ingredients=randomShuffledIngredients.slice(0, randomIngredientsLength);
+          const ingredients=randomShuffledIngredients.slice(0, randomIngredientsLength).map(el=> addUniqueId(el) );
 
           //buns
           const bunsArr = data.filter(el => el.type === "bun");
 
           //random bun
           const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
+          randomBun.uniqueId=uuid4();
           return {data: [randomBun,...ingredients,randomBun]};
-      case "REMOVE_INGREDIENT":
+      case REMOVE_INGREDIENT:
           const removeItem = action.item;
           return {data: state.data.filter(el=> el!==removeItem)};
-      case "ADD_INGREDIENT":
-          const item = action.item;
+      case ADD_INGREDIENT:
+          const item = addUniqueId(action.item);
           let exIngredients=state.data.filter(el=>el.type!=="bun");
           let exBun = state.data.find(el=>el.type==="bun");
           if (item.type==="bun"){
@@ -37,6 +43,8 @@ function constructorReducer(state, action){
             exIngredients.push(item);
           }
           return {data: [exBun,...exIngredients,exBun]};
+      case CLEAR_DATA:
+          return constructorDataInitialState;
 
 
       default:
@@ -85,7 +93,7 @@ function App() {
       setIngredientsData(obj.data);      
 
       constructorDispatcher({ 
-        type:"GENERATE_DATA",
+        type:GENERATE_DATA,
         payload: obj.data
       })
 
@@ -143,7 +151,6 @@ function App() {
           </>
         )}
       </main>
-      <footer/>
     </div>
   );
 }

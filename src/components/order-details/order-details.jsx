@@ -38,12 +38,8 @@ function OrderDetails(props) {
 
 }
 
-OrderDetails.propTypes = PropTypes
-  .shape({
-  messages: PropTypes
-    .arrayOf(PropTypes.string)
-    .isRequired
-})
-  .isRequired;
+OrderDetails.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default OrderDetails;
