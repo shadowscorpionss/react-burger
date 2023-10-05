@@ -6,7 +6,7 @@ import {useContext, useMemo, useState} from "react";
 import {useToggle} from "../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { ConstructorContext } from "../../utils/context";
+import { ConstructorContext, OrderContext } from "../../utils/context";
 import { postOrder } from "../../utils/api";
 
 function ingredientsList(array, onCloseHandler) {
@@ -23,11 +23,10 @@ function BurgerConstructor() {
   const { constructorData, setConstructorData } = useContext(ConstructorContext);
   const { isOpened: showModal, open:openModal, close:closeModal} = useToggle(false);  
   const [messages, setMessages] = useState([]);
-  const [orderId, setOrderId] = useState(0);
+  const {setOrderId} = useContext(OrderContext);
   
-  const bun = constructorData.find(el=> el.type==="bun") ;
-  const ingredients = constructorData.filter(el=> el.type!=="bun");
-
+  const bun = useMemo( ()=> constructorData.find(el=> el.type==="bun"),[constructorData]) ;
+  const ingredients = useMemo( ()=> constructorData.filter(el=> el.type!=="bun"),[constructorData]);
   const ingredientsIds = useMemo(()=> constructorData.map(el=>el._id), [constructorData]);
 
   function removeIngredient(item){     
@@ -38,6 +37,7 @@ function BurgerConstructor() {
     postOrder(ingredientsIds)
     .then(obj=>{
       const {success, order, name, message}=obj;
+      console.log(success, order.number, name);
       setMessages(["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"]);
 
       if (!success)
@@ -109,7 +109,9 @@ function BurgerConstructor() {
           <Button type="primary" size="large" htmlType="button" onClick={makeOrder}>Оформить заказ</Button>
           {showModal && 
           (<Modal title="&nbsp;" onClose={closeModal}>
-            <OrderDetails orderId={orderId} messages={messages} />
+            
+              <OrderDetails messages={messages} />
+            
           </Modal>)}
         </div>
       </div>

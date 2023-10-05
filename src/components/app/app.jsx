@@ -2,15 +2,14 @@ import {useState, useEffect, useContext} from "react";
 import AppHeader from "../app-header/app-header";
 import appStyles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import utdata from "../../utils/data";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {getIngredients} from "../../utils/api";
-import { DataContext, ConstructorContext } from "../../utils/context";
+import { DataContext, ConstructorContext, OrderContext } from "../../utils/context";
 
 function App() {
   const [data, setData]= useState([]);
   const [constructorData, setConstructorData]= useState([]);
-
+  const [orderId, setOrderId]= useState(0);
 
   const [state, setState] = useState({
     hasError:false,
@@ -56,7 +55,8 @@ function App() {
   function generateConstructorItems(data){
       //random random elements (not bun)  
       const notBunFiltered = [...data.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random())
-      const randomLength = Math.floor((notBunFiltered.length-3) * Math.random())+3;
+      const minCount = 1;
+      const randomLength = Math.floor((notBunFiltered.length-minCount) * Math.random())+minCount;
       const notBunArr=notBunFiltered.slice(0, randomLength);
 
       //buns
@@ -85,21 +85,21 @@ function App() {
         {!state.hasError && !state.isLoading && (
           <DataContext.Provider value={data}>
             <ConstructorContext.Provider value={{constructorData, setConstructorData}}>
-              <div className={appStyles.grid}>
-                <section className={appStyles.column}>
-                  <h2 className="text text_type_main-large">Соберите бургер</h2>
-                  <div className={appStyles.cellContent}>
-                    {data && data.length && (<BurgerIngredients />)}
-                    
-                  </div>
-                </section>
-                
-                <section className={appStyles.column}>
-                  <div className={appStyles.cellContent}>
-                  {data && data.length && (<BurgerConstructor />)}
-                  </div>
-                </section>
-              </div>
+              <OrderContext.Provider value= {{orderId,setOrderId}}>
+                <div className={appStyles.grid}>
+                  <section className={appStyles.column}>
+                    <h2 className="text text_type_main-large">Соберите бургер</h2>
+                    <div className={appStyles.cellContent}>
+                      {data && data.length && (<BurgerIngredients />)}                      
+                    </div>
+                  </section>                  
+                  <section className={appStyles.column}>
+                    <div className={appStyles.cellContent}>
+                      {data && data.length && (<BurgerConstructor />)}
+                    </div>
+                  </section>                  
+                </div>
+              </OrderContext.Provider>
             </ConstructorContext.Provider>
           </DataContext.Provider>
         )}
