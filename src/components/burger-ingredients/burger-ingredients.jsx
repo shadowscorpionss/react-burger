@@ -1,13 +1,16 @@
-import React, {useMemo} from "react";
+import React, {useContext, useMemo} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useRef} from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import BurgerIngredient from "./burger-ingredient";
 import PropTypes from "prop-types";
 import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
+import { DataContext } from "../../utils/context";
 
 
-function BurgerIngredients({ingdata}) {
+function BurgerIngredients() {
+  const ingdata = useContext(DataContext);
+
   //saves state current tab
   const [stab, setTab] = React.useState("tbun");
   
@@ -86,7 +89,6 @@ function BurgerIngredients({ingdata}) {
 };
 
 BurgerIngredients.propTypes = {
-  ingdata: PropTypes.arrayOf(IngredientPropType).isRequired
 }
 
 export default BurgerIngredients;
