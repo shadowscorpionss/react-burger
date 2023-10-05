@@ -1,12 +1,13 @@
 import React from "react"
 import Style from "./ingredient-details.module.css"
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
+import PropTypes from "prop-types";
 
 function IngredientDetails (props) {
- const {image_large, image,name, calories, proteins,fat,carbohydrates}=props
+ const {image_large, image,name, calories, proteins,fat,carbohydrates, onClick}=props
  console.log(props.description)
   return (
-    <div className={Style.ingredientCard}>
+    <div className={Style.ingredientCard} onClick={onClick}>
       <div className={Style.c1}>
         <img src={image_large??image} alt={name}/>
       </div>
@@ -43,5 +44,6 @@ function IngredientDetails (props) {
 }
 
 IngredientDetails.propTypes = IngredientPropType.isRequired;
+IngredientDetails.propTypes.onClick= PropTypes.func;
 
 export default IngredientDetails;

@@ -1,4 +1,4 @@
-import {useState, useEffect, useContext} from "react";
+import {useState, useEffect, useContext, useReducer} from "react";
 import AppHeader from "../app-header/app-header";
 import appStyles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -6,10 +6,54 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {getIngredients} from "../../utils/api";
 import { DataContext, ConstructorContext, OrderContext } from "../../utils/context";
 
+
+function constructorReducer(state, action){
+    console.log(action.type);
+    switch(action.type){
+      case "GENERATE_DATA":
+          const data= action.payload;
+         //random random elements (not bun)  
+          const randomShuffledIngredients = [...data.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random())
+          const minCount = 1;
+          const randomIngredientsLength = Math.floor((randomShuffledIngredients.length-minCount) * Math.random())+minCount;
+          const ingredients=randomShuffledIngredients.slice(0, randomIngredientsLength);
+
+          //buns
+          const bunsArr = data.filter(el => el.type === "bun");
+
+          //random bun
+          const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
+          return {data: [randomBun,...ingredients,randomBun]};
+      case "REMOVE_INGREDIENT":
+          const removeItem = action.item;
+          return {data: state.data.filter(el=> el!==removeItem)};
+      case "ADD_INGREDIENT":
+          const item = action.item;
+          let exIngredients=state.data.filter(el=>el.type!=="bun");
+          let exBun = state.data.find(el=>el.type==="bun");
+          if (item.type==="bun"){
+            exBun=item;            
+          } else {
+            exIngredients.push(item);
+          }
+          return {data: [exBun,...exIngredients,exBun]};
+
+
+      default:
+        throw Error('Unknown action: ' + action.type);
+    }
+
+}
+
+const constructorDataInitialState = {data: []};
+
 function App() {
-  const [data, setData]= useState([]);
-  const [constructorData, setConstructorData]= useState([]);
+  
+  
+  const [ingredientsData, setIngredientsData]= useState([]);
   const [orderId, setOrderId]= useState(0);
+
+  const [constructorData, constructorDispatcher]= useReducer(constructorReducer,constructorDataInitialState);
 
   const [state, setState] = useState({
     hasError:false,
@@ -28,7 +72,7 @@ function App() {
         isLoading: false
       });
 
-      setData([]);
+      setIngredientsData([]);
       console.log("I've caught it! ", err);
     }
     
@@ -38,8 +82,13 @@ function App() {
         hasError: !obj.success,
         isLoading: false
       });
-      setData(obj.data);      
-      generateConstructorItems(obj.data);
+      setIngredientsData(obj.data);      
+
+      constructorDispatcher({ 
+        type:"GENERATE_DATA",
+        payload: obj.data
+      })
+
     }
 
     setState({
@@ -51,23 +100,6 @@ function App() {
     getIngredients().then(gotData).catch(catchError);
   }
 
-
-  function generateConstructorItems(data){
-      //random random elements (not bun)  
-      const notBunFiltered = [...data.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random())
-      const minCount = 1;
-      const randomLength = Math.floor((notBunFiltered.length-minCount) * Math.random())+minCount;
-      const notBunArr=notBunFiltered.slice(0, randomLength);
-
-      //buns
-      const bunsArr = data.filter(el => el.type === "bun");
-
-      //random bun
-      const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
-
-      setConstructorData([randomBun, ...notBunArr, randomBun]);
-
-  }
 
   //loading data on mount
   useEffect(getData, []);  
@@ -83,19 +115,19 @@ function App() {
           </>
         )}
         {!state.hasError && !state.isLoading && (
-          <DataContext.Provider value={data}>
-            <ConstructorContext.Provider value={{constructorData, setConstructorData}}>
+          <DataContext.Provider value={ingredientsData}>
+            <ConstructorContext.Provider value={{constructorData, constructorDispatcher}}>
               <OrderContext.Provider value= {{orderId,setOrderId}}>
                 <div className={appStyles.grid}>
                   <section className={appStyles.column}>
                     <h2 className="text text_type_main-large">Соберите бургер</h2>
                     <div className={appStyles.cellContent}>
-                      {data && data.length && (<BurgerIngredients />)}                      
+                      {ingredientsData && ingredientsData.length && (<BurgerIngredients />)}                      
                     </div>
                   </section>                  
                   <section className={appStyles.column}>
                     <div className={appStyles.cellContent}>
-                      {data && data.length && (<BurgerConstructor />)}
+                      {ingredientsData && ingredientsData.length && (<BurgerConstructor />)}
                     </div>
                   </section>                  
                 </div>

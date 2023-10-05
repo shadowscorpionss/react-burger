@@ -11,7 +11,7 @@ import { postOrder } from "../../utils/api";
 
 function ingredientsList(array, onCloseHandler) {
   return array.map(item => (
-    <li key={item._id} className={`${burgerConstructorStyles.listItem} `}>
+    <li key={`ingredient_${item._id}_${new Date().getTime()}`} className={`${burgerConstructorStyles.listItem} `}>
         <DragIcon /> <div className="mr-2" />
         <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={()=>onCloseHandler(item)}/>
     </li>
@@ -20,17 +20,35 @@ function ingredientsList(array, onCloseHandler) {
 
 
 function BurgerConstructor() {
-  const { constructorData, setConstructorData } = useContext(ConstructorContext);
+  //states and context
+  const { constructorData, constructorDispatcher } = useContext(ConstructorContext);
   const { isOpened: showModal, open:openModal, close:closeModal} = useToggle(false);  
   const [messages, setMessages] = useState([]);
   const {setOrderId} = useContext(OrderContext);
   
-  const bun = useMemo( ()=> constructorData.find(el=> el.type==="bun"),[constructorData]) ;
-  const ingredients = useMemo( ()=> constructorData.filter(el=> el.type!=="bun"),[constructorData]);
-  const ingredientsIds = useMemo(()=> constructorData.map(el=>el._id), [constructorData]);
+  //structured data
+  const bun = useMemo( ()=> constructorData.data.find(el=> el.type==="bun"),[constructorData]) ;
+  const ingredients = useMemo( ()=> constructorData.data.filter(el=> el.type!=="bun"),[constructorData]);
+  const ingredientsIds = useMemo(()=> [bun._id,...ingredients.map(el=>el._id),bun._id], [constructorData]);
 
+
+  //calc fields
+  //-------
+  //total
+  const total = useMemo(() => {
+    let s = 0;
+    ingredients.forEach(el => {
+      s += el.price;
+    });
+    if (!bun || !bun.price)
+      return s;
+    s += bun.price*2;
+    return s;
+  }, [constructorData]);
+
+  //methods
   function removeIngredient(item){     
-     setConstructorData(constructorData.filter(el=>el!==item));
+    constructorDispatcher({type: "REMOVE_INGREDIENT", item: item});
   }
   
   function makeOrder (){    
@@ -54,24 +72,10 @@ function BurgerConstructor() {
     });
   }
 
-  //total
-  const total = useMemo(() => {
-    let s = 0;
-    ingredients.forEach(el => {
-      s += el.price;
-    });
-    if (!bun || !bun.price)
-      return s;
-    s += bun.price*2;
-    return s;
-  }, [constructorData]);
-
-  if (!constructorData || !constructorData.length)
-    return;
-
+  //render
   return (
     <section className={burgerConstructorStyles.constructor}>
-      <div className={burgerConstructorStyles.a}>
+      <div>
           <div className={burgerConstructorStyles.splitter}>
             <div></div>
             <div><ConstructorElement
