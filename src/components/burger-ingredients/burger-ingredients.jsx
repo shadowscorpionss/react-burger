@@ -1,13 +1,22 @@
-import React, {useMemo} from "react";
+import React, {useContext, useMemo} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useRef} from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import BurgerIngredient from "./burger-ingredient";
 import PropTypes from "prop-types";
 import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
+import { ConstructorContext, DataContext } from "../../utils/context";
 
 
-function BurgerIngredients({ingdata}) {
+function BurgerIngredients() {
+  const ingdata = useContext(DataContext);
+  const {constructorData, constructorDispatcher}=useContext(ConstructorContext);
+
+  function getCount(item){
+      const g= constructorData.data.filter(el=>el._id===item._id);
+      return g && g.length ? g.length: 0;
+  }
+
   //saves state current tab
   const [stab, setTab] = React.useState("tbun");
   
@@ -24,6 +33,9 @@ function BurgerIngredients({ingdata}) {
       .selectEl[type] //element
       .scrollIntoView({behavior: "smooth"});
   };
+  function handleAddItem(item){
+      constructorDispatcher({type:"ADD_INGREDIENT", item:item});
+  }
 
   //generates section of items 
   function SectionOf({sid, filter, sectionClass, title, tabName }){
@@ -38,7 +50,7 @@ function BurgerIngredients({ingdata}) {
           {
             ingdata
               .filter(el => el.type === filter)
-              .map(item => <BurgerIngredient key={item._id} ingredient={item}/>)
+              .map(item => <BurgerIngredient key={item._id} ingredient={item} count={getCount(item)} addItem={handleAddItem}/>)
           }
         </ul>
       </section>
@@ -86,7 +98,6 @@ function BurgerIngredients({ingdata}) {
 };
 
 BurgerIngredients.propTypes = {
-  ingdata: PropTypes.arrayOf(IngredientPropType).isRequired
 }
 
 export default BurgerIngredients;

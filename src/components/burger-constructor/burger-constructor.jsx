@@ -1,67 +1,113 @@
-import {ConstructorElement, CurrencyIcon, Button} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement, CurrencyIcon, Button, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
 import PropTypes from "prop-types";
-import {useMemo} from "react";
-import {useToggle} from "../hooks/useToggle";
+import {useContext, useMemo, useState} from "react";
+import {useToggle} from "../../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { ConstructorContext, OrderContext } from "../../utils/context";
+import { postOrder } from "../../utils/api";
+import { CLEAR_DATA, REMOVE_INGREDIENT } from "../../actions/constructor";
 
-function ingredientsList(array) {
+function ingredientsList(array, onCloseHandler) {
   return array.map(item => (
-    <li key={item._id} className={`${burgerConstructorStyles.listItem} `}>
-      <ConstructorElement text={item.name} price={item.price} thumbnail={item.image}/>
+    <li key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>
+        <DragIcon /> <div className="mr-2" />
+        <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={()=>onCloseHandler(item)}/>
     </li>
   ));
 }
 
-function BurgerConstructor({ingdata}) {
-  const { isOpened: showModal, open:openModal, close:closeModal} = useToggle(false);
 
-  //random 7 elements (not bun)
-  const notBunArr = [...ingdata.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random()).slice(0, 7);
-  //buns
-  const bunsArr = ingdata.filter(el => el.type === "bun");
+function BurgerConstructor() {
+  //states and context
+  const { constructorData, constructorDispatcher } = useContext(ConstructorContext);
+  const { isOpened: showModal, open:openModal, close:closeModal} = useToggle(false);  
+  const [messages, setMessages] = useState([]);
+  const {setOrderId} = useContext(OrderContext);
+  
+  //structured data
+  const bun = useMemo( ()=> constructorData.data.find(el=> el.type==="bun") ?? {price:0, name:'', image:undefined},[constructorData]) ;
+  const ingredients = useMemo( ()=> constructorData.data.filter(el=> el.type!=="bun"),[constructorData]);
+  const ingredientsIds = useMemo(()=> [bun._id,...ingredients.map(el=>el._id),bun._id], [constructorData]);
 
-  //random bun
-  const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
 
+  //calc fields
+  //-------
   //total
   const total = useMemo(() => {
     let s = 0;
-    notBunArr.forEach(el => {
+    ingredients.forEach(el => {
       s += el.price;
     });
-    s += randomBun.price;
+    if (!bun || !bun.price)
+      return s;
+    s += bun.price*2;
     return s;
-  });
+  }, [constructorData]);
 
-  const messages = ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"];
-  const digits = 6;
-  const pw = Math.pow(10,digits);
-  const rndNum = Math.floor(Math.random() * pw).toString().padStart(digits,"0"); 
+  //methods
+  function removeIngredient(item){     
+    constructorDispatcher({type: REMOVE_INGREDIENT, item: item});
+  }
+  
+  function clearOrder (){
+    constructorDispatcher({type: CLEAR_DATA});
+  }
+
+  function makeOrder (){    
+    postOrder(ingredientsIds)
+    .then(obj=>{
+      const {success, order, name, message}=obj;
+      console.log(success, order.number, name);
+      setMessages(["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"]);
+
+      if (!success)
+        setMessages(["Что-то пошло не так", message]);
+      
+      setOrderId(order.number);
+      clearOrder();
+    })
+    .catch(err=>{
+      const {message}=err;
+      setMessages(["Ошибка выполнения запроса", message]);
+      
+    })
+    .finally(()=>{
+      openModal();
+    })
+  }
+
+  //render
   return (
     <section className={burgerConstructorStyles.constructor}>
       <div>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${randomBun.name} (верх)`}
-          price={randomBun.price}
-          thumbnail={randomBun.image}
-          style={{
-          backgroundColor: "green"
-        }}/>
+          <div className={burgerConstructorStyles.splitter}>
+            <div></div>
+            <div><ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${bun.name} (верх)`}
+                price={bun.price}
+                thumbnail={bun.image}
+                /></div>
+            
+          </div>
+          <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
+            {ingredientsList(ingredients, removeIngredient)}
+          </ul>
+          <div className={burgerConstructorStyles.splitter}>
+            <div></div>
+            <div><ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}/></div>
 
-        <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
-          {ingredientsList(notBunArr)}
-        </ul>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${randomBun.name} (низ)`}
-          price={randomBun.price}
-          thumbnail={randomBun.image}/>
+           
+            </div>
       </div>
       <div className={burgerConstructorStyles.currency}>
         <div className={burgerConstructorStyles.orderButton}>
@@ -69,10 +115,12 @@ function BurgerConstructor({ingdata}) {
             className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon/>
             &nbsp;
           </span>
-          <Button type="primary" size="large" htmlType="button" onClick={openModal}>Оформить заказ</Button>
+          <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={makeOrder}>Оформить заказ</Button>
           {showModal && 
           (<Modal title="&nbsp;" onClose={closeModal}>
-            <OrderDetails orderId={rndNum} messages={messages}/>
+            
+              <OrderDetails messages={messages} />
+            
           </Modal>)}
         </div>
       </div>
@@ -83,8 +131,6 @@ function BurgerConstructor({ingdata}) {
 }
 
 BurgerConstructor.propTypes = {
-  ingdata: PropTypes
-    .arrayOf(IngredientPropType)
-    .isRequired
+  
 }
 export default BurgerConstructor;

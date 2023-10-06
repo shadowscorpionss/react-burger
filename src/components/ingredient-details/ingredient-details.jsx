@@ -1,47 +1,50 @@
 import React from "react"
-import Style from "./ingredient-details.module.css"
+import IngredientDetailsStyles from "./ingredient-details.module.css"
 import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
+import PropTypes from "prop-types";
 
-function IngredientDetails (props) {
- const {image_large, image,name, calories, proteins,fat,carbohydrates}=props
- console.log(props.description)
+function IngredientDetails ({ingredient, onClick}) {
+ const {image_large, image,name, calories, proteins,fat,carbohydrates}=ingredient;
   return (
-    <div className={Style.ingredientCard}>
-      <div className={Style.c1}>
+    <div className={IngredientDetailsStyles.ingredientCard} onClick={onClick}>
+      <div className={IngredientDetailsStyles.c1}>
         <img src={image_large??image} alt={name}/>
       </div>
-      <div className={Style.c2}>
+      <div className={IngredientDetailsStyles.c2}>
         <p className="text_type_main-medium text">{name}</p>
       </div>
-      <div className={Style.c3}>
+      <div className={IngredientDetailsStyles.c3}>
         <p className="text text_color_inactive text_type_main-small">Калории, ккал
         </p>
       </div>
-      <div className={Style.c4}>
+      <div className={IngredientDetailsStyles.c4}>
         <p className="text_type_digits-default text_color_inactive">{calories}</p>
       </div>
-      <div className={Style.c5}>
+      <div className={IngredientDetailsStyles.c5}>
         <p className="text_color_inactive text_type_main-small">Белки, г</p>
       </div>
-      <div className={Style.c6}>
+      <div className={IngredientDetailsStyles.c6}>
         <p className="text_type_digits-default text_color_inactive">{proteins}</p>
       </div>
-      <div className={Style.c7}>
+      <div className={IngredientDetailsStyles.c7}>
         <p className="text_color_inactive text_type_main-small">Жиры, г</p>
       </div>
-      <div className={Style.c8}>
+      <div className={IngredientDetailsStyles.c8}>
         <p className="text_type_digits-default text_color_inactive ">{fat}</p>
       </div>
-      <div className={Style.c9}>
+      <div className={IngredientDetailsStyles.c9}>
         <p className="text_color_inactive text_type_main-small">Углеводы, г</p>
       </div>
-      <div className={Style.c10}>
+      <div className={IngredientDetailsStyles.c10}>
         <p className="text_type_digits-default text_color_inactive">{carbohydrates}</p>
       </div>
     </div>
   )
 }
 
-IngredientDetails.propTypes = IngredientPropType.isRequired;
+IngredientDetails.propTypes = { 
+  ingredient: IngredientPropType.isRequired,
+  onClick: PropTypes.func
+}
 
 export default IngredientDetails;

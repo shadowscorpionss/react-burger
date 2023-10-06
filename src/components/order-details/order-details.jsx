@@ -1,10 +1,13 @@
 import orderConfirmStyles from "./order-details.module.css";
 import doneImage from "../../images/done.png";
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { OrderContext } from "../../utils/context";
 
 function OrderDetails(props) {
 
-  const {orderId, messages} = props;
+  const {messages} = props;
+  const {orderId}= useContext(OrderContext);
 
   return (
     <div className={orderConfirmStyles.orderCard}>
@@ -35,13 +38,8 @@ function OrderDetails(props) {
 
 }
 
-OrderDetails.propTypes = PropTypes
-  .shape({
-  orderId: PropTypes.string.isRequired,
-  messages: PropTypes
-    .arrayOf(PropTypes.string)
-    .isRequired
-})
-  .isRequired;
+OrderDetails.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default OrderDetails;
