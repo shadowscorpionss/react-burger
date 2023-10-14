@@ -1,7 +1,6 @@
 
 import { getIngredientsRequest } from "../../utils/api";
 import { errorActionCreator, actionCreator } from ".";
-import { generateConstructorDataAction } from "./burger-constructor";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
