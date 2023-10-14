@@ -25,7 +25,6 @@ export const getIngredients = () => (dispatch) => {
     getIngredientsRequest().then(res => {
         if (res && res.success) {
             dispatch(getIngredientsSuccessAction(res.data));
-            dispatch(generateConstructorDataAction(res.data));
         } else {
             const { message } = res;
             dispatchError(message);

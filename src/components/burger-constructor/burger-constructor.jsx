@@ -1,16 +1,17 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useToggle } from "../../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
+import { generateConstructorDataAction, removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/order";
 
 function BurgerConstructor() {
   //states and context
   const { constructorData } = useSelector(store => store.burgerConstructor);
+  const data = useSelector(store=>store.burgerIngredients.ingredients);
   const { isLoading, isFailed, order, errorMessage } = useSelector(store=>store.order);
   const dispatch = useDispatch();
 
@@ -38,6 +39,9 @@ function BurgerConstructor() {
     dispatch(makeOrder(ingredientsIds));
     openModal();
   };
+
+  //load ingredients data on mount
+  useEffect(()=> { dispatch(generateConstructorDataAction(data)) },[data]);
 
   //render
   return (
