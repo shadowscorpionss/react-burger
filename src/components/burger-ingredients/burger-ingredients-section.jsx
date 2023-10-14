@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import burgerIngredientsSectionStyles from "./burger-ingredients-section.module.css";
 import BurgerIngredient from "./burger-ingredient";
-
+import PropTypes from "prop-types";
+import React from "react";
 //generates section of items 
 const BurgerIngredientSection = ({ filter, title, tabName, ingredientsRef }) => {
   const {ingredients}=useSelector(store=>store.burgerIngredients);
@@ -22,5 +23,17 @@ const BurgerIngredientSection = ({ filter, title, tabName, ingredientsRef }) => 
     </section>
   )
 };
+
+BurgerIngredientSection.propTypes= {
+  filter: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  tabName: PropTypes.string.isRequired,  
+  ingredientsRef: PropTypes.oneOfType([
+    // Either a function
+    PropTypes.func, 
+    // Or the instance of a DOM native element (see the note about SSR)
+    PropTypes.shape({ current: PropTypes.any })
+  ]).isRequired
+}
 
 export default BurgerIngredientSection;
