@@ -5,7 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {getIngredients} from "../../utils/api";
 import { DataContext, ConstructorContext, OrderContext } from "../../utils/context";
-import { ADD_INGREDIENT, CLEAR_DATA, GENERATE_DATA, REMOVE_INGREDIENT } from "../../services/actions/burger-constructor";
+import { ADD_CONSTRUCTOR_INGREDIENT, CLEAR_CONSTRUCTOR_DATA, GENERATE_CONSTRUCTOR_DATA, REMOVE_CONSTRUCTOR_INGREDIENT } from "../../services/actions/burger-constructor";
 import {v4 as uuid4} from "uuid";
 
 function addUniqueId(item){
@@ -15,7 +15,7 @@ function addUniqueId(item){
 function constructorReducer(state, action){
     console.log(action.type);
     switch(action.type){
-      case GENERATE_DATA:
+      case GENERATE_CONSTRUCTOR_DATA:
           const data= action.payload;
          //random random elements (not bun)  
           const randomShuffledIngredients = [...data.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random())
@@ -30,10 +30,10 @@ function constructorReducer(state, action){
           const randomBun = bunsArr[Math.floor(bunsArr.length * Math.random())];
           randomBun.uniqueId=uuid4();
           return {data: [randomBun,...ingredients,randomBun]};
-      case REMOVE_INGREDIENT:
+      case REMOVE_CONSTRUCTOR_INGREDIENT:
           const removeItem = action.item;
           return {data: state.data.filter(el=> el!==removeItem)};
-      case ADD_INGREDIENT:
+      case ADD_CONSTRUCTOR_INGREDIENT:
           const item = addUniqueId(action.item);
           let exIngredients=state.data.filter(el=>el.type!=="bun");
           let exBun = state.data.find(el=>el.type==="bun");
@@ -43,7 +43,7 @@ function constructorReducer(state, action){
             exIngredients.push(item);
           }
           return {data: [exBun,...exIngredients,exBun]};
-      case CLEAR_DATA:
+      case CLEAR_CONSTRUCTOR_DATA:
           return constructorDataInitialState;
 
 
@@ -93,7 +93,7 @@ function App() {
       setIngredientsData(obj.data);      
 
       constructorDispatcher({ 
-        type:GENERATE_DATA,
+        type:GENERATE_CONSTRUCTOR_DATA,
         payload: obj.data
       })
 

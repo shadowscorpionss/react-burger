@@ -8,7 +8,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { ConstructorContext, OrderContext } from "../../utils/context";
 import { postOrder } from "../../utils/api";
-import { CLEAR_DATA, REMOVE_INGREDIENT } from "../../services/actions/burger-constructor";
+import { CLEAR_CONSTRUCTOR_DATA, REMOVE_CONSTRUCTOR_INGREDIENT } from "../../services/actions/burger-constructor";
 
 function ingredientsList(array, onCloseHandler) {
   return array.map(item => (
@@ -45,15 +45,15 @@ function BurgerConstructor() {
       return s;
     s += bun.price*2;
     return s;
-  }, [constructorData]);
+  }, [ingredients, bun]);
 
   //methods
   function removeIngredient(item){     
-    constructorDispatcher({type: REMOVE_INGREDIENT, item: item});
+    constructorDispatcher({type: REMOVE_CONSTRUCTOR_INGREDIENT, item: item});
   }
   
   function clearOrder (){
-    constructorDispatcher({type: CLEAR_DATA});
+    constructorDispatcher({type: CLEAR_CONSTRUCTOR_DATA});
   }
 
   function makeOrder (){    
