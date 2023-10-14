@@ -3,9 +3,8 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useRef} from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import BurgerIngredient from "./burger-ingredient";
-import PropTypes from "prop-types";
-import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
 import { ConstructorContext, DataContext } from "../../utils/context";
+import { ADD_CONSTRUCTOR_INGREDIENT } from "../../services/actions/burger-constructor";
 
 
 function BurgerIngredients() {
@@ -34,7 +33,7 @@ function BurgerIngredients() {
       .scrollIntoView({behavior: "smooth"});
   };
   function handleAddItem(item){
-      constructorDispatcher({type:"ADD_INGREDIENT", item:item});
+      constructorDispatcher({type:ADD_CONSTRUCTOR_INGREDIENT, item:item});
   }
 
   //generates section of items 
@@ -96,8 +95,5 @@ function BurgerIngredients() {
     </section>
   );
 };
-
-BurgerIngredients.propTypes = {
-}
 
 export default BurgerIngredients;
