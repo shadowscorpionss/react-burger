@@ -3,8 +3,6 @@ import AppHeader from "../app-header/app-header";
 import appStyles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { OrderContext } from "../../utils/context";
-
 
 function App() {
   const [orderId, setOrderId] = useState(0);
@@ -12,7 +10,6 @@ function App() {
     <div className="App">
       <AppHeader />
       <main>
-        <OrderContext.Provider value={{ orderId, setOrderId }}>
           <div className={appStyles.grid}>
             <section className={appStyles.column}>
               <h2 className="text text_type_main-large">Соберите бургер</h2>
@@ -25,8 +22,7 @@ function App() {
                 <BurgerConstructor />
               </div>
             </section>
-          </div>
-        </OrderContext.Provider>
+          </div>       
       </main>
     </div>
   );

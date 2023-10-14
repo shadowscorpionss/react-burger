@@ -1,34 +1,21 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
-import PropTypes from "prop-types";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useToggle } from "../../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { OrderContext } from "../../utils/context";
-import { postOrder } from "../../utils/api";
-import { clearConstructorDataAction, removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
+import { removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
-
-function ingredientsList(array, onCloseHandler) {
-  return array.map(item => (
-    <li key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>
-      <DragIcon /> <div className="mr-2" />
-      <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={() => onCloseHandler(item)} />
-    </li>
-  ));
-}
-
+import { makeOrder } from "../../services/actions/order";
 
 function BurgerConstructor() {
   //states and context
   const { constructorData } = useSelector(store => store.burgerConstructor);
+  const { isLoading, isFailed, order, errorMessage } = useSelector(store=>store.order);
   const dispatch = useDispatch();
 
   const { isOpened: showModal, open: openModal, close: closeModal } = useToggle(false);
-  const [messages, setMessages] = useState([]);
-  const { setOrderId } = useContext(OrderContext);
+  const messages = useMemo(()=> isFailed? ["Ошибка выполнения запроса", errorMessage]:["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"] ,[isFailed]);
 
   //structured data
   const bun = useMemo(() => constructorData.find(el => el.type === "bun") ?? { price: 0, name: '', image: null }, [constructorData]);
@@ -43,36 +30,14 @@ function BurgerConstructor() {
     , [ingredients, bun]);
 
   //methods
-  const removeIngredient = (item) => {
-    dispatch(removeConstructorIngredientAction(item.uniqueId));
-  }
+  const removeIngredient = (uniqueId) => {
+    dispatch(removeConstructorIngredientAction(uniqueId));
+  };
 
-  const clearOrder = () => {
-    dispatch(clearConstructorDataAction());
-  }
-
-  const makeOrder = ()=> {
-    postOrder(ingredientsIds)
-      .then(obj => {
-        const { success, order, name, message } = obj;
-        console.log(success, order.number, name);
-        setMessages(["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"]);
-
-        if (!success)
-          setMessages(["Что-то пошло не так", message]);
-
-        setOrderId(order.number);
-        clearOrder();
-      })
-      .catch(err => {
-        const { message } = err;
-        setMessages(["Ошибка выполнения запроса", message]);
-
-      })
-      .finally(() => {
-        openModal();
-      })
-  }
+  const callMakeOrder = () => {
+    dispatch(makeOrder(ingredientsIds));
+    openModal();
+  };
 
   //render
   return (
@@ -83,25 +48,33 @@ function BurgerConstructor() {
           <div><ConstructorElement
             type="top"
             isLocked={true}
-            text={`${bun.name} (верх)`}
+            text={bun.name? `${bun.name} (верх)`:'Выберете булку'}
             price={bun.price}
-            thumbnail={bun.image}
-          /></div>
+            thumbnail={bun.image} 
+                      /></div>
 
         </div>
         <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
-          {ingredients && ingredients.length ? ingredientsList(ingredients, removeIngredient) : ''}
+          {ingredients && ingredients.length ?
+            (
+              ingredients.map(item =>
+               (<li key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>
+                <DragIcon /> <div className="mr-2" />
+                <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={() => removeIngredient(item.uniqueId)} />
+              </li>)              
+              )
+            )
+
+            : ''}
         </ul>
         <div className={burgerConstructorStyles.splitter}>
           <div></div>
           <div><ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${bun.name} (низ)`}
+            text={bun.name? `${bun.name} (низ)`:'Выберете булку'}
             price={bun.price}
             thumbnail={bun.image} /></div>
-
-
         </div>
       </div>
       <div className={burgerConstructorStyles.currency}>
@@ -110,8 +83,8 @@ function BurgerConstructor() {
             className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon />
             &nbsp;
           </span>
-          <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={makeOrder}>Оформить заказ</Button>
-          {showModal &&
+          <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={callMakeOrder}>Оформить заказ</Button>
+          {!isLoading && !isFailed && !!order && showModal &&
             (<Modal title="&nbsp;" onClose={closeModal}>
 
               <OrderDetails messages={messages} />

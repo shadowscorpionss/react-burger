@@ -20,6 +20,6 @@ function postSomeUrl(url, data){
      body: JSON.stringify(data)})
 }
 
-export function postOrder(data){    
+export function postOrderRequest(data){    
     return postSomeUrl(`${NORMA_API}/orders`, {ingredients:data});
 }

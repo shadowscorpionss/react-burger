@@ -1,19 +1,16 @@
 import orderConfirmStyles from "./order-details.module.css";
 import doneImage from "../../images/done.png";
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { OrderContext } from "../../utils/context";
+import { useSelector } from "react-redux";
 
-function OrderDetails(props) {
-
-  const {messages} = props;
-  const {orderId}= useContext(OrderContext);
+function OrderDetails({messages}) {
+  const {order}= useSelector(store=>store.order);
 
   return (
     <div className={orderConfirmStyles.orderCard}>
       <div className={orderConfirmStyles.topSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.orderId}>
-        <p className=" text text_type_digits-large ">{orderId}</p>
+        <p className=" text text_type_digits-large ">{order.number}</p>
       </div>
       <div className={orderConfirmStyles.orderIdSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.orderIdLabel}>
