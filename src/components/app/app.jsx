@@ -5,7 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {getIngredients} from "../../utils/api";
 import { DataContext, ConstructorContext, OrderContext } from "../../utils/context";
-import { ADD_INGREDIENT, CLEAR_DATA, GENERATE_DATA, REMOVE_INGREDIENT } from "../../actions/constructor";
+import { ADD_INGREDIENT, CLEAR_DATA, GENERATE_DATA, REMOVE_INGREDIENT } from "../../services/actions/burger-constructor";
 import {v4 as uuid4} from "uuid";
 
 function addUniqueId(item){

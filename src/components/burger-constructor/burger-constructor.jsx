@@ -8,7 +8,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { ConstructorContext, OrderContext } from "../../utils/context";
 import { postOrder } from "../../utils/api";
-import { CLEAR_DATA, REMOVE_INGREDIENT } from "../../actions/constructor";
+import { CLEAR_DATA, REMOVE_INGREDIENT } from "../../services/actions/burger-constructor";
 
 function ingredientsList(array, onCloseHandler) {
   return array.map(item => (
