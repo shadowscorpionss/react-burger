@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
-
-const emptyReducer = (state = '', action) => {
-    return state;
-}
-
+import { burgerIngredientsReducer } from "./burger-ingredients";
+import { burgerConstructorReducer } from "./burger-constructor";
+import { orderReducer } from "./order";
 
 export const rootReducer = combineReducers({
-    empty: emptyReducer,
+    burgerIngredients: burgerIngredientsReducer,
+    burgerConstructor: burgerConstructorReducer,
+    order: orderReducer,
+
 });
