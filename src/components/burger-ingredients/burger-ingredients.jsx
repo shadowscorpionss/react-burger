@@ -16,7 +16,7 @@ const sectionProps = sections.map((s, i) => ({
   tabName: s + "Tab"
 }));
 
-function BurgerIngredients() {  
+function BurgerIngredients() {
   //dispatch
   const dispatch = useDispatch();
   //store
@@ -24,7 +24,7 @@ function BurgerIngredients() {
 
   //---scrolling block start---
   //saves state current tab
-  const [stab, setTab] = React.useState("tbun");
+  const [stab, setTab] = React.useState("bunTab");
 
   //using for scrolling 
   const componentsRef = useRef({});
@@ -47,6 +47,23 @@ function BurgerIngredients() {
         {props.children}
       </Tab>);
   }
+
+  const onScroll = (e) => {
+    const element = e.target;
+    const est = element.scrollTop;
+
+    const { bunTab, sauceTab } = componentsRef.current;
+    const tot = [bunTab, sauceTab].reduce((acc, cur) => cur.scrollHeight + acc, 0);
+    const bsh = bunTab.scrollHeight;    
+
+    if (est > tot) {
+      setTab("mainTab");
+    } else if (est > bsh && est < tot) {
+      setTab("sauceTab");
+    } else if (est <= bsh) {
+      setTab("bunTab");
+    }
+  };
   //---scrolling block end---
 
   //load ingredients on mount
@@ -59,7 +76,7 @@ function BurgerIngredients() {
           return <ScrollTab type={t.tabName} key={i}>{t.title}</ScrollTab>
         })}
       </div>
-      <div className={`${burgerIngredientsStyles.ingredients} custom-scroll`}>
+      <div className={`${burgerIngredientsStyles.ingredients} custom-scroll`} onScroll={onScroll}>
         {!isLoading && !isFailed && ingredients && ingredients.length ? (
           sectionProps.map((s, i) => {
             return <BurgerIngredientSection
