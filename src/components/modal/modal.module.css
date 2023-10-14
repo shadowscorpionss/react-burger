@@ -10,11 +10,10 @@
     position: fixed;
     top: 0;
     width: 100vw;
-    z-index: 1040;
+    z-index: 1040;    
 }
 
-.modal .container {    
-    background-color: var(--interfacemodal-bg);
+.modal .container {        
     background: #1A1A1A;
     border-radius: 40px;
     display: flex;

@@ -11,7 +11,7 @@ const inititialState = {
     ingredients: [],
     isLoading: false,
     isFailed: false,
-    currentIngredient: {}
+    currentIngredient: null
 }
 
 export const burgerIngredientsReducer = (state = inititialState, action) => {
@@ -25,7 +25,7 @@ export const burgerIngredientsReducer = (state = inititialState, action) => {
         case SET_CURRENT_INGREDIENT:
             return { ...state, currentIngredient: action.item };
         case RESET_CURRENT_INGREDIENT:
-            return { ...state, currentIngredient: {} };
+            return { ...state, currentIngredient: null };
         default:
             return state;
 

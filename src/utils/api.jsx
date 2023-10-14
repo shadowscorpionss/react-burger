@@ -8,7 +8,7 @@ function fetchSomeUrl(url, fetchOptions){
     return fetch(url, fetchOptions).then(checkResponse);
 }
 
-export function getIngredients() {
+export function getIngredientsRequest() {
     return fetchSomeUrl(`${NORMA_API}/ingredients`);    
  }
 

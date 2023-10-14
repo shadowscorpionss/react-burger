@@ -1,49 +1,59 @@
 import burgerIngredientStyles from "./burger-ingredient.module.css";
-import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
-import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
+import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { useToggle } from "../../hooks/useToggle";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { resetCurrentIngredientAction, setCurrentIngredientAction } from "../../services/actions/burger-ingredients";
+import { useMemo } from "react";
+import { addConstructorIngredientAction } from "../../services/actions/burger-constructor";
+
+function BurgerIngredient({ ingredient }) {
+  const dispatch = useDispatch();
+  const { currentIngredient } = useSelector(store => store.burgerIngredients);
+  const { constructorData } = useSelector(store => store.burgerConstructor);
+
+  const count = useMemo(() => {
+    const g = constructorData.filter(el => el._id === ingredient._id);
+    return g && g.length ? g.length : 0
+  }, [constructorData]);
 
 
-function BurgerIngredient({ingredient, count, addItem}) {
-  const {isOpened:showModal, open:openModal, close:closeModal} = useToggle(false);
-
-  function handleIngredientClick(e){  
-    if (e.shiftKey && typeof(addItem)==="function"){
-        addItem(ingredient);
-        return;
+  function handleIngredientClick(e) {
+    if (e.shiftKey) {
+      dispatch(addConstructorIngredientAction(ingredient));
+      return;
     }
-    
-    openModal();
+    dispatch(setCurrentIngredientAction(ingredient));
+  }
+
+  function handleClose() {
+    dispatch(resetCurrentIngredientAction());
   }
 
   return (
 
     <li className={`${burgerIngredientStyles.ingredient} mb-8 `}>
       <div onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
-        {!!count && <Counter count={count} size="default"/>}        
-        <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1"/>
+        {!!count && <Counter count={count} size="default" />}
+        <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
         <div className={`${burgerIngredientStyles.currency} mb-1`}>
           <p className="text text_type_digits-default ">{ingredient.price}&nbsp;</p>
-          <CurrencyIcon/>
+          <CurrencyIcon />
         </div>
         <p className="text text_type_main-small">{ingredient.name}</p>
       </div>
-      {showModal && 
-      (<Modal title="Детали ингредиента" onClose={closeModal}>
-        <IngredientDetails ingredient={ingredient}/>
-      </Modal>)}
+      {currentIngredient &&
+        (<Modal title="Детали ингредиента" onClose={handleClose}>
+          <IngredientDetails />
+        </Modal>)}
     </li>
 
   )
 }
 
 BurgerIngredient.propTypes = {
-  ingredient: IngredientPropType.isRequired,
-  count: PropTypes.number,
-  addItem: PropTypes.func
+  ingredient: IngredientPropType.isRequired
 }
 
 export default BurgerIngredient;

@@ -1,12 +1,10 @@
-import React from "react"
 import IngredientDetailsStyles from "./ingredient-details.module.css"
-import {IngredientPropType} from "../component-prop-types/ingredients-prop-types";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-function IngredientDetails ({ingredient, onClick}) {
- const {image_large, image,name, calories, proteins,fat,carbohydrates}=ingredient;
+function IngredientDetails () {
+ const {image_large, image,name, calories, proteins,fat,carbohydrates}=useSelector(store=>store.burgerIngredients.currentIngredient);
   return (
-    <div className={IngredientDetailsStyles.ingredientCard} onClick={onClick}>
+    <div className={IngredientDetailsStyles.ingredientCard} >
       <div className={IngredientDetailsStyles.c1}>
         <img src={image_large??image} alt={name}/>
       </div>
@@ -40,11 +38,6 @@ function IngredientDetails ({ingredient, onClick}) {
       </div>
     </div>
   )
-}
-
-IngredientDetails.propTypes = { 
-  ingredient: IngredientPropType.isRequired,
-  onClick: PropTypes.func
 }
 
 export default IngredientDetails;
