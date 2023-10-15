@@ -15,8 +15,8 @@ function BurgerIngredient({ ingredient }) {
   //store
   const { currentIngredient } = useSelector(store => store.burgerIngredients);
   const { constructorData } = useSelector(store => store.burgerConstructor);
-  
-  const [{ opacity }, ref] = useDrag({
+
+  const [{ opacity, isDragging }, ref] = useDrag({
     type: 'ingredient',
     item: { ingredient },
     collect: monitor => ({
@@ -47,13 +47,13 @@ function BurgerIngredient({ ingredient }) {
 
     <li className={`${burgerIngredientStyles.ingredient} mb-8 `}>
       <div ref={ref} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
-        {!!count && <Counter count={count} size="default" />}
-        <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
-        <div className={`${burgerIngredientStyles.currency} mb-1`}>
-          <p className="text text_type_digits-default ">{ingredient.price}&nbsp;</p>
-          <CurrencyIcon />
-        </div>
-        <p className="text text_type_main-small">{ingredient.name}</p>
+        {!!count && <Counter count={count} size="default" />}        
+          <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
+          <div className={`${burgerIngredientStyles.currency} mb-1`}>
+            <p className="text text_type_digits-default ">{ingredient.price}&nbsp;</p>
+            <CurrencyIcon />
+          </div>
+          <p className="text text_type_main-small">{ingredient.name}</p>
       </div>
       {currentIngredient &&
         (<Modal title="Детали ингредиента" onClose={handleClose}>
