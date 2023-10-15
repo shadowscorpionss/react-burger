@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { removeConstructorIngredientAction, addConstructorIngredientAction } from "../../services/actions/burger-constructor";
 import { useDrag, useDrop } from "react-dnd";
 import burgerConstructorElementStyles from "./burger-constructor-element.module.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
-const BurgerConstructorElement = ({ ingredient, index, moveCard }) => {   
+const BurgerConstructorElement = ({ ingredient, index, moveIngredient, setIsDragging }) => {   
     const dispatch = useDispatch();
     const ref = useRef(null);
 
@@ -15,7 +15,7 @@ const BurgerConstructorElement = ({ ingredient, index, moveCard }) => {
     };
 
     const [{ handlerId }, drop] = useDrop({
-        accept: 'constructor',
+        accept: "constructor",
         collect: monitor => ({
             handlerId: monitor.getHandlerId(),
         }),
@@ -25,7 +25,7 @@ const BurgerConstructorElement = ({ ingredient, index, moveCard }) => {
             }
             const dragIndex = item.index
             const hoverIndex = index
-            // Don't replace items with themselves
+            // Don"t replace items with themselves
             if (dragIndex === hoverIndex) {
                 return
             }
@@ -51,11 +51,11 @@ const BurgerConstructorElement = ({ ingredient, index, moveCard }) => {
             }
 
             // Time to actually perform the action
-            if (typeof(moveCard)==='function')
-                moveCard(dragIndex, hoverIndex);
-            // Note: we're mutating the monitor item here!
-            // Generally it's better to avoid mutations,
-            // but it's good here for the sake of performance
+            if (typeof(moveIngredient)==="function")
+                moveIngredient(dragIndex, hoverIndex);
+            // Note: we"re mutating the monitor item here!
+            // Generally it"s better to avoid mutations,
+            // but it"s good here for the sake of performance
             // to avoid expensive index searches.
             item.index = hoverIndex
 
@@ -66,24 +66,29 @@ const BurgerConstructorElement = ({ ingredient, index, moveCard }) => {
             if (dragIndex === hoverIndex) {
               return;
             }
-            moveCard(dragIndex, hoverIndex);
+            moveIngredient(dragIndex, hoverIndex);
           },
     });
 
-    const [{ opacity }, drag] = useDrag({
-        type: 'constructor',
+    const [{ opacity, isDragging }, drag] = useDrag({
+        type: "constructor",
         item: () => {
             return { ingredient, index }
         },
         collect: (monitor) => ({
             opacity: monitor.isDragging()? 0:1,
+            isDragging: monitor.isDragging()
         }),
     });
 
     drag(drop(ref));
+    
+    //
+    useEffect(()=> typeof(setIsDragging==="function")? setIsDragging(isDragging):null,[isDragging]);
+
     return (
         <div ref={ref} onDrop={e=>e.preventDefault()} style={{ opacity: {opacity} }} className={burgerConstructorElementStyles.constructorElementContainer} data-handler-id={handlerId}>
-            <div className={`${'mr-2'}  ${burgerConstructorElementStyles.selfCenter}`}> <DragIcon /></div>
+            <div className={`${"mr-2"}  ${burgerConstructorElementStyles.selfCenter}`}> <DragIcon /></div>
             <div className={burgerConstructorElementStyles.constructorElementContainer}>
                 <ConstructorElement
                     text={ingredient.name}

@@ -1,5 +1,5 @@
 import { v4 as uuid4 } from "uuid";
-import emptybun from '../../images/emptybun.png';
+import emptybun from "../../images/emptybun.png";
 import {
     GET_CONSTRUCTOR_DATA_FAILED,
     GET_CONSTRUCTOR_DATA_REQUEST,

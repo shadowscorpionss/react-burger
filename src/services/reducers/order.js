@@ -4,13 +4,13 @@ const inititialState ={
     order: null,
     isFailed: false,
     isLoading: false,
-    errorMessage:''
+    errorMessage:""
 }
 
 export const orderReducer = (state = inititialState, action ) => {
     switch (action.type){
         case MAKE_ORDER_SUCCESS:
-            return {...state, isLoading:false, isFailed:false, errorMessage: '', order: action.order};
+            return {...state, isLoading:false, isFailed:false, errorMessage: "", order: action.order};
         case MAKE_ORDER_FAILED:
             return {...state, order:null, isLoading: false, isFailed:true, errorMessage: action.errorMessage};
         case MAKE_ORDER_REQUEST:
