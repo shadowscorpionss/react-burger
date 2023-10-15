@@ -115,7 +115,7 @@ function BurgerConstructor() {
             &nbsp;
           </span>
           <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={callMakeOrder}>Оформить заказ</Button>
-          {!isLoading && !isFailed && !!order && showModal &&
+          {showModal &&
             (<Modal title="&nbsp;" onClose={closeModal}>
 
               <OrderDetails messages={messages} />

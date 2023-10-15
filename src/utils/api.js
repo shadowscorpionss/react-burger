@@ -1,25 +1,38 @@
-export const NORMA_API='https://norma.nomoreparties.space/api';
+export const NORMA_API = 'https://norma.nomoreparties.space/api';
 
-function checkResponse(res){
-    return res.ok? res.json() : res.json().then(err=> Promise.reject(err))
+function checkResponse(res) {
+    return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
 }
 
-function fetchSomeUrl(url, fetchOptions){
-    return fetch(url, fetchOptions).then(checkResponse);
+// создаем функцию проверки на `success`
+function checkSuccess(res) {
+    if (res && res.success) {
+        return res;
+    }
+    // не забываем выкидывать ошибку, чтобы она попала в `catch`
+    return Promise.reject(`Что-то пошло не так: ${res}`);
+};
+
+export function request(endpoint, options) {
+    return fetch(`${NORMA_API}/${endpoint}`, options)
+        .then(checkResponse)
+        .then(checkSuccess);
 }
 
 export function getIngredientsRequest() {
-    return fetchSomeUrl(`${NORMA_API}/ingredients`);    
- }
-
-function postSomeUrl(url, data){
-    return fetchSomeUrl(url, {method: 'POST',
-    headers: {
-        "Content-Type": "application/json;charset=utf-8",
-    },    
-     body: JSON.stringify(data)})
+    return request('ingredients');
 }
 
-export function postOrderRequest(data){    
-    return postSomeUrl(`${NORMA_API}/orders`, {ingredients:data});
+export function postRequest(endpoint, data) {
+    return request(endpoint, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(data)
+    })
+}
+
+export function postOrderRequest(data) {
+    return postRequest('orders', { ingredients: data });
 }

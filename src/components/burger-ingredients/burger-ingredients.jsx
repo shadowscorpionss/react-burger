@@ -20,7 +20,7 @@ function BurgerIngredients() {
   //dispatch
   const dispatch = useDispatch();
   //store
-  const { ingredients, isLoading, isFailed } = useSelector(store => store.burgerIngredients);
+  const { ingredients, isLoading, isFailed, errorMessage } = useSelector(store => store.burgerIngredients);
 
   //---scrolling block start---
   //saves state current tab
@@ -33,7 +33,8 @@ function BurgerIngredients() {
   function scrollInto(type) {
     //save state
     setTab(type);
-
+    if (isFailed)
+      return;
     //scroll to 
     componentsRef
       .current[type] //element
@@ -71,12 +72,16 @@ function BurgerIngredients() {
 
   return (
     <section>
+      
       <div className={burgerIngredientsStyles.tabs}>
         {sectionProps.map((t, i) => {
           return <ScrollTab type={t.tabName} key={i}>{t.title}</ScrollTab>
         })}
       </div>
       <div className={`${burgerIngredientsStyles.ingredients} custom-scroll`} onScroll={onScroll}>
+        {isLoading && (<div className="lds-dual-ring" />)}
+        {isFailed && (errorMessage + " попробуйте перезагрузить страницу.")}
+
         {!isLoading && !isFailed && ingredients && ingredients.length ? (
           sectionProps.map((s, i) => {
             return <BurgerIngredientSection
@@ -85,7 +90,7 @@ function BurgerIngredients() {
               ingredientsRef={componentsRef}
               {...s}
             />
-          })) : ('')
+          })) : ("")
         }
       </div>
 

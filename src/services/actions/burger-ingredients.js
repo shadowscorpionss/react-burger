@@ -1,6 +1,6 @@
 
 import { getIngredientsRequest } from "../../utils/api";
-import { errorActionCreator, actionCreator } from ".";
+import { errorActionCreator, actionCreator, requestErrorActionCreator } from ".";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
@@ -17,18 +17,15 @@ export const resetCurrentIngredientAction = () => actionCreator(RESET_CURRENT_IN
 
 //ingredients load promise with dispatch
 export const getIngredients = () => (dispatch) => {
-    const dispatchError = (errorMessage) => {
-        dispatch(errorActionCreator(GET_INGREDIENTS_FAILED, errorMessage));
-    }
+    const dispatchError = (err) => 
+        dispatch(requestErrorActionCreator(GET_INGREDIENTS_FAILED, err))
+    
     dispatch(getIngredientsRequestAction());
     getIngredientsRequest().then(res => {
-        if (res && res.success) {
-            dispatch(getIngredientsSuccessAction(res.data));
-        } else {
-            const { message } = res;
-            dispatchError(message);
-        }
-    }).catch(err => dispatchError(err));
+        
+        dispatch(getIngredientsSuccessAction(res.data));
+         
+    }).catch(dispatchError);
 
     ;
 };
