@@ -4,6 +4,8 @@ import { removeConstructorIngredientAction, addConstructorIngredientAction } fro
 import { useDrag, useDrop } from "react-dnd";
 import burgerConstructorElementStyles from "./burger-constructor-element.module.css";
 import { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
 
 const BurgerConstructorElement = ({ ingredient, index, moveIngredient, setIsDragging }) => {   
     const dispatch = useDispatch();
@@ -98,6 +100,13 @@ const BurgerConstructorElement = ({ ingredient, index, moveIngredient, setIsDrag
             </div>
         </div>
     );
+}
+
+BurgerConstructorElement.propTypes = {
+    ingredient: IngredientPropType.isRequired, 
+    index: PropTypes.number.isRequired, 
+    moveIngredient: PropTypes.func.isRequired, 
+    setIsDragging: PropTypes.func
 }
 
 export default BurgerConstructorElement;
