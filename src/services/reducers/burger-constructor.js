@@ -8,7 +8,8 @@ import {
     ADD_CONSTRUCTOR_INGREDIENT,
     CLEAR_CONSTRUCTOR_DATA,
     REMOVE_CONSTRUCTOR_INGREDIENT,
-    SORT_CONSTRUCTOR_DATA
+    SORT_CONSTRUCTOR_DATA,
+    SET_CONSTRUCTOR_BUN
 } from "../actions/burger-constructor";
 
 
@@ -61,12 +62,14 @@ export const burgerConstructorReducer = (state = inititialState, action) => {
             return { ...state, ingredients: state.ingredients.filter(el => el.uniqueId !== action.uniqueId) };
 
         case ADD_CONSTRUCTOR_INGREDIENT:
+            if (action.item.type === "bun")
+                return state;
             const newItem = addUniqueId(action.item);
-
-            if (newItem.type === "bun")
-                return { ...state, bun: newItem };
-
             return { ...state, ingredients: [...state.ingredients, newItem] };
+
+        case SET_CONSTRUCTOR_BUN:
+            const {bun} =action;
+            return {...state, bun: addUniqueId(bun)};
 
         case CLEAR_CONSTRUCTOR_DATA:
             return inititialState;

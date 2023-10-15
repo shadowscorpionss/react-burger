@@ -6,7 +6,7 @@ import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCurrentIngredientAction, setCurrentIngredientAction } from "../../services/actions/burger-ingredients";
 import { useMemo } from "react";
-import { addConstructorIngredientAction } from "../../services/actions/burger-constructor";
+import { addConstructorIngredientAction, setConstructorBunAction } from "../../services/actions/burger-constructor";
 import { useDrag } from "react-dnd";
 
 function BurgerIngredient({ ingredient }) {
@@ -36,20 +36,23 @@ function BurgerIngredient({ ingredient }) {
   //event handlers
   const handleIngredientClick = (e) => {
     if (e.shiftKey) {
-      dispatch(addConstructorIngredientAction(ingredient));
+      if (ingredient.type !== "bun")
+        dispatch(addConstructorIngredientAction(ingredient));
+      else
+        dispatch(setConstructorBunAction(ingredient));
       return;
     }
     dispatch(setCurrentIngredientAction(ingredient));
   }
 
-  const handleClose = ()=> {
+  const handleClose = () => {
     dispatch(resetCurrentIngredientAction());
   }
 
   return (
 
     <li className={`${burgerIngredientStyles.ingredient} mb-8 `}>
-      <div style={{opacity:{opacity}}} ref={drag} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
+      <div style={{ opacity: { opacity } }} ref={drag} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
         {!!count && <Counter count={count} size="default" />}
         <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
         <div className={`${burgerIngredientStyles.currency} mb-1`}>

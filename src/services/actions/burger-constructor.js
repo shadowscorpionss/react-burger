@@ -1,6 +1,7 @@
 import { actionCreator, errorActionCreator } from ".";
 export const GENERATE_CONSTRUCTOR_DATA      ="GENERATE_CONSTRUCTOR_DATA";
 export const ADD_CONSTRUCTOR_INGREDIENT     ="ADD_CONSTRUCTOR_INGREDIENT";
+export const SET_CONSTRUCTOR_BUN            ="SET_CONSTRUCTOR_BUN";
 export const REMOVE_CONSTRUCTOR_INGREDIENT  ="REMOVE_CONSTRUCTOR_INGREDIENT";
 export const CLEAR_CONSTRUCTOR_DATA         ="CLEAR_CONSTRUCTOR_DATA";
 
@@ -15,3 +16,4 @@ export const generateConstructorDataAction=(data)=> ({...actionCreator(GENERATE_
 export const addConstructorIngredientAction= (item)=>({...actionCreator(ADD_CONSTRUCTOR_INGREDIENT), item});
 export const removeConstructorIngredientAction= (uniqueId)=> ({...actionCreator(REMOVE_CONSTRUCTOR_INGREDIENT), uniqueId});
 export const clearConstructorDataAction = () => actionCreator(CLEAR_CONSTRUCTOR_DATA);
+export const setConstructorBunAction =(bun)=>({...actionCreator(SET_CONSTRUCTOR_BUN), bun});

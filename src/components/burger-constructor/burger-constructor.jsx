@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useToggle } from "../../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { addConstructorIngredientAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
+import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
@@ -54,7 +54,10 @@ function BurgerConstructor() {
     accept: "ingredient",
     drop(item) {
       const dropItem = item.ingredient;
-      dispatch(addConstructorIngredientAction(dropItem));
+      if (dropItem.type!=="bun")
+        dispatch(addConstructorIngredientAction(dropItem));
+      else
+        dispatch(setConstructorBunAction(dropItem));
     },
 
   });
