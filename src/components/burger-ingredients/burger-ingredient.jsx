@@ -14,9 +14,9 @@ function BurgerIngredient({ ingredient }) {
   const dispatch = useDispatch();
   //store
   const { currentIngredient } = useSelector(store => store.burgerIngredients);
-  const { constructorData } = useSelector(store => store.burgerConstructor);
+  const { ingredients, bun } = useSelector(store => store.burgerConstructor);
 
-  const [{ opacity, isDragging }, ref] = useDrag({
+  const [{ opacity, isDragging }, drag] = useDrag({
     type: 'ingredient',
     item: { ingredient },
     collect: monitor => ({
@@ -26,9 +26,12 @@ function BurgerIngredient({ ingredient }) {
 
   //counter
   const count = useMemo(() => {
-    const g = constructorData.filter(el => el._id === ingredient._id);
+    if (ingredient.type === 'bun' && bun._id == ingredient._id) {
+      return 2;
+    }
+    const g = ingredients.filter(el => el ? el._id === ingredient._id : null);
     return g && g.length ? g.length : 0
-  }, [constructorData]);
+  }, [ingredients]);
 
   //event handlers
   function handleIngredientClick(e) {
@@ -46,14 +49,14 @@ function BurgerIngredient({ ingredient }) {
   return (
 
     <li className={`${burgerIngredientStyles.ingredient} mb-8 `}>
-      <div ref={ref} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
-        {!!count && <Counter count={count} size="default" />}        
-          <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
-          <div className={`${burgerIngredientStyles.currency} mb-1`}>
-            <p className="text text_type_digits-default ">{ingredient.price}&nbsp;</p>
-            <CurrencyIcon />
-          </div>
-          <p className="text text_type_main-small">{ingredient.name}</p>
+      <div draggable ref={drag} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
+        {!!count && <Counter count={count} size="default" />}
+        <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
+        <div className={`${burgerIngredientStyles.currency} mb-1`}>
+          <p className="text text_type_digits-default ">{ingredient.price}&nbsp;</p>
+          <CurrencyIcon />
+        </div>
+        <p className="text text_type_main-small">{ingredient.name}</p>
       </div>
       {currentIngredient &&
         (<Modal title="Детали ингредиента" onClose={handleClose}>

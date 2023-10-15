@@ -1,19 +1,23 @@
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useToggle } from "../../hooks/useToggle";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { generateConstructorDataAction, removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
+import { addConstructorIngredientAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
-import emptybun from '../../images/emptybun.png';
+
+import { useDrop } from "react-dnd";
 
 function BurgerConstructor() {
   //states and context
-  const { constructorData } = useSelector(store => store.burgerConstructor);
-  const data = useSelector(store => store.burgerIngredients.ingredients);
+  const { ingredients, bun } = useSelector(store => store.burgerConstructor);
+  //const data = useSelector(store => store.burgerIngredients.ingredients);
+
+  const lref = useRef();
+
   const { isLoading, isFailed, order, errorMessage } = useSelector(store => store.order);
   const dispatch = useDispatch();
 
@@ -21,15 +25,14 @@ function BurgerConstructor() {
   const messages = useMemo(() => isFailed ? ["Ошибка выполнения запроса", errorMessage] : ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"], [isFailed]);
 
   //structured data
-  const bun = useMemo(() => constructorData.find(el => el.type === "bun") ?? { price: 0, name: '', image: emptybun, type:"bun" }, [constructorData]);
-  const ingredients = useMemo(() => constructorData.filter(el => el.type !== "bun"), [constructorData]);
-  const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el._id), bun._id], [constructorData]);
+
+  const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id], [ingredients, bun]);
 
   //calc fields
   //-------
   //total
   const total = useMemo(() =>
-    ingredients.reduce((acc, el) => acc + el.price, 0) + (bun && bun.price ? bun.price * 2 : 0)
+    ingredients.reduce((acc, el) => el ? acc + el.price : acc, 0) + (bun && bun.price ? bun.price * 2 : 0)
     , [ingredients, bun]);
 
   //methods
@@ -38,29 +41,66 @@ function BurgerConstructor() {
     openModal();
   };
 
-  //load ingredients data on mount
-  useEffect(() => { dispatch(generateConstructorDataAction(data)) }, [data]);
+  const moveCard = (dragIndex, hoverIndex) => {
+    // Получаем перетаскиваемый ингредиент
+    const dragCard = ingredients[dragIndex];
+    const newCards = [...ingredients];
+    // Удаляем перетаскиваемый элемент из массива
+    newCards.splice(dragIndex, 1);
+    // Вставляем элемент на место того элемента, над которым мы навели мышку с "перетаскиванием"
+    // создается новый массив, в котором изменен порядок элементов
+    newCards.splice(hoverIndex, 0, dragCard);
+    dispatch(sortConstructorDataAction(newCards));
+  };
+
+
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(item) {
+      const dropItem = item.ingredient;
+      dispatch(addConstructorIngredientAction(dropItem));
+    },
+
+  });
 
   //render
+  const renderConstructorElement = useCallback((item, index) => {
+    return (
+      item && item.uniqueId && item.type ? (
+        <li ref={lref} key={item ? item.uniqueId : index} className={`${burgerConstructorStyles.listItem} `}>
+          <BurgerConstructorElement ingredient={item} index={index} moveCard={moveCard} />
+        </li>
+      ) : ''
+    )
+  }, []);
+
+
   return (
-    <section className={burgerConstructorStyles.constructor}>
+    <section className={burgerConstructorStyles.constructor} ref={dropTarget}>
       <div>
-        <div className={burgerConstructorStyles.splitter}>
-          <BurgerConstructorElement ingredient={bun} isOnTheTop={true} /> 
+        <div >         
+          <div><ConstructorElement
+            type="top"
+            isLocked={true}
+            text={bun.name ? `${bun.name} (верх)` : 'Выберете булку'}
+            price={bun.price}
+            thumbnail={bun.image}
+          /></div>
         </div>
         <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
           {ingredients && ingredients.length ?
             (
-              ingredients.map(item => (
-                <li key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>
-                  <BurgerConstructorElement ingredient={item}/>
-                </li>
-              ))
+              ingredients.map((item, index) => renderConstructorElement(item, index))
             )
             : ''}
         </ul>
-        <div className={burgerConstructorStyles.splitter}>
-          <BurgerConstructorElement ingredient={bun} isOnTheTop={false} />         
+        <div>          
+          <div><ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={bun.name ? `${bun.name} (низ)` : 'Выберете булку'}
+            price={bun.price}
+            thumbnail={bun.image} /></div>
         </div>
       </div>
       <div className={burgerConstructorStyles.currency}>

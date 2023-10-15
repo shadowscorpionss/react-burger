@@ -1,4 +1,10 @@
 .constructorElementContainer{
     width: 100%;
     justify-content: stretch;
+    display:flex;    
+    align-content: center;
+}
+
+.selfCenter{
+    align-self: center;
 }

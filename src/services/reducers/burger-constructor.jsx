@@ -1,19 +1,28 @@
 import { v4 as uuid4 } from "uuid";
+import emptybun from '../../images/emptybun.png';
 import {
     GET_CONSTRUCTOR_DATA_FAILED,
-    GET_CONSTRUCTOR_DATA_REQUEST, 
+    GET_CONSTRUCTOR_DATA_REQUEST,
     GET_CONSTRUCTOR_DATA_SUCCESS,
     GENERATE_CONSTRUCTOR_DATA,
     ADD_CONSTRUCTOR_INGREDIENT,
     CLEAR_CONSTRUCTOR_DATA,
-    REMOVE_CONSTRUCTOR_INGREDIENT
+    REMOVE_CONSTRUCTOR_INGREDIENT,
+    SORT_CONSTRUCTOR_DATA
 } from "../actions/burger-constructor";
 
 
 const inititialState = {
     isLoading: false,
     isFailed: false,
-    constructorData: [],
+    bun: {
+        _id: "",
+        price: 0,
+        name: "", 
+        image: emptybun, 
+        type: "bun"
+    },
+    ingredients: [],
 }
 
 function addUniqueId(item) {
@@ -25,11 +34,13 @@ export const burgerConstructorReducer = (state = inititialState, action) => {
         case GET_CONSTRUCTOR_DATA_REQUEST:
             return { ...state, isLoading: true };
         case GET_CONSTRUCTOR_DATA_SUCCESS:
-            return { ...state, isLoading: false, isFailed: false, ingredients: action.data.map(item => addUniqueId(item)) };
+            const mappedData = action.data.map(item => addUniqueId(item));
+            return { ...state, isLoading: false, isFailed: false, ingredients: mappedData.filter(el => el.type !== "bun"), bun: mappedData.find(el => el.type === "bun") };
         case GET_CONSTRUCTOR_DATA_FAILED:
             return { ...state, isLoading: false, isFailed: true, ingredients: [] };
+
         case GENERATE_CONSTRUCTOR_DATA:
-            const {data} = action;
+            const { data } = action;
             if (!data || !data.length)
                 return state;
             //random random elements (not bun)  
@@ -43,24 +54,29 @@ export const burgerConstructorReducer = (state = inititialState, action) => {
 
             //random bun
             const randomBun = addUniqueId(bunsArr[Math.floor(bunsArr.length * Math.random())]);
-            
-            return { ...state, constructorData: [randomBun, ...choosen, randomBun] };
+
+            return { ...state, bun: randomBun, ingredients: choosen };
 
         case REMOVE_CONSTRUCTOR_INGREDIENT:
-            return { ...state, constructorData: state.constructorData.filter(el => el.uniqueId !== action.uniqueId) };
+            return { ...state, ingredients: state.ingredients.filter(el => el.uniqueId !== action.uniqueId) };
 
         case ADD_CONSTRUCTOR_INGREDIENT:
-            const item = addUniqueId(action.item);
-            let exIngredients = state.constructorData.filter(el => el.type !== "bun");
-            let exBun = state.constructorData.find(el => el.type === "bun");
-            if (item.type === "bun") {
-                exBun = item;
-            } else {
-                exIngredients.push(item);
-            }
-            return { ...state, constructorData: [exBun, ...exIngredients, exBun] };
+            const newItem = addUniqueId(action.item);
+
+            if (newItem.type === "bun")
+                return { ...state, bun: newItem };
+
+            return { ...state, ingredients: [...state.ingredients, newItem] };
+
         case CLEAR_CONSTRUCTOR_DATA:
             return inititialState;
+
+        case SORT_CONSTRUCTOR_DATA:
+            const { ingredients } = action;
+            if (!ingredients || !ingredients.length)
+                return state;
+            return { ...state, ingredients: ingredients };
+
         default:
             return state;
 
