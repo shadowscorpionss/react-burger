@@ -5,8 +5,8 @@ function AppHeader() {
   return (
     <header>
       <nav className={appHeaderStyles.panel}>
-        <div className={appHeaderStyles.wrapper}>
-          <div>
+        <div className={appHeaderStyles.wrapper}>          
+          <div className={appHeaderStyles.col}>
             <a className={appHeaderStyles.linkBlock}>
               <BurgerIcon type="primary"/>
               <p className="pl-2 text text_type_main-default">Конструктор</p>
@@ -15,15 +15,12 @@ function AppHeader() {
               <ListIcon type="primary"/>
               <p className="pl-2 text text_type_main-default">Лента заказов</p>
             </a>
-
           </div>
-          <div></div>
-          <div>
-            <div className={appHeaderStyles.logo}><Logo/></div>
+          <div className={appHeaderStyles.colLogo}>
+            <section className={appHeaderStyles.logo}><Logo/></section>
           </div>
-          <div></div>
-          <div>
-            <a className={appHeaderStyles.linkBlock}>
+          <div className={appHeaderStyles.colRight}>
+            <a className={`${appHeaderStyles.linkBlock}`}>
               <ProfileIcon type="primary"/>
               <p className="pl-2 text text_type_main-default">Личный кабинет</p>
             </a>
