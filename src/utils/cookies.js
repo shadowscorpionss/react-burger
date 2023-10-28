@@ -1,3 +1,7 @@
+export const ACCESS_TOKEN_PATH= "accessToken";
+export const REFRESH_TOKEN_PATH="refreshToken";
+
+
 export function setCookie(name, value, options = {}) {
     
     //обязательно указываем область действия для печеньки - корень сайта
