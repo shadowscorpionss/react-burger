@@ -11,6 +11,6 @@ export const requestErrorActionCreator =(type,err)=> errorActionCreator(type, re
 
 
 export const requestErrorMessage= (err)=>{
-    const {status, message}=err;
-    return `Error. Status: ${status}. Message: ${message}`;
+    const {status, message, additional}=err;
+    return `Error. Status: ${status}. Message: ${message}. Additional info: ${additional}`;
 }
