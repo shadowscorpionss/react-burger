@@ -1,7 +1,13 @@
 export const NORMA_API = "https://norma.nomoreparties.space/api";
 
 function checkResponse(res) {
-    return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+    return res.ok ?
+        res.json() :
+        res.json().then(err => Promise.reject({
+            status: res.status,
+            additional: `${res.url} ${res.statusText}`,
+            message: err.message
+        }));
 }
 
 // создаем функцию проверки на `success`
@@ -48,33 +54,37 @@ export function getUser(token) {
 }
 
 
-function postAuthRequest(authEndpoint, data){
+function postAuthRequest(authEndpoint, data) {
     return postRequest(`auth/${authEndpoint}`, data)
-    .then(checkResponse);
+        .then(checkResponse);
 }
 
 
 export function loginRequest(email, password) {
-    return postAuthRequest("login",{email,password});
+    return postAuthRequest("login", { email, password })
+        .then(checkSuccess);
 }
 
 export function refreshTokens(token) {
-    return postAuthRequest("token", {token});
+    return postAuthRequest("token", { token });
 }
 
 
 export function registrationRequest(email, password, name) {
-    return postAuthRequest("register", {email,password,name});
+    return postAuthRequest("register", { email, password, name })
+        .then(checkSuccess);
 }
 
 
 export function passwordReset(email) {
-    return postRequest("password-reset",{email});
+    return postRequest("password-reset", { email })
+        .then(checkSuccess);
 }
 
 
 export function passwordRecovery(password, token) {
-    return postRequest("password-reset/reset",{password,token});
+    return postRequest("password-reset/reset", { password, token })
+        .then(checkSuccess);
 }
 
 
