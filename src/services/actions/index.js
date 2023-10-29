@@ -3,11 +3,11 @@ export const actionCreator =(type)=> {
     return {type: type};
 }
 
-export const errorActionCreator =(type, errorMessage) =>{
-    return {...actionCreator(type), errorMessage: errorMessage};
+export const errorActionCreator =(type, errorMessage, err) =>{
+    return {...actionCreator(type), errorMessage: errorMessage, err};
 }
 
-export const requestErrorActionCreator =(type,err)=> errorActionCreator(type, requestErrorMessage(err))
+export const requestErrorActionCreator =(type,err)=> errorActionCreator(type, requestErrorMessage(err), err)
 
 
 export const requestErrorMessage= (err)=>{

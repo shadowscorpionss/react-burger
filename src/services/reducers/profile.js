@@ -29,6 +29,19 @@ import {
 } from '../actions/profile/reset-password';
 
 
+import {
+    USER_LOGOUT_REQUEST,
+    USER_LOGOUT_SUCCESS,
+    USER_LOGOUT_FAILED
+} from '../actions/profile/user-logout';
+
+import {
+    UPDATE_USER_DATA_REQUEST,
+    UPDATE_USER_DATA_SUCCESS,
+    UPDATE_USER_DATA_FAILED
+} from '../actions/profile/change-user-data';
+
+
 const initialState = {
     user: {
         email: null,
@@ -39,10 +52,10 @@ const initialState = {
     hasError: false,
 
     //Errors?
-    errorMessage:"",
+    errorMessage: "",
 
-    hasLoginError:false,
-    loginErrorMessage:""
+    hasLoginError: false,
+    loginErrorMessage: ""
 }
 
 
@@ -128,7 +141,7 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: true,
                 hasError: false,
-                hasLoginError:false,
+                hasLoginError: false,
                 user: {
                     email: null,
                     name: null,
@@ -141,7 +154,7 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 hasError: false,
-                hasLoginError:false,
+                hasLoginError: false,
                 user: {
                     email: rest.user.email,
                     name: rest.user.name,
@@ -156,12 +169,60 @@ export const profileReducer = (state = initialState, action) => {
                 hasError: true,
                 hasLoginError: true,
                 errorMessage: rest.errorMessage,
-                loginErrorMessage:rest.errorMessage
+                loginErrorMessage: rest.errorMessage
             };
         }
 
-
-
+        case USER_LOGOUT_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+            };
+        }
+        case USER_LOGOUT_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                hasError: false,
+                user: {
+                    email: null,
+                    name: null,
+                    isLogedIn: false,
+                },
+            };
+        }
+        case USER_LOGOUT_FAILED: {
+            return {
+                ...state,
+                isLoading: false,
+                hasError: true,
+                errorMessage: rest.errorMessage
+            };
+        }
+        case UPDATE_USER_DATA_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+            };
+        }
+        case UPDATE_USER_DATA_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                hasError: false,
+                user: {
+                    email: rest.user.email,
+                    name: rest.user.name,
+                },
+            };
+        }
+        case UPDATE_USER_DATA_FAILED: {
+            return {
+                ...state,
+                isLoading: false,
+                hasError: true,
+            };
+        }
         case GET_PROFILE_DATA_REQUEST: {
             return {
                 ...state,
