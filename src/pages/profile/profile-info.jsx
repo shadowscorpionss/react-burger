@@ -9,7 +9,7 @@ import { changeUserData } from "../../services/actions/profile/change-user-data"
 const ProfileInfo = () => {
     const [isBottonsOpen, setIsBottonsOpen] = useState(false);
 
-    const user = useSelector((state) => state.auth.user)
+    const user = useSelector((state) => state.profile.user)
     const { formValues, handleInputsChange, setFormValues } = useForm({ name: user.name, email: user.email, password: "", });
 
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const ProfileInfo = () => {
             formValues.name,
             formValues.email,
             formValues.password
-        ))
+        ));
     }
 
     const changeInputs = (e) => {
