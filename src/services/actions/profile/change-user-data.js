@@ -1,6 +1,6 @@
 import { actionCreator, requestErrorActionCreator } from "..";
 import { updateUser, refreshTokens } from "../../../utils/api";
-import { REFRESH_TOKEN_PATH } from "../../../utils/cookies";
+import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, getCookie } from "../../../utils/cookies";
 
 export const UPDATE_USER_DATA_REQUEST = "UPDATE_USER_DATA_REQUEST";
 export const UPDATE_USER_DATA_SUCCESS = "UPDATE_USER_DATA_SUCCESS";
@@ -15,8 +15,8 @@ export const changeUserData = (name, email, password) => (dispatch) => {
     const dispatchError = (err) => dispatch(updateUserDataFailedActionCreator(err));
     const dispatchSuccess = (res)=> dispatch(updateUserDataSuccessActionCreator(res));
     dispatch(updateUserDataRequestActionCreator());
-
-    updateUser(name, email, password)
+    const accessToken = getCookie(ACCESS_TOKEN_PATH);
+    updateUser(name, email, password, accessToken)
         .then(dispatchSuccess)
         .catch(err => {
             if (err.message === "jwt expired") {
