@@ -11,7 +11,7 @@ export const ProtectedRoute = ({ children }) => {
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const { isLoading, hasError, user: { isLogedIn } } = useSelector(store => store.profile);
+    const { isLoading, hasError, user } = useSelector(store => store.profile);
 
     // useEffect(() => {
     //     dispatch(getProfileData())
@@ -20,7 +20,7 @@ export const ProtectedRoute = ({ children }) => {
     if (isLoading)
         return (<h1>Пожайлуста, подождите ...</h1>);
 
-    if (hasError || !isLogedIn)
+    if (hasError || !user.email)
         return (<Navigate to={LOGIN_PATH} state={{ path: location }} replace />);
 
     return children;

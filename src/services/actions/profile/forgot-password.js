@@ -16,5 +16,5 @@ export const forgotPassword = (email) => (dispatch) => {
 
     dispatch(forgotRequestActionCreator());        
     
-    passwordReset(email).then(dispatchSuccess).catch(dispatchError)
+    passwordReset(email).then(dispatchSuccess).catch(dispatchError);
 }

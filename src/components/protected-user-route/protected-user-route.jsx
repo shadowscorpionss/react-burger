@@ -11,19 +11,16 @@ export const ProtectedUserRoute = ({ children }) => {
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const { isLoading, user: { isLogedIn } } = useSelector(store => store.profile);
+    const { isLoading, user } = useSelector(store => store.profile);
 
 
-    // useEffect(() => {
-    //     dispatch(getProfileData());
-    // }, [dispatch]);
-
-
-    if (isLoading) 
+    if (isLoading)
         return (<h1>Пожайлуста, подождите ...</h1>);
-    if (isLogedIn) 
-        return (<Navigate to={location.state?.path || HOME_PATH} replace />);
 
+    if (user.email) {
+        console.log(user.email, ' redirected.. ', location.state?.path);
+        return (<Navigate to={location.state?.path || HOME_PATH} replace />);
+    }
     return children;
 }
 

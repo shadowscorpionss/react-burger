@@ -46,7 +46,6 @@ const initialState = {
     user: {
         email: null,
         name: null,
-        isLogedIn: false,
     },
     isLoading: false,
     hasError: false,
@@ -145,7 +144,6 @@ export const profileReducer = (state = initialState, action) => {
                 user: {
                     email: null,
                     name: null,
-                    isLogedIn: false,
                 },
             };
         }
@@ -158,7 +156,6 @@ export const profileReducer = (state = initialState, action) => {
                 user: {
                     email: rest.user.email,
                     name: rest.user.name,
-                    isLogedIn: true,
                 },
             };
         }
@@ -187,7 +184,6 @@ export const profileReducer = (state = initialState, action) => {
                 user: {
                     email: null,
                     name: null,
-                    isLogedIn: false,
                 },
             };
         }
@@ -209,6 +205,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
+
                 hasError: false,
                 user: {
                     email: rest.user.email,
@@ -237,7 +234,6 @@ export const profileReducer = (state = initialState, action) => {
                 user: {
                     email: rest.user.email,
                     name: rest.user.name,
-                    isLogedIn: true,
                 },
             };
         }
@@ -247,7 +243,8 @@ export const profileReducer = (state = initialState, action) => {
                 isLoading: false,
                 hasError: true,
                 user: {
-                    isLogedIn: false,
+                    email:null,
+                    name:null
                 },
                 errorMessage: rest.errorMessage
             };

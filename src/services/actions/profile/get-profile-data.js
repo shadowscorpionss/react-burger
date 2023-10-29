@@ -1,5 +1,5 @@
 import { actionCreator, requestErrorActionCreator } from "..";
-import { getUser, refreshTokens } from "../../../utils/api";
+import { getProfileDataRequest, refreshTokens } from "../../../utils/api";
 import { getCookie, setCookie, ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH } from "../../../utils/cookies";
 
 export const GET_PROFILE_DATA_REQUEST = "GET_PROFILE_DATA_REQUEST";
@@ -15,13 +15,10 @@ export const getProfileData = () => (dispatch) => {
     const dispatchError = (err) => dispatch(profileDataFailedActionCreator(err));
     dispatch(profileDataRequestActionCreator());
 
-    const accessToken = getCookie(ACCESS_TOKEN_PATH);
-    getUser(accessToken).then(res => {
+    
+    getProfileDataRequest().then(res => {
         dispatch(profileDataSuccessActionCreator(res.user));
-        const newAccessToken = res.accessToken.split("Bearer ")[1];
-        const newRefreshToken = res.refreshToken;
-        setCookie(ACCESS_TOKEN_PATH, newAccessToken);
-        localStorage.setItem(REFRESH_TOKEN_PATH, newRefreshToken);
+        
 
     }).catch(err => {
         if (err.message === "jwt expired") {

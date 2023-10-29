@@ -36,10 +36,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
-    if (!refreshToken)
-      return;
-    refreshTokens(refreshToken)
+    refreshTokens()
       .then(dispatch(getProfileData()))
       .catch(err => console.log(err));
   }
