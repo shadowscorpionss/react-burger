@@ -25,9 +25,26 @@ import ProfileInfo from "../../pages/profile/profile-info";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { useEffect } from "react";
+import { REFRESH_TOKEN_PATH } from "../../utils/cookies";
+import { useDispatch } from "react-redux";
+import { refreshTokens } from "../../utils/api";
+import { getProfileData } from "../../services/actions/profile/get-profile-data";
 
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
+    if (!refreshToken)
+      return;
+    refreshTokens(refreshToken)
+      .then(dispatch(getProfileData()))
+      .catch(err => console.log(err));
+  }
+    , [dispatch]);
+
   const location = useLocation();
   const background = location.state && location.state.background;
   return (
