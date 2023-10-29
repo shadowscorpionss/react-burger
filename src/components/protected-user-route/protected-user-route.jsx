@@ -10,12 +10,12 @@ export const ProtectedUserRoute = ({ children }) => {
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const { isLoading, user: { isLogedIn } } = useSelector(state => state.profile);
+    const { isLoading, user: { isLogedIn } } = useSelector(store => store.profile);
 
 
     useEffect(() => {
         dispatch(getProfileData())
-    }, []);
+    }, [dispatch]);
 
 
     if (isLoading) 
