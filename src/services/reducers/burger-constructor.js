@@ -28,31 +28,6 @@ const inititialState = {
 
 export const burgerConstructorReducer = (state = inititialState, action) => {
     switch (action.type) {
-        // case GET_CONSTRUCTOR_DATA_REQUEST:
-        //     return { ...state, isLoading: true };
-        // case GET_CONSTRUCTOR_DATA_SUCCESS:
-        //     const mappedData = action.data.map(item => addUniqueId(item));
-        //     return { ...state, isLoading: false, isFailed: false, ingredients: mappedData.filter(el => el.type !== "bun"), bun: mappedData.find(el => el.type === "bun") };
-        // case GET_CONSTRUCTOR_DATA_FAILED:
-        //     return { ...state, isLoading: false, isFailed: true, ingredients: [] };
-
-        // case GENERATE_CONSTRUCTOR_DATA:
-        //     const { data } = action;
-        //     if (!data || !data.length)
-        //         return state;
-        //     //random random elements (not bun)  
-        //     const randomShuffledIngredients = [...data.filter(el => el.type !== "bun")].sort(() => 0.5 - Math.random())
-        //     const minCount = 1;
-        //     const randomIngredientsLength = Math.floor((randomShuffledIngredients.length - minCount) * Math.random()) + minCount;
-        //     const choosen = randomShuffledIngredients.slice(0, randomIngredientsLength).map(el => addUniqueId(el));
-
-        //     //buns
-        //     const bunsArr = data.filter(el => el.type === "bun");
-
-        //     //random bun
-        //     const randomBun = addUniqueId(bunsArr[Math.floor(bunsArr.length * Math.random())]);
-
-        //     return { ...state, bun: randomBun, ingredients: choosen };
 
         case REMOVE_CONSTRUCTOR_INGREDIENT:
             return { ...state, ingredients: state.ingredients.filter(el => el.uniqueId !== action.uniqueId) };

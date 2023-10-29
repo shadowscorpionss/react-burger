@@ -14,8 +14,8 @@ export const userLogin = (email, password) => (dispatch) => {
     const dispatchError = (err)=> dispatch(userLoginFailedActionCreator(err));
     dispatch(userLoginRequestActionCreator());
     loginRequest(email, password).then(res => {
-        let accessToken = res.accessToken.split("Bearer ")[1];
-        let refreshToken = res.refreshToken;
+        const accessToken = res.accessToken.split("Bearer ")[1];
+        const refreshToken = res.refreshToken;
 
         setCookie(ACCESS_TOKEN_PATH, accessToken);
         localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);

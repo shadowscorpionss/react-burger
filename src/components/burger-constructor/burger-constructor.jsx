@@ -16,11 +16,11 @@ function BurgerConstructor() {
   const lref = useRef();
   const [isDragging, setIsDragging] = useState(false);
 
-  const { isLoading, isFailed, order, errorMessage } = useSelector(store => store.order);
+  
   const dispatch = useDispatch();
 
   const { isOpened: showModal, open: openModal, close: closeModal } = useToggle(false);
-  const messages = useMemo(() => isFailed ? ["Ошибка выполнения запроса", errorMessage] : ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"], [isFailed]);
+  
 
   //structured data
   const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id], [ingredients, bun]);
@@ -118,7 +118,7 @@ function BurgerConstructor() {
           {showModal &&
             (<Modal title="&nbsp;" onClose={closeModal}>
 
-              <OrderDetails messages={messages} />
+              <OrderDetails />
 
             </Modal>)}
         </div>

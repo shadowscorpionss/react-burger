@@ -87,7 +87,7 @@ export function postOrderRequest(data, accessToken) {
 }
 
 export function getUser(accessToken) {
-    return request(`/auth/user`,
+    return request("auth/user",
         addAuthorization(accessToken,
             addJsonContentType(createOptions("GET"))));
 }
@@ -124,5 +124,5 @@ export function passwordRecovery(password, token) {
 
 export function updateUser(name, email, password, accessToken) {
     const options = addData({name,email,password}, addAuthorization(accessToken ,createOptions("PATCH")));
-    return request("/auth/user",  options);
+    return request("auth/user",  options);
 }

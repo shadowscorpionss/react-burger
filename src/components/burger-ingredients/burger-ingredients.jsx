@@ -68,7 +68,7 @@ function BurgerIngredients() {
   //---scrolling block end---
 
   //load ingredients on mount
-  useEffect(() => dispatch(getIngredients()), []);
+  useEffect(() => dispatch(getIngredients()), [dispatch]);
 
   return (
     <section>

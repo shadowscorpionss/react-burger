@@ -35,7 +35,8 @@ const Modal = props => {
 
   const onOverlayClose = (e) => {
     if (e.target === e.currentTarget) {
-      onClose()
+      if (typeof (onClose)==='function')
+        onClose()
     }
   }
 
@@ -63,7 +64,7 @@ const Modal = props => {
 
 Modal.propTypes = {
   title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   children: PropTypes.node.isRequired,
 }
 

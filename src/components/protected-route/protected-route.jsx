@@ -13,9 +13,9 @@ export const ProtectedRoute = ({ children }) => {
 
     const { isLoading, hasError, user: { isLogedIn } } = useSelector(store => store.profile);
 
-    useEffect(() => {
-        dispatch(getProfileData())
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getProfileData())
+    // }, [dispatch]);
 
     if (isLoading)
         return (<h1>Пожайлуста, подождите ...</h1>);
