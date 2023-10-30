@@ -19,11 +19,7 @@ export const userRegistration = (email, password, name) => (dispatch) => {
 
     registrationRequest(email, password, name).then(res => {
 
-        let accessToken = res.accessToken.split("Bearer ")[1];
-        let refreshToken = res.refreshToken;
-
-        setCookie(ACCESS_TOKEN_PATH, accessToken)
-        localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);
+        
 
         dispatch(userRegistrationSucessActionCreator(res.user));
 

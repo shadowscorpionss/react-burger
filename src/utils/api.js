@@ -8,14 +8,16 @@ const JSON_SIMPLE_CONTENT_TYPE = "application/json";
 function checkResponse(res) {
     return res.ok ?
         res.json() :
-        res.json().then(err => Promise.reject({
-            //передаем статус (401, 403, 500 и тд)
-            status: res.status,
-            //адрес страницы с ошибкой и statusText если есть
-            additional: `${res.url} ${res.statusText}`,
-            //сообщение из json
-            message: err.message
-        }));
+        res.json().then(err =>
+            Promise.reject({
+                //передаем статус (401, 403, 500 и тд)
+                status: res.status,
+                //адрес страницы с ошибкой и statusText если есть
+                additional: `${res.url} ${res.statusText}`,
+                //сообщение из json
+                message: err.message
+            })
+        );
 }
 
 // создаем функцию проверки на `success`
@@ -24,42 +26,8 @@ function checkSuccess(res) {
         return res;
     }
     // не забываем выкидывать ошибку, чтобы она попала в `catch`
-    return Promise.reject(`Что-то пошло не так: ${res}`);
+    return Promise.reject({ message: res.message, status: 200, additional: "" });
 };
-
-
-function addAuthorization(accessToken, options) {
-    return {
-        ...options, headers: {
-            ...options.headers,
-            Authorization: "Bearer " + accessToken
-        }
-    };
-}
-
-function addJsonContentType(options) {
-    return {
-        ...options,
-        headers: {
-            ...options.headers,
-            "Content-Type": JSON_CONTENT_TYPE
-        }
-    }
-}
-
-function createOptions(method) {
-    return {
-        method: method,
-    }
-}
-
-function addData(data, options) {
-    return {
-        ...options,
-        body: JSON.stringify(data)
-    }
-}
-
 
 export function request(endpoint, options) {
     return fetch(`${NORMA_API}/${endpoint}`, options)
@@ -83,109 +51,143 @@ export function postRequest(endpoint, data, options = {}) {
     })
 }
 
-export function postOrderRequest(data, accessToken) {
-    return postRequest("orders",
-        { ingredients: data },
-        addAuthorization(accessToken));
-}
-
-function checkJwtExpired(err, refreshCallBack) {
-    if (err.message === "jwt expired") {
-        refreshTokens()
-            .then((res) => {
-                if (typeof refreshCallBack === 'function')
-                    return refreshCallBack(res);
-                return res;
-            })
-            .catch(err => Promise.reject(err));
-    } else {
-        return Promise.reject(err)
-    }
-}
-
-export function getProfileDataRequest() {
+export function postOrderRequest(data) {
+    let options = {};
     const accessToken = getCookie(ACCESS_TOKEN_PATH);
-    const options = {
-        method: "GET",
-        headers: {
-            "Content-Type": JSON_CONTENT_TYPE,
-            Authorization: `Bearer ${accessToken}`
+    if (accessToken) {
+        options = {
+            headers: {
+                Authorization: getAuthorizationString()
+            }
         }
     }
-    const cb = (res) => getProfileDataRequest();
-    return request("auth/user", options)
-        .then(res => { saveTokens(res); return res })
-        .catch(err => checkJwtExpired(err, cb));
-
+    return postRequest("orders",
+        { ingredients: data }, options);
 }
 
-
-function postAuthRequest(authEndpoint, data) {
-    return postRequest(`auth/${authEndpoint}`, data);
+function isFunction(fn) {
+    return typeof (fn) === 'function';
 }
 
+function callFnOrReturnArg(fn, arg) {
+    return isFunction(fn) ? fn(arg) : arg;
+}
 
+function getAuthorizationString() {
+    return `Bearer ${getCookie(ACCESS_TOKEN_PATH)}`;
+}
+
+//вспомогательная функция "попутного" сохранения токена
 function saveTokens(res) {
     const accessToken = res.accessToken.split("Bearer ")[1];
     const refreshToken = res.refreshToken;
 
     setCookie(ACCESS_TOKEN_PATH, accessToken);
     localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);
+    return res;
+}
+
+//вспомогательная функция "попутной" очистки сохраненных токенов
+function clearTokens(res) {
+    deleteCookie(ACCESS_TOKEN_PATH);
+    localStorage.removeItem(REFRESH_TOKEN_PATH);
+
+    return res;
+}
+
+export function getUserRequest() {
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": JSON_CONTENT_TYPE,
+            Authorization: getAuthorizationString()
+        }
+    }
+
+    return requestWithRefresh("auth/user", options)
+        .then(saveTokens);
+}
+
+
+export async function refreshTokenRequest() {
+    try {
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
+        if (!refreshToken)
+            return Promise.resolve();
+
+        const data = await request(`auth/token`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': JSON_CONTENT_TYPE
+            },
+            body: JSON.stringify({
+                token: refreshToken
+            })
+        });
+
+        setCookie(ACCESS_TOKEN_PATH, data.accessToken);
+        return data;
+    } catch (err) {
+        return Promise.reject(err);
+    }
+};
+
+
+export async function requestWithRefresh(endpoint, options) {
+    try {
+        await request(endpoint, options);
+    } catch (err) {
+        if (err.message !== "jwt expired")
+            return Promise.reject(err);
+
+        const refreshData = await refreshTokenRequest();
+        saveTokens(refreshData);
+        options.headers.Authorization = getAuthorizationString();
+
+        return await request(endpoint, options)
+    }
+}
+
+function postAuthRequest(authEndpoint, data) {
+    return postRequest(`auth/${authEndpoint}`, data);
 }
 
 export function loginRequest(email, password) {
     return postAuthRequest("login", { email, password })
-        .then(res => {
-            saveTokens(res);
-            return res;
-        });
+        .then(saveTokens);
 }
 
 export function logoutRequest() {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
     if (!refreshToken)
-        return
-    return postAuthRequest("logout", { token: refreshToken })
-        .then((res) => {
-            deleteCookie(ACCESS_TOKEN_PATH);
-            localStorage.removeItem(REFRESH_TOKEN_PATH);
-            return res;
-        });
-}
-
-export function refreshTokens() {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
-    if (!refreshToken)
         return;
-
-    return postAuthRequest("token", { token: refreshToken });
+    return postAuthRequest("logout", { token: refreshToken })
+        .then(clearTokens);
 }
 
 export function registrationRequest(email, password, name) {
-    return postAuthRequest("register", { email, password, name });
+    return postAuthRequest("register", { email, password, name })
+        .then(saveTokens);
 }
 
-export function passwordReset(email) {
+export function passwordResetRequest(email) {
     return postRequest("password-reset", { email });
 }
 
-export function passwordRecovery(password, token) {
+export function passwordRecoveryRequest(password, token) {
     return postRequest("password-reset/reset", { password, token });
 }
 
-
-
-export function updateUser(name, email, password) {
-    const accessToken = getCookie(ACCESS_TOKEN_PATH);
+export async function updateUserRequest(name, email, password) {
     const data = { name, email, password };
     const options = {
         method: "PATCH",
         body: JSON.stringify(data),
         headers: {
             "Content-Type": JSON_SIMPLE_CONTENT_TYPE,
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: getAuthorizationString(),
         }
     };
-    var cb = (res) => updateUser(name, email, password);
-    return request("auth/user", options).catch((err) => checkJwtExpired(err, cb));
+    return requestWithRefresh("auth/user", options);
+
 }

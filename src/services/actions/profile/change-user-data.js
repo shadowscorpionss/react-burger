@@ -1,5 +1,5 @@
 import { actionCreator, requestErrorActionCreator } from "..";
-import { updateUser, refreshTokens } from "../../../utils/api";
+import { updateUserRequest, refreshTokensRequest } from "../../../utils/api";
 import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, getCookie } from "../../../utils/cookies";
 
 export const UPDATE_USER_DATA_REQUEST = "UPDATE_USER_DATA_REQUEST";
@@ -16,7 +16,7 @@ export const changeUserData = (name, email, password) => (dispatch) => {
     const dispatchSuccess = (res) => dispatch(updateUserDataSuccessActionCreator(res));
     dispatch(updateUserDataRequestActionCreator());
 
-    updateUser(name, email, password)
+    updateUserRequest(name, email, password)
         .then(dispatchSuccess)
         .catch(dispatchError);
 
