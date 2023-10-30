@@ -9,13 +9,17 @@ import { changeUserData } from "../../services/actions/profile/change-user-data"
 const ProfileInfo = () => {
     const [isBottonsOpen, setIsBottonsOpen] = useState(false);
 
-    const user = useSelector((state) => state.profile.user)
-    const { formValues, handleInputsChange, setFormValues } = useForm({ name: user.name, email: user.email, password: "", });
+    const user = useSelector((state) => state.profile.user);
+    const { values, handleChange, setValues } = useForm({
+        name: user.name,
+        email: user.email,
+        password: "",
+    });
 
     const dispatch = useDispatch();
 
     const cancelInput = () => {
-        setFormValues({
+        setValues({
             name: user.name,
             email: user.email,
             password: "",
@@ -25,14 +29,14 @@ const ProfileInfo = () => {
 
     const updateInputsValue = () => {
         dispatch(changeUserData(
-            formValues.name,
-            formValues.email,
-            formValues.password
+            values.name,
+            values.email,
+            values.password
         ));
     }
 
     const changeInputs = (e) => {
-        handleInputsChange(e);
+        handleChange(e);
         setIsBottonsOpen(true)
     }
 
@@ -40,7 +44,7 @@ const ProfileInfo = () => {
         <form onSubmit={updateInputsValue} className={`${styles.inputs} ml-15`}>
             <Input
                 name="name"
-                value={formValues.name}
+                value={values.name}
                 onChange={(e) => changeInputs(e)}
                 placeholder={"Имя"}
                 extraClass="mt-6"
@@ -48,7 +52,7 @@ const ProfileInfo = () => {
             />
             <EmailInput
                 name="email"
-                value={formValues.email}
+                value={values.email}
                 onChange={(e) => changeInputs(e)}
                 placeholder={"e-mail"}
                 extraClass="mt-6"
@@ -56,7 +60,7 @@ const ProfileInfo = () => {
             />
             <PasswordInput
                 name="password"
-                value={formValues.password}
+                value={values.password}
                 onChange={(e) => changeInputs(e)}
                 placeholder={"Пароль"}
                 extraClass="mt-6"

@@ -11,23 +11,27 @@ import { LOGIN_PATH } from "../pages-paths";
 
 
 export const RegisterPage = () => {
-    const { formValues, handleInputsChange } = useForm({ name: "", email: "", password: "", });
-
+    const { values, handleChange } = useForm({
+        name: "",
+        email: "",
+        password: "",
+    });
+    
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const vals= Object.values(formValues);
+        const vals = Object.values(values);
         console.log(vals);
-        if (vals.some(el=> el===""))
+        if (vals.some(el => el === ""))
             return;
 
-        
+
         dispatch(userRegistration(
-            formValues.email,
-            formValues.password,
-            formValues.name
+            values.email,
+            values.password,
+            values.name
         ))
 
     }
@@ -37,22 +41,22 @@ export const RegisterPage = () => {
             <h1>Регистрация</h1>
             <Input
                 name="name"
-                value={formValues.name}
-                onChange={(e) => handleInputsChange(e)}
+                value={values.name}
+                onChange={(e) => handleChange(e)}
                 placeholder={"Имя"}
                 extraClass="mt-6"
             />
             <EmailInput
                 name="email"
-                value={formValues.email}
-                onChange={(e) => handleInputsChange(e)}
+                value={values.email}
+                onChange={(e) => handleChange(e)}
                 placeholder={"E-mail"}
                 extraClass="mt-6"
             />
             <PasswordInput
                 name="password"
-                value={formValues.password}
-                onChange={(e) => handleInputsChange(e)}
+                value={values.password}
+                onChange={(e) => handleChange(e)}
                 placeholder={"Пароль"}
                 extraClass="mt-6"
                 icon={"ShowIcon"}
