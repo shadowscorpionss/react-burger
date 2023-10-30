@@ -55,7 +55,7 @@ function BurgerIngredients() {
 
     const { bunTab, sauceTab } = componentsRef.current;
     const tot = [bunTab, sauceTab].reduce((acc, cur) => cur.scrollHeight + acc, 0);
-    const bsh = bunTab.scrollHeight;    
+    const bsh = bunTab.scrollHeight;
 
     if (est > tot) {
       setTab("mainTab");
@@ -72,7 +72,7 @@ function BurgerIngredients() {
 
   return (
     <section>
-      
+
       <div className={burgerIngredientsStyles.tabs}>
         {sectionProps.map((t, i) => {
           return <ScrollTab type={t.tabName} key={i}>{t.title}</ScrollTab>

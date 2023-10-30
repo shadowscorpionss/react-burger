@@ -1,5 +1,5 @@
 import AppHeader from "../app-header/app-header";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import appStyles from './app.module.css';
 import { ProtectedUserRoute } from "../protected-user-route/protected-user-route";
 import { ProtectedRoute } from "../protected-route/protected-route";
@@ -20,19 +20,33 @@ import {
   FEED_PATH,
   ProfileOrdersPage,
   ORDER_PATH,
-  PROFILE_ORDERS_PATH
+  PROFILE_ORDERS_PATH,
+  INGREDIENTS_DETAILS_PATH
+
 } from "../../pages";
 import ProfileInfo from "../../pages/profile/profile-info";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getProfileData } from "../../services/actions/profile/get-profile-data";
+import { resetCurrentIngredientActionCreator, setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
 
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleCloseIngredientDetails = useCallback(() => {
+    dispatch(resetCurrentIngredientActionCreator());
+    navigate('/');
+  }, [dispatch]);
+
+  const handleCloseOrderDetails = useCallback(() => {    
+    navigate('/');
+  }, [dispatch]);
+
 
   useEffect(() => dispatch(getProfileData()), [dispatch]);
 
@@ -41,7 +55,7 @@ function App() {
   return (
     <div className={appStyles.App}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path={HOME_PATH} element={<HomePage />} />
 
         {/*  Protected user pages  */}
@@ -50,10 +64,10 @@ function App() {
         <Route path={FORGOT_PATH} element={<ProtectedUserRoute><ForgotPasswordPage /></ProtectedUserRoute>} />
         <Route path={RESET_PATH} element={<ProtectedUserRoute><ResetPasswordPage /></ProtectedUserRoute>} />
 
-        <Route path="ingridients/:id" element={<IngredientDetails />} />
+        <Route path={INGREDIENTS_DETAILS_PATH} element={<IngredientDetails />} />
 
         <Route path={ORDER_PATH} element={<ProtectedRoute>
-          <Modal>
+          <Modal onClose={handleCloseOrderDetails}>
             <OrderDetails />
           </Modal>
         </ProtectedRoute>} />
@@ -69,11 +83,11 @@ function App() {
 
       {background &&
         <Routes>
-          <Route path={ORDER_PATH} element={<ProtectedRoute><Modal>
+          <Route path={ORDER_PATH} element={<ProtectedRoute><Modal >
             <OrderDetails />
           </Modal>
           </ProtectedRoute>} />
-          <Route path="ingridients/:id" element={<Modal title={'Детали ингридиента'}>
+          <Route path={INGREDIENTS_DETAILS_PATH} element={<Modal onClose={handleCloseIngredientDetails} title={'Детали ингредиента'}>
             <IngredientDetails />
           </Modal>}
           />

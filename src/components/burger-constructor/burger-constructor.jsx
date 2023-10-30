@@ -9,8 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
 import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router-dom";
+import { ORDER_PATH } from "../../pages";
 
 function BurgerConstructor() {
+  const navigate= useNavigate();
   //states and context
   const { ingredients, bun } = useSelector(store => store.burgerConstructor);
   const lref = useRef();
@@ -33,7 +36,8 @@ function BurgerConstructor() {
   //methods
   const callMakeOrder = () => {
     dispatch(makeOrder(ingredientsIds));
-    openModal();
+    navigate(ORDER_PATH);
+    //openModal();
   };
 
   const moveIngredient = (dragIndex, hoverIndex) => {

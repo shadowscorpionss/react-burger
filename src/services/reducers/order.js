@@ -16,7 +16,7 @@ export const orderReducer = (state = inititialState, action ) => {
         case MAKE_ORDER_FAILED:
             return {...state, order:inititialState.order, isLoading: false, isFailed:true, errorMessage: action.errorMessage};
         case MAKE_ORDER_REQUEST:
-            return {...state, isLoading: true};
+            return {...state, order: inititialState.order, isLoading: true};
         default:
             return state;
     }
