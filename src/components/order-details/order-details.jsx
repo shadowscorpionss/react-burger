@@ -23,7 +23,7 @@ function OrderDetails() {
       </div>
       <div className={orderConfirmStyles.imageTopSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.image}>
-        {!isFailed && (<img src={doneImage} />)}
+        {!isFailed && !isLoading && (<img src={doneImage} />)}
         {isLoading && (<div className='lds-dual-ring' />)}
       </div>
       <div className={orderConfirmStyles.imageBottomSpace}>&nbsp;</div>

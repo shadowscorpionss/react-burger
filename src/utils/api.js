@@ -66,7 +66,7 @@ export function postOrderRequest(data) {
 }
 
 function isFunction(fn) {
-    return typeof (fn) === 'function';
+    return typeof (fn) === "function";
 }
 
 function callFnOrReturnArg(fn, arg) {
@@ -79,11 +79,20 @@ function getAuthorizationString() {
 
 //вспомогательная функция "попутного" сохранения токена
 function saveTokens(res) {
-    const accessToken = res.accessToken.split("Bearer ")[1];
-    const refreshToken = res.refreshToken;
 
-    setCookie(ACCESS_TOKEN_PATH, accessToken);
-    localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);
+    if (!res)
+        return res;
+
+    if (res.accessToken) {
+        const accessToken = res.accessToken.split("Bearer ")[1];
+        setCookie(ACCESS_TOKEN_PATH, accessToken);
+    }
+
+    if (res.refreshToken) {
+        const refreshToken = res.refreshToken;
+        localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);
+    }
+
     return res;
 }
 
@@ -95,30 +104,31 @@ function clearTokens(res) {
     return res;
 }
 
-export function getUserRequest() {
-    const options = {
-        method: "GET",
-        headers: {
-            "Content-Type": JSON_CONTENT_TYPE,
-            Authorization: getAuthorizationString()
+export async function getUserRequest() {
+    try {
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": JSON_CONTENT_TYPE,
+                Authorization: getAuthorizationString()
+            }
         }
-    }
 
-    return requestWithRefresh("auth/user", options)
-        .then(saveTokens);
+        const response = await requestWithRefresh("auth/user", options);
+        return saveTokens(response);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 
 export async function refreshTokenRequest() {
     try {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
-        if (!refreshToken)
-            return Promise.resolve();
-
-        const data = await request(`auth/token`, {
-            method: 'POST',
+        const data = await request("auth/token", {
+            method: "POST",
             headers: {
-                'Content-Type': JSON_CONTENT_TYPE
+                "Content-Type": JSON_CONTENT_TYPE
             },
             body: JSON.stringify({
                 token: refreshToken
@@ -135,9 +145,11 @@ export async function refreshTokenRequest() {
 
 export async function requestWithRefresh(endpoint, options) {
     try {
-        await request(endpoint, options);
+        return await request(endpoint, options);
     } catch (err) {
-        if (err.message !== "jwt expired")
+        if (err.message !== "jwt expired"
+            && err.message !== "invalid signature"
+            && err.message !== "invalid token")
             return Promise.reject(err);
 
         const refreshData = await refreshTokenRequest();
