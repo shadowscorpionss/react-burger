@@ -5,7 +5,6 @@ import { EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FORGOT_PATH, REGISTER_PATH } from "../pages-paths";
 import { useForm } from "../../hooks/useForm";
