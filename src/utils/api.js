@@ -52,25 +52,17 @@ export function postRequest(endpoint, data, options = {}) {
 }
 
 export function postOrderRequest(data) {
-    let options = {};
+    let options = {
+        body: JSON.stringify({ ingredients: data }),
+        method: "POST",
+        headers: { "Content-Type": JSON_SIMPLE_CONTENT_TYPE }
+
+    };
     const accessToken = getCookie(ACCESS_TOKEN_PATH);
     if (accessToken) {
-        options = {
-            headers: {
-                Authorization: getAuthorizationString()
-            }
-        }
+        options.headers.Authorization = getAuthorizationString();
     }
-    return postRequest("orders",
-        { ingredients: data }, options);
-}
-
-function isFunction(fn) {
-    return typeof (fn) === "function";
-}
-
-function callFnOrReturnArg(fn, arg) {
-    return isFunction(fn) ? fn(arg) : arg;
+    return requestWithRefresh("orders", options);
 }
 
 function getAuthorizationString() {
