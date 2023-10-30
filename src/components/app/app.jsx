@@ -31,7 +31,7 @@ import OrderDetails from "../order-details/order-details";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getProfileData } from "../../services/actions/profile/get-profile-data";
-import { resetCurrentIngredientActionCreator, setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { getIngredients, resetCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
 
 
 function App() {
@@ -48,7 +48,10 @@ function App() {
   }, [dispatch]);
 
 
-  useEffect(() => dispatch(getProfileData()), [dispatch]);
+  useEffect(() => {
+    dispatch(getProfileData());
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   const location = useLocation();
   const background = location.state && location.state.background;

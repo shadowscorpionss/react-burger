@@ -13,13 +13,6 @@ function IngredientDetails() {
   const current = useMemo(() => ingredients.find((ingredient) => ingredient._id === id), [id, ingredients]);
 
   useEffect(() => {
-    if (!ingredients || !ingredients.length)
-      dispatch(getIngredients());
-  }
-    , [dispatch, ingredients])
-
-
-  useEffect(() => {
     if (current) {
       dispatch(setCurrentIngredientActionCreator(current))
     }
