@@ -25,7 +25,6 @@ export function LoginPage() {
         e.preventDefault();
 
         const vals = Object.values(values);
-        console.log(vals);
         if (vals.some(el => el === ""))
             return;       
 

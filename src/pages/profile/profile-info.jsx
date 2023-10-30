@@ -27,7 +27,7 @@ const ProfileInfo = () => {
         setIsBottonsOpen(false)
     }
 
-    const updateInputsValue = () => {
+    const handleSubmit = () => {
         dispatch(changeUserData(
             values.name,
             values.email,
@@ -41,7 +41,7 @@ const ProfileInfo = () => {
     }
 
     return (
-        <form onSubmit={updateInputsValue} className={`${styles.inputs} ml-15`}>
+        <form onSubmit={handleSubmit} className={`${styles.inputs} ml-15`}>
             <Input
                 name="name"
                 value={values.name}

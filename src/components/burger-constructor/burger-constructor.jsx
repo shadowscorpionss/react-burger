@@ -1,9 +1,6 @@
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useToggle } from "../../hooks/useToggle";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
 import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/order";
@@ -18,12 +15,8 @@ function BurgerConstructor() {
   const { ingredients, bun } = useSelector(store => store.burgerConstructor);
   const lref = useRef();
   const [isDragging, setIsDragging] = useState(false);
-
   
-  const dispatch = useDispatch();
-
-  const { isOpened: showModal, open: openModal, close: closeModal } = useToggle(false);
-  
+  const dispatch = useDispatch(); 
 
   //structured data
   const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id], [ingredients, bun]);
@@ -36,8 +29,7 @@ function BurgerConstructor() {
   //methods
   const callMakeOrder = () => {
     dispatch(makeOrder(ingredientsIds));
-    navigate(ORDER_PATH);
-    //openModal();
+    navigate(ORDER_PATH);    
   };
 
   const moveIngredient = (dragIndex, hoverIndex) => {
@@ -119,12 +111,6 @@ function BurgerConstructor() {
             &nbsp;
           </span>
           <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={callMakeOrder}>Оформить заказ</Button>
-          {showModal &&
-            (<Modal title="&nbsp;" onClose={closeModal}>
-
-              <OrderDetails />
-
-            </Modal>)}
         </div>
       </div>
 
