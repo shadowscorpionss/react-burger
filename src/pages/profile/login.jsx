@@ -8,38 +8,44 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FORGOT_PATH, REGISTER_PATH } from "../pages-paths";
+import { useForm } from "../../hooks/useForm";
 
 
 export function LoginPage() {
     const { loginErrorMessage, hasLoginError } = useSelector(store => store.profile);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const { values, handleChange } = useForm({
+        email: "",
+        password: "",
+    });
 
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (email === "" || password === "") {
-            return;
-        }
 
-        dispatch(userLogin(email, password));
+        const vals = Object.values(values);
+        console.log(vals);
+        if (vals.some(el => el === ""))
+            return;       
+
+        dispatch(userLogin(values.email, values.password));
     }
 
     return (
         <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
             <h1>Вход</h1>
             <EmailInput
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                name="email"                
+                value={values.email}
+                onChange={(e) => handleChange(e)}
                 placeholder={"E-mail"}
                 extraClass="mt-6"
             />
             <PasswordInput
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                name="password"
+                value={values.password}
+                onChange={(e) => handleChange(e)}
                 placeholder={"Пароль"}
                 extraClass="mt-6"
                 icon={"ShowIcon"}
