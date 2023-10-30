@@ -67,6 +67,10 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: true,
+                user: {
+                    ...state.user,
+                    passwordReset:0
+                }
             };
         }
         case FORGOT_PASSWORD_SUCCESS: {
@@ -74,6 +78,7 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 user: {
+                    ...state.user,
                     password: null,
                 },
             };
@@ -82,6 +87,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: {
+                    ...state.user,
                     password: null,
                 },
                 isLoading: false,
@@ -94,12 +100,20 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: true,
+                user: {
+                    ...state.user,
+                    passwordReset:0
+                }
             };
         }
         case RESET_PASSWORD_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
+                user:{
+                    ...state.user,
+                    passwordReset:2
+                }
             };
         }
         case RESET_PASSWORD_FAILED: {
@@ -107,6 +121,10 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 hasError: true,
+                user:{
+                    ...state.user,
+                    passwordReset:1
+                },
                 errorMessage: rest.errorMessage
             };
         }
@@ -166,7 +184,7 @@ export const profileReducer = (state = initialState, action) => {
                 hasError: true,
                 hasLoginError: true,
                 errorMessage: rest.errorMessage,
-                loginErrorMessage: rest.errorMessage
+                loginErrorMessage: rest.err.message
             };
         }
 
@@ -205,7 +223,6 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-
                 hasError: false,
                 user: {
                     email: rest.user.email,

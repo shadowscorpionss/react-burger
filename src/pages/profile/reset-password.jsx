@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 
 import { resetPassword } from "../../services/actions/profile/reset-password"
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FORGOT_PATH, LOGIN_PATH } from "../pages-paths";
+import { FORGOT_PATH, LOGIN_PATH, PROFILE_PATH } from "../pages-paths";
 
 export const ResetPasswordPage = () => {
+    const { user: { passwordReset } } = useSelector(store => store.profile);
+
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("")
 
@@ -23,9 +25,15 @@ export const ResetPasswordPage = () => {
             return;
         }
 
-        dispatch(resetPassword(password, token))
-
+        dispatch(resetPassword(password, token));
     }
+
+
+    useEffect(() => {
+        if (passwordReset === 2)
+            navigate(LOGIN_PATH, { state: { resetPassword: false } });
+        
+    }, [passwordReset]);
 
     useEffect(() => {
 
@@ -56,7 +64,7 @@ export const ResetPasswordPage = () => {
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text} >Вспомнили пароль?</p>
-                    <Link to={LOGIN_PATH} className={styles.link}>Войти</Link>
+                    <Link to={LOGIN_PATH} className={styles.link2}>Войти</Link>
                 </div>
             </div>
         </form >

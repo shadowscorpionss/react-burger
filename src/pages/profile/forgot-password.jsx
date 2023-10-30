@@ -23,8 +23,8 @@ export const ForgotPasswordPage = () => {
             return;
         }
 
-        dispatch(forgotPassword(email))
-        navigate(RESET_PATH, { state: { resetPassword: true } })
+        dispatch(forgotPassword(email));
+        navigate(RESET_PATH, { state: { resetPassword: true } });
 
     }
 
@@ -42,7 +42,7 @@ export const ForgotPasswordPage = () => {
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text} >Вспомнили пароль?</p>
-                    <Link to={LOGIN_PATH} className={styles.link}>Войти</Link>
+                    <Link to={LOGIN_PATH} className={styles.link2}>Войти</Link>
                 </div>
             </div>
         </form >

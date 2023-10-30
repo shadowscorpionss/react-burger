@@ -1,11 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileData } from '../../services/actions/profile/get-profile-data';
 import { Navigate, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types';
-
-import { useEffect } from 'react';
 import { LOGIN_PATH } from '../../pages';
-
 
 export const ProtectedRoute = ({ children }) => {
     const dispatch = useDispatch();
@@ -13,11 +9,7 @@ export const ProtectedRoute = ({ children }) => {
 
     const { isLoading, hasError, user } = useSelector(store => store.profile);
 
-    // useEffect(() => {
-    //     dispatch(getProfileData())
-    // }, [dispatch]);
-
-    if (isLoading)
+    if (isLoading && !user.email)
         return (<h1>Пожайлуста, подождите ...</h1>);
 
     if (hasError || !user.email)

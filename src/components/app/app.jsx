@@ -19,7 +19,8 @@ import {
   FeedPage,
   FEED_PATH,
   ProfileOrdersPage,
-  ORDER_PATH
+  ORDER_PATH,
+  PROFILE_ORDERS_PATH
 } from "../../pages";
 import ProfileInfo from "../../pages/profile/profile-info";
 import IngredientDetails from "../ingredient-details/ingredient-details";
@@ -59,7 +60,7 @@ function App() {
 
         <Route path={PROFILE_PATH} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}>
           <Route path={PROFILE_PATH} element={<ProfileInfo />} />
-          <Route path="/profile/orders/:id" element={<ProfileOrdersPage />} />
+          <Route path={PROFILE_ORDERS_PATH} element={<ProfileOrdersPage />} />
         </Route>
 
         <Route path={FEED_PATH} element={<FeedPage />} />

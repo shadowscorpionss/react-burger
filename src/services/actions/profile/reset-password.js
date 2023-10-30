@@ -1,8 +1,8 @@
 import { actionCreator, requestErrorActionCreator } from "..";
 import { passwordRecoveryRequest } from "../../../utils/api";
 
-export const RESET_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
-export const RESET_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
 

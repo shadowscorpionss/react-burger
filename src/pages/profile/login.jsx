@@ -52,11 +52,11 @@ export function LoginPage() {
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text} >Вы — новый пользователь?</p>
-                    <Link to={REGISTER_PATH} className={styles.link}>Зарегистрироваться</Link>
+                    <Link to={REGISTER_PATH} className={styles.link2}>Зарегистрироваться</Link>
                 </div>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text}>Забыли пароль?</p>
-                    <Link to={FORGOT_PATH} className={styles.link}>Восстановить пароль</Link>
+                    <Link to={FORGOT_PATH} className={styles.link2}>Восстановить пароль</Link>
                 </div>
             </div>
         </form >

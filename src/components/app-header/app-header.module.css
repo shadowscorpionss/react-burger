@@ -1,51 +1,53 @@
+.panel {
+    padding: 16px 0;
 
-.panel{    
-    padding: 16px 0;   
-    
     width: 100vw;
 }
 
-.wrapper{
-    display:grid;
-    grid-template-columns:  repeat(3, 1fr);
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 100vw;
     justify-content: center;
     gap: 16px;
 }
 
 
-.linkBlock{
+.linkBlock {
     padding: 16px 20px;
     border-radius: 40px;
-    display: flex;     
+    display: flex;
     align-items: center;
     justify-content: center;
-    color: #8585ad;
+    color:   white; /* #8585ad; */
     text-decoration: none;
 }
 
-.linkBlock p{
+
+.linkBlock p {
     white-space: nowrap;
 }
 
-.logo{    
+.logo {
     padding: 8px 0;
     justify-self: center;
 }
 
-.col{
+.col {
     padding-left: 10vw;
-    display: flex;
-    justify-content: center;  
-} 
-
-.colLogo{
     display: flex;
     justify-content: center;
 }
 
-.colRight{
+.colLogo {
+    display: flex;
+    justify-content: center;
+}
+
+.colRight {
     padding-right: 10vw;
     display: flex;
     justify-content: flex-end;
 }
+
+

@@ -15,9 +15,9 @@ export const ProfilePage = () => {
 
     return (
         <div>
-            <div className={`${styles.wrapper} pl-2`}>
+            <div className={`${styles.wrapperCol} pl-2`}>
                 <div className={styles.menu}>
-
+                    
                     <NavLink
                         end
                         to={PROFILE_PATH}
@@ -25,7 +25,7 @@ export const ProfilePage = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p>Профиль</p>
+                        <p className="text text_type_main-medium">Профиль</p>
                     </NavLink>
 
                     <NavLink
@@ -35,7 +35,7 @@ export const ProfilePage = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p>История заказов</p>
+                        <p className="text text_type_main-medium">История заказов</p>
                     </NavLink>
 
                     <NavLink
@@ -46,7 +46,7 @@ export const ProfilePage = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p>Выход</p>
+                        <p className="text text_type_main-medium">Выход</p>
                     </NavLink>
 
                     <p className={`${styles.text} mt-30`}>

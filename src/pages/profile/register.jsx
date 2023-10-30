@@ -61,7 +61,7 @@ export const RegisterPage = () => {
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text}>Уже зарегистрированы?</p>
-                    <Link to={LOGIN_PATH} className={styles.link}>Войти</Link>
+                    <Link to={LOGIN_PATH} className={styles.link2}>Войти</Link>
                 </div>
             </div>
         </form >

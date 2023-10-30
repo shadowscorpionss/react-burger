@@ -13,14 +13,12 @@ export const ProtectedUserRoute = ({ children }) => {
 
     const { isLoading, user } = useSelector(store => store.profile);
 
+    if (user.email)         
+        return (<Navigate to={location.state?.path || HOME_PATH} replace />);
 
     if (isLoading)
-        return (<h1>Пожайлуста, подождите ...</h1>);
-
-    if (user.email) {
-        console.log(user.email, ' redirected.. ', location.state?.path);
-        return (<Navigate to={location.state?.path || HOME_PATH} replace />);
-    }
+        return (<h1>Пожайлуста, подождите ...</h1>);    
+    
     return children;
 }
 
