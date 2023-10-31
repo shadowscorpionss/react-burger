@@ -141,6 +141,7 @@ export async function requestWithRefresh(endpoint, options) {
     } catch (err) {
         if (err.message !== "jwt expired"
             && err.message !== "invalid signature"
+            && err.message !== "jwt malformed"
             && err.message !== "invalid token")
             return Promise.reject(err);
 

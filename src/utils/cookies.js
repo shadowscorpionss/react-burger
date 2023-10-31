@@ -1,5 +1,5 @@
-export const ACCESS_TOKEN_PATH= "accessToken";
-export const REFRESH_TOKEN_PATH="refreshToken";
+export const ACCESS_TOKEN_PATH= "accessSEREJA_URSULA";
+export const REFRESH_TOKEN_PATH="refreshSEREJA_URSULA";
 
 
 export function setCookie(name, value, options = {}) {
