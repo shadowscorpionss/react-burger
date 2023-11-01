@@ -1,4 +1,4 @@
-import { actionCreator, errorActionCreator, requestErrorActionCreator } from ".";
+import { actionCreator, requestErrorActionCreator } from ".";
 import { postOrderRequest } from "../../utils/api";
 import { clearConstructorDataAction } from "./burger-constructor";
 
@@ -9,8 +9,6 @@ export const MAKE_ORDER_SUCCESS = "MAKE_ORDER_SUCCESS";
 
 export const makeOrderSuccessAction = (order) => ({ ...actionCreator(MAKE_ORDER_SUCCESS), order });
 export const makeOrderRequestAction = () => actionCreator(MAKE_ORDER_REQUEST);
-
-
 
 export const makeOrder = (ingredientsIds) => (dispatch) => {
     const dispatchError = (err) => dispatch(requestErrorActionCreator(MAKE_ORDER_FAILED, err));

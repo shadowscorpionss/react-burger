@@ -1,26 +1,23 @@
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useToggle } from "../../hooks/useToggle";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
 import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
 import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router-dom";
+import { LOGIN_PATH, ORDER_PATH } from "../../pages";
 
 function BurgerConstructor() {
+  const navigate= useNavigate();
+  const {user} = useSelector(store=> store.profile);
   //states and context
   const { ingredients, bun } = useSelector(store => store.burgerConstructor);
   const lref = useRef();
   const [isDragging, setIsDragging] = useState(false);
-
-  const { isLoading, isFailed, order, errorMessage } = useSelector(store => store.order);
-  const dispatch = useDispatch();
-
-  const { isOpened: showModal, open: openModal, close: closeModal } = useToggle(false);
-  const messages = useMemo(() => isFailed ? ["Ошибка выполнения запроса", errorMessage] : ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"], [isFailed]);
+  
+  const dispatch = useDispatch(); 
 
   //structured data
   const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id], [ingredients, bun]);
@@ -32,8 +29,12 @@ function BurgerConstructor() {
 
   //methods
   const callMakeOrder = () => {
+    if (!user.email)    {
+      navigate(LOGIN_PATH, { replace: true });
+      return;
+    }
     dispatch(makeOrder(ingredientsIds));
-    openModal();
+    navigate(ORDER_PATH);    
   };
 
   const moveIngredient = (dragIndex, hoverIndex) => {
@@ -115,12 +116,6 @@ function BurgerConstructor() {
             &nbsp;
           </span>
           <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={callMakeOrder}>Оформить заказ</Button>
-          {showModal &&
-            (<Modal title="&nbsp;" onClose={closeModal}>
-
-              <OrderDetails messages={messages} />
-
-            </Modal>)}
         </div>
       </div>
 

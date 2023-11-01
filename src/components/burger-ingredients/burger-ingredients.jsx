@@ -2,8 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef } from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../services/actions/burger-ingredients";
+import { useSelector } from "react-redux";
 import BurgerIngredientSection from "./burger-ingredients-section";
 
 //constants
@@ -17,8 +16,6 @@ const sectionProps = sections.map((s, i) => ({
 }));
 
 function BurgerIngredients() {
-  //dispatch
-  const dispatch = useDispatch();
   //store
   const { ingredients, isLoading, isFailed, errorMessage } = useSelector(store => store.burgerIngredients);
 
@@ -55,7 +52,7 @@ function BurgerIngredients() {
 
     const { bunTab, sauceTab } = componentsRef.current;
     const tot = [bunTab, sauceTab].reduce((acc, cur) => cur.scrollHeight + acc, 0);
-    const bsh = bunTab.scrollHeight;    
+    const bsh = bunTab.scrollHeight;
 
     if (est > tot) {
       setTab("mainTab");
@@ -67,12 +64,9 @@ function BurgerIngredients() {
   };
   //---scrolling block end---
 
-  //load ingredients on mount
-  useEffect(() => dispatch(getIngredients()), []);
-
   return (
     <section>
-      
+
       <div className={burgerIngredientsStyles.tabs}>
         {sectionProps.map((t, i) => {
           return <ScrollTab type={t.tabName} key={i}>{t.title}</ScrollTab>

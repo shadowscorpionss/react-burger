@@ -2,9 +2,13 @@ import orderConfirmStyles from "./order-details.module.css";
 import doneImage from "../../images/done.png";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { useMemo } from "react";
 
-function OrderDetails({ messages }) {
-  const { order, isFailed, isLoading } = useSelector(store => store.order);
+function OrderDetails() {
+  const { isLoading, isFailed, order, errorMessage } = useSelector(store => store.order);
+
+  const messages = useMemo(() => isFailed ? ["Ошибка выполнения запроса", errorMessage] : ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"], [isFailed]);
+
 
   return (
     <div className={orderConfirmStyles.orderCard}>
@@ -19,7 +23,7 @@ function OrderDetails({ messages }) {
       </div>
       <div className={orderConfirmStyles.imageTopSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.image}>
-        {!isFailed && (<img src={doneImage} />)}
+        {!isFailed && !isLoading && (<img src={doneImage} />)}
         {isLoading && (<div className='lds-dual-ring' />)}
       </div>
       <div className={orderConfirmStyles.imageBottomSpace}>&nbsp;</div>
@@ -37,9 +41,5 @@ function OrderDetails({ messages }) {
   )
 
 }
-
-OrderDetails.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default OrderDetails;
