@@ -1,21 +1,25 @@
 import burgerIngredientStyles from "./burger-ingredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { resetCurrentIngredientActionCreator, setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
-import { useMemo } from "react";
+import { setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { useMemo, FC, MouseEventHandler } from "react";
 import { addConstructorIngredientAction, setConstructorBunAction } from "../../services/actions/burger-constructor";
 import { useDrag } from "react-dnd";
 import { INGREDIENTS_PATH } from "../../pages/pages-paths";
 import { Link, useLocation } from "react-router-dom";
+import { IIngredient } from "./ingredient-interface";
+import { IBurgerConstructorStorage } from "../burger-constructor/burger-constructor-storage-interface";
 
-function BurgerIngredient({ ingredient }) {
+interface IBurgerIngredient{
+  ingredient: IIngredient;
+};
+
+export const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
   const location = useLocation();
   const dispatch = useDispatch();
+  
   //store
-  const { ingredients, bun } = useSelector(store => store.burgerConstructor);
+  const { ingredients, bun } = useSelector<any, IBurgerConstructorStorage>(store => store.burgerConstructor);
 
   const [{ opacity }, drag] = useDrag({
     type: "ingredient",
@@ -26,7 +30,7 @@ function BurgerIngredient({ ingredient }) {
   });
 
   //counter
-  const count = useMemo(() => {
+  const count = useMemo<number>(() => {
     if (ingredient.type === "bun" && bun._id == ingredient._id) {
       return 2;
     }
@@ -35,7 +39,7 @@ function BurgerIngredient({ ingredient }) {
   }, [ingredients, bun]);
 
   //event handlers
-  const handleIngredientClick = (e) => {
+  const handleIngredientClick:MouseEventHandler<HTMLDivElement> = (e) => {
     if (e.shiftKey) {
       if (ingredient.type !== "bun")
         dispatch(addConstructorIngredientAction(ingredient));
@@ -46,10 +50,6 @@ function BurgerIngredient({ ingredient }) {
     dispatch(setCurrentIngredientActionCreator(ingredient));
   }
 
-  const handleClose = () => {
-    dispatch(resetCurrentIngredientActionCreator());
-  }
-
   return (
 
     <li className={`${burgerIngredientStyles.ingredient} mb-8 `}>
@@ -58,12 +58,12 @@ function BurgerIngredient({ ingredient }) {
         state={{ background: location }}
         className={burgerIngredientStyles.container}
       >
-        <div style={{ opacity: { opacity } }} ref={drag} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
+        <div style={{ opacity: opacity }} ref={drag} onClick={handleIngredientClick} title="Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину">
           {!!count && <Counter count={count} size="default" />}
           <img src={ingredient.image} alt={ingredient.name} className="ml-4 mr-4 mb-1" />
           <div className={`${burgerIngredientStyles.currency} mb-1`}>
             <p className="text text_type_digits-default ">{ingredient.price}&nbsp;</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary" />
           </div>
           <p className="text text_type_main-small">{ingredient.name}</p>
         </div>
@@ -71,10 +71,6 @@ function BurgerIngredient({ ingredient }) {
     </li>
 
   )
-}
-
-BurgerIngredient.propTypes = {
-  ingredient: IngredientPropType.isRequired
-}
+};
 
 export default BurgerIngredient;
