@@ -12,5 +12,9 @@ interface IIngredient {
     image_large: string;
     __v: number;
   };
+  
+interface IIngredientsListObject{
+    ingredients:Array<IIngredient>;
+}
 
-export type {IIngredient};
+export type {IIngredient, IIngredientsListObject};

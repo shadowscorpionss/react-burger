@@ -1,6 +1,5 @@
-import { IIngredient } from "../burger-ingredients/ingredient-interface";
-interface IBurgerConstructorStorage {
-    ingredients: Array<IIngredient>;
+import { IIngredient, IIngredientsListObject } from "../burger-ingredients/ingredient-interface";
+interface IBurgerConstructorStorage extends IIngredientsListObject{    
     bun: IIngredient;
 }
 export type {IBurgerConstructorStorage};
