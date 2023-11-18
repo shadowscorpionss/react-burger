@@ -18,7 +18,7 @@ export const ProtectedUserRoute : FC<PropsWithChildren>  = ({ children }) => {
     if (isLoading)
         return (<h1>Пожайлуста, подождите ...</h1>);    
     
-    return children;
+    return (<>{children}</>);
 }
 
 export default ProtectedUserRoute;

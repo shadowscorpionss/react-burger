@@ -1,8 +1,8 @@
 import AppHeader from "../app-header/app-header";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import appStyles from './app.module.css';
-import { ProtectedUserRoute } from "../protected-user-route/protected-user-route";
-import { ProtectedRoute } from "../protected-route/protected-route";
+import ProtectedUserRoute from "../protected-user-route/protected-user-route";
+import ProtectedRoute  from "../protected-route/protected-route";
 import {
   FORGOT_PATH,
   ForgotPasswordPage,

@@ -4,6 +4,7 @@ interface IUser{
 
 interface IProfileStorage{
     isLoading: boolean;
+    hasError: boolean;
     user: IUser;
 }
 
