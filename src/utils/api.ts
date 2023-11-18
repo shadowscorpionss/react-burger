@@ -5,7 +5,14 @@ export const NORMA_API = "https://norma.nomoreparties.space/api";
 const JSON_CONTENT_TYPE = "application/json;charset=utf-8";
 const JSON_SIMPLE_CONTENT_TYPE = "application/json";
 
-function checkResponse(res) {
+interface successType {
+    success?: boolean
+}
+interface errorType {
+    message?: string;
+}
+
+const checkResponse = <T extends successType>(res: Response): Promise<T> => {
     return res.ok ?
         res.json() :
         res.json().then(err =>
@@ -21,26 +28,34 @@ function checkResponse(res) {
 }
 
 // создаем функцию проверки на `success`
-function checkSuccess(res) {
+const checkSuccess = async <T extends successType>(res: T): Promise<T> => {
     if (res && res.success) {
         return res;
     }
+    const errObj = {
+        message: (res as errorType)?.message,
+        status: 200,
+        additional: ""
+    };
+    console.log(errObj);
     // не забываем выкидывать ошибку, чтобы она попала в `catch`
-    return Promise.reject({ message: res.message, status: 200, additional: "" });
+    return Promise.reject(
+        errObj
+    );
 };
 
-export function request(endpoint, options) {
+export const request = async <T extends successType>(endpoint: string, options: RequestInit = {}) => {
     return fetch(`${NORMA_API}/${endpoint}`, options)
-        .then(checkResponse)
-        .then(checkSuccess);
+        .then<T>(checkResponse)
+        .then<T>(checkSuccess);
 }
 
-export function getIngredientsRequest() {
+export const getIngredientsRequest = () => {
     return request("ingredients");
 }
 
-export function postRequest(endpoint, data, options = {}) {
-    return request(endpoint, {
+export const postRequest = <T extends successType>(endpoint: string, data: any, options: RequestInit = {}) => {
+    return request<T>(endpoint, {
         ...options,
         method: "POST",
         headers: {
@@ -51,8 +66,8 @@ export function postRequest(endpoint, data, options = {}) {
     })
 }
 
-export function postOrderRequest(data) {
-    let options = {
+export const postOrderRequest = (data: string[]) => {
+    let options: RequestInit = {
         body: JSON.stringify({ ingredients: data }),
         method: "POST",
         headers: { "Content-Type": JSON_SIMPLE_CONTENT_TYPE }
@@ -60,17 +75,29 @@ export function postOrderRequest(data) {
     };
     const accessToken = getCookie(ACCESS_TOKEN_PATH);
     if (accessToken) {
-        options.headers.Authorization = getAuthorizationString();
+        options = {
+            ...options,
+            headers: {
+                ...options.headers,
+                'Authorization': getAuthorizationString(),
+            }
+        };
+
     }
     return requestWithRefresh("orders", options);
 }
 
-function getAuthorizationString() {
+const getAuthorizationString = (): string => {
     return `Bearer ${getCookie(ACCESS_TOKEN_PATH)}`;
 }
 
+interface ITokens extends successType {
+    accessToken?: string;
+    refreshToken?: string;
+}
+
 //вспомогательная функция "попутного" сохранения токена
-function saveTokens(res) {
+const saveTokens = (res: ITokens): ITokens => {
 
     if (!res)
         return res;
@@ -89,14 +116,13 @@ function saveTokens(res) {
 }
 
 //вспомогательная функция "попутной" очистки сохраненных токенов
-function clearTokens(res) {
+const clearTokens = <T>(res: T): T => {
     deleteCookie(ACCESS_TOKEN_PATH);
     localStorage.removeItem(REFRESH_TOKEN_PATH);
-
     return res;
 }
 
-export async function getUserRequest() {
+export const getUserRequest = async () => {
     try {
         const options = {
             method: "GET",
@@ -106,7 +132,7 @@ export async function getUserRequest() {
             }
         }
 
-        const response = await requestWithRefresh("auth/user", options);
+        const response = await requestWithRefresh("auth/user", options) as ITokens;
         return saveTokens(response);
     } catch (err) {
         return Promise.reject(err);
@@ -114,10 +140,10 @@ export async function getUserRequest() {
 }
 
 
-export async function refreshTokenRequest() {
+export const refreshTokenRequest = async () => {
     try {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
-        const data = await request("auth/token", {
+        const data = await request<ITokens>("auth/token", {
             method: "POST",
             headers: {
                 "Content-Type": JSON_CONTENT_TYPE
@@ -126,8 +152,9 @@ export async function refreshTokenRequest() {
                 token: refreshToken
             })
         });
+        if (data.accessToken)
+            setCookie(ACCESS_TOKEN_PATH, data.accessToken);
 
-        setCookie(ACCESS_TOKEN_PATH, data.accessToken);
         return data;
     } catch (err) {
         return Promise.reject(err);
@@ -135,10 +162,10 @@ export async function refreshTokenRequest() {
 };
 
 
-export async function requestWithRefresh(endpoint, options) {
+export const requestWithRefresh = async <T extends successType>(endpoint: string, options: ResponseInit) => {
     try {
-        return await request(endpoint, options);
-    } catch (err) {
+        return await request<T>(endpoint, options);
+    } catch (err: any) {
         if (err.message !== "jwt expired"
             && err.message !== "invalid signature"
             && err.message !== "jwt malformed"
@@ -147,22 +174,29 @@ export async function requestWithRefresh(endpoint, options) {
 
         const refreshData = await refreshTokenRequest();
         saveTokens(refreshData);
-        options.headers.Authorization = getAuthorizationString();
 
-        return await request(endpoint, options)
+        options = {
+            ...options,
+            headers: {
+                ...options.headers,
+                'Authorization': getAuthorizationString(),
+            }
+
+        };
+        return await request<T>(endpoint, options)
     }
 }
 
-function postAuthRequest(authEndpoint, data) {
-    return postRequest(`auth/${authEndpoint}`, data);
+const postAuthRequest = <T extends successType>(authEndpoint: string, data: any) => {
+    return postRequest<T>(`auth/${authEndpoint}`, data);
 }
 
-export function loginRequest(email, password) {
-    return postAuthRequest("login", { email, password })
+export const loginRequest = async (email: string, password: string) => {
+    return postAuthRequest<ITokens>('login', { email, password })
         .then(saveTokens);
 }
 
-export function logoutRequest() {
+export const logoutRequest = () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
     if (!refreshToken)
         return;
@@ -170,20 +204,20 @@ export function logoutRequest() {
         .then(clearTokens);
 }
 
-export function registrationRequest(email, password, name) {
-    return postAuthRequest("register", { email, password, name })
+export const registrationRequest = async (email: string, password: string, name: string) => {
+    return postAuthRequest<ITokens>("register", { email, password, name })
         .then(saveTokens);
 }
 
-export function passwordResetRequest(email) {
+export const passwordResetRequest = (email: string) => {
     return postRequest("password-reset", { email });
 }
 
-export function passwordRecoveryRequest(password, token) {
+export const passwordRecoveryRequest = (password: string, token: string) => {
     return postRequest("password-reset/reset", { password, token });
 }
 
-export async function updateUserRequest(name, email, password) {
+export const updateUserRequest = async (name: string, email: string, password: string) => {
     const data = { name, email, password };
     const options = {
         method: "PATCH",
