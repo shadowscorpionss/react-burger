@@ -48,7 +48,7 @@ const initialState = {
         name: null,
     },
     isLoading: false,
-    hasError: false,
+    isFailed: false,
 
     //Errors?
     errorMessage: "",
@@ -91,7 +91,7 @@ export const profileReducer = (state = initialState, action) => {
                     password: null,
                 },
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
                 errorMessage: rest.errorMessage
             };
         }
@@ -120,7 +120,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
                 user:{
                     ...state.user,
                     passwordReset:1
@@ -138,7 +138,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: false,
+                isFailed: false,
                 user: {
                     email: rest.user.email,
                     name: rest.user.name,
@@ -149,7 +149,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
             };
         }
 
@@ -157,7 +157,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: true,
-                hasError: false,
+                isFailed: false,
                 hasLoginError: false,
                 user: {
                     email: null,
@@ -169,7 +169,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: false,
+                isFailed: false,
                 hasLoginError: false,
                 user: {
                     email: rest.user.email,
@@ -181,7 +181,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
                 hasLoginError: true,
                 errorMessage: rest.errorMessage,
                 loginErrorMessage: rest.err.message
@@ -198,7 +198,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: false,
+                isFailed: false,
                 user: {
                     email: null,
                     name: null,
@@ -209,7 +209,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
                 errorMessage: rest.errorMessage
             };
         }
@@ -223,7 +223,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: false,
+                isFailed: false,
                 user: {
                     email: rest.user.email,
                     name: rest.user.name,
@@ -234,7 +234,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
             };
         }
         case GET_PROFILE_DATA_REQUEST: {
@@ -247,7 +247,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: false,
+                isFailed: false,
                 user: {
                     email: rest.user.email,
                     name: rest.user.name,
@@ -258,7 +258,7 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                hasError: true,
+                isFailed: true,
                 user: {
                     email:null,
                     name:null

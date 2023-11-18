@@ -10,12 +10,12 @@ import { IProfileStorage } from '../../types/profile-types';
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
     const location = useLocation();
 
-    const { isLoading, hasError, user } = useSelector<any, IProfileStorage>(store => store.profile);
+    const { isLoading, isFailed, user } = useSelector<any, IProfileStorage>(store => store.profile);
 
     if (isLoading && !user.email)
         return (<h1>Пожайлуста, подождите ...</h1>);
 
-    if (hasError || !user.email)
+    if (isFailed || !user.email)
         return (<Navigate to={LOGIN_PATH} state={{ path: location }} replace />);
 
     return (<>{children}</>);
