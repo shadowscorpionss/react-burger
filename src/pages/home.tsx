@@ -1,10 +1,14 @@
+//styles
+import homeStyles from "./home.module.css";
+//react, dnd
+import { FC } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+//components
 import BurgerIngredientsContainer from "../components/burger-ingredients/burger-ingredients-container";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
-import homeStyles from "./home.module.css";
 
-export function HomePage() {
+export const HomePage: FC = () => {
     return (
         <main>
             <div className={homeStyles.grid}>
