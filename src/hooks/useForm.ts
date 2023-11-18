@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-interface IAnswer {
+interface IInputValue {
   [name: string]: string;
 }
 
-export const useForm = <T extends IAnswer>(inputValues: T) => {
+export const useForm = <T extends IInputValue>(inputValues: T) => {
 
   const [values, setValues] = useState(inputValues);
 
