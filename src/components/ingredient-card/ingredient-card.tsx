@@ -1,7 +1,16 @@
-import { IngredientPropType } from "../component-prop-types/ingredients-prop-types";
+//styles
 import IngredientDetailsStyles from "./ingredient-card.module.css";
+//react
+import { FC } from "react";
 
-export const IngredientCard = ({ currentIngredient }) => {
+//types
+import { IIngredient } from "../../types/ingredient-types";
+
+interface IIngredientCard{
+    currentIngredient: IIngredient;
+}
+
+const IngredientCard:FC<IIngredientCard> = ({ currentIngredient }) => {
     return (
         <div className={IngredientDetailsStyles.ingredientCard} >
             <div className={IngredientDetailsStyles.c1}>
@@ -39,6 +48,4 @@ export const IngredientCard = ({ currentIngredient }) => {
     );
 };
 
-IngredientCard.propTypes = {
-    currentIngredient: IngredientPropType.isRequired
-}
+export default IngredientCard;

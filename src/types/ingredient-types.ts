@@ -1,3 +1,4 @@
+import { IStorage } from "./common-types";
 
 interface IIngredient {
     _id: string;
@@ -19,8 +20,9 @@ interface IIngredientsListObject {
     ingredients: Array<IIngredient>;
 }
 
-interface IIngredientsStorage extends IIngredientsListObject {
+interface IIngredientsStorage extends IIngredientsListObject, IStorage {
     currentTab: string;
+    currentIngredient: IIngredient;
 }
 
 export type { IIngredient, IIngredientsListObject, IIngredientsStorage };

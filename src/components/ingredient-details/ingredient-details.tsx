@@ -1,15 +1,19 @@
+//react, redux, router
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo } from "react";
-import { getIngredients, setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
-import { IngredientCard } from "../ingredient-card/ingredient-card";
+import { FC, useEffect, useMemo } from "react";
+//components
+import IngredientCard from "../ingredient-card/ingredient-card";
+//types
+import { IIngredientsStorage } from "../../types/ingredient-types";
+//actions
+import { setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
 
-function IngredientDetails() {
-
+const IngredientDetails:FC<{}> = ()=> {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { ingredients, isLoading, currentIngredient } = useSelector(store => store.burgerIngredients);
+  const { ingredients, isLoading, currentIngredient } = useSelector<any, IIngredientsStorage> (store => store.burgerIngredients);
   const current = useMemo(() => ingredients.find((ingredient) => ingredient._id === id), [id, ingredients]);
 
   useEffect(() => {
