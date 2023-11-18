@@ -6,11 +6,14 @@ export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
+export const SET_CURRENT_TAB = "SET_CURRENT_TAB";
 export const RESET_CURRENT_INGREDIENT = "RESET_CURRENT_INGREDIENT";
+
 
 //action creators
 export const getIngredientsSuccessActionCreator = ({ data }) => ({ ...actionCreator(GET_INGREDIENTS_SUCCESS), data });
 export const getIngredientsRequestActionCreator = () => actionCreator(GET_INGREDIENTS_REQUEST);
+export const setCurrentTabActionCreator = (tabName) => ({ ...actionCreator(SET_CURRENT_TAB), tabName });
 export const setCurrentIngredientActionCreator = (item) => ({ ...actionCreator(SET_CURRENT_INGREDIENT), item });
 export const resetCurrentIngredientActionCreator = () => actionCreator(RESET_CURRENT_INGREDIENT);
 
