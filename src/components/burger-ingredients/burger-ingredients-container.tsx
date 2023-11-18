@@ -1,15 +1,19 @@
-import React, { FC, RefObject, UIEvent, useState } from "react";
+//styles
+import styles from "./burger-ingredients-container.module.css";
+//react, redux
+import { FC, RefObject, UIEvent } from "react";
 import { useRef } from "react";
-import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import BurgerIngredientSection from "./burger-ingredients-section";
-
+//custom components
+import BurgerIngredientsSection from "./burger-ingredients-section";
 import BurgerIngredientsScrollTab from "./burger-ingredients-scroll-tab";
+//actions
 import { setCurrentTabActionCreator } from "../../services/actions/burger-ingredients";
 
 //constants
-const sections = ["bun", "sauce", "main"];
-const titles = ["Булки", "Соусы", "Начинки"];
+const sections = ["bun", "sauce", "main"] as const;
+const titles = ["Булки", "Соусы", "Начинки"] as const;
+
 const sectionProps = sections.map((s, i) => ({
   sid: s + "s",
   filter: s,
@@ -17,18 +21,15 @@ const sectionProps = sections.map((s, i) => ({
   tabName: s + "Tab"
 }));
 
-
+//types
 type TTitleToRef = {
   [name: string]: RefObject<HTMLHeadingElement>;
 };
 
-const BurgerIngredients: FC<{}> = () => {
+const BurgerIngredientsContainer: FC<{}> = () => {
   const dispatch = useDispatch();
   //store
   const { ingredients, isLoading, isFailed, errorMessage } = useSelector<any, any>(store => store.burgerIngredients);
-
-
-
 
   //using for scrolling ---NOT WORKING FUCK!
   const bunRef = useRef<HTMLHeadingElement>(null);
@@ -68,7 +69,7 @@ const BurgerIngredients: FC<{}> = () => {
   return (
     <section>
 
-      <div className={burgerIngredientsStyles.tabs}>
+      <div className={styles.tabs}>
         {sectionProps.map((t, i) => {
           return (
             <BurgerIngredientsScrollTab type={t.tabName} key={i}>
@@ -77,13 +78,13 @@ const BurgerIngredients: FC<{}> = () => {
           );
         })}
       </div>
-      <div className={`${burgerIngredientsStyles.ingredients} custom-scroll`} onScroll={onScroll}>
+      <div className={`${styles.ingredients} custom-scroll`} onScroll={onScroll}>
         {isLoading && (<div className="lds-dual-ring" />)}
         {isFailed && (errorMessage + " попробуйте перезагрузить страницу.")}
 
         {!isLoading && !isFailed && ingredients && ingredients.length ? (
           sectionProps.map((s, i) => {
-            return (<BurgerIngredientSection
+            return (<BurgerIngredientsSection
               key={i}
               elementRef={titleToRef[s.title]}
               {...s}
@@ -96,4 +97,4 @@ const BurgerIngredients: FC<{}> = () => {
   );
 };
 
-export default BurgerIngredients;
+export default BurgerIngredientsContainer;

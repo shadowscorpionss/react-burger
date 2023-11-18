@@ -2,10 +2,10 @@ import { useSelector } from "react-redux";
 import burgerIngredientsSectionStyles from "./burger-ingredients-section.module.css";
 import BurgerIngredient from "./burger-ingredient";
 import React,{ FC, RefObject, useEffect, useRef } from "react";
-import {  IIngredientsStorage } from "./ingredient-interface";
+import {  IIngredientsStorage } from "../../types/ingredient-interface";
 
 
-interface IBurgerIngredientSection {
+interface IBurgerIngredientsSection {
   filter: string;
   title: string;
   tabName: string;
@@ -13,7 +13,7 @@ interface IBurgerIngredientSection {
 }
 
 //generates section of items 
-const BurgerIngredientSection: FC<IBurgerIngredientSection> = ({ filter, title, tabName, elementRef }) => {
+const BurgerIngredientsSection: FC<IBurgerIngredientsSection> = ({ filter, title, tabName, elementRef }) => {
   const { ingredients, currentTab } = useSelector<any, IIngredientsStorage>(store => store.burgerIngredients);  
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -43,4 +43,4 @@ const BurgerIngredientSection: FC<IBurgerIngredientSection> = ({ filter, title, 
   )
 };
 
-export default BurgerIngredientSection;
+export default BurgerIngredientsSection;

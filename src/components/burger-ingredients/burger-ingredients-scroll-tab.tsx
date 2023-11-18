@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from "react";
 import { setCurrentTabActionCreator } from "../../services/actions/burger-ingredients";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IIngredientsStorage } from "./ingredient-interface";
+import { IIngredientsStorage } from "../../types/ingredient-interface";
 
 interface IBurgerIngredientsScrollTab extends PropsWithChildren {
     type: string;
