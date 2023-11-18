@@ -1,17 +1,23 @@
+//styles
 import styles from "./profile.module.css";
-import { userLogin } from "../../services/actions/profile/user-login";
-
+//react, redux
+import { useDispatch, useSelector } from "react-redux";
+import { FC, FormEventHandler } from "react";
+//components
 import { EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
+//types
+import { IProfileStorage } from "../../types/profile-types";
+//constants
 import { FORGOT_PATH, REGISTER_PATH } from "../pages-paths";
+//actions
+import { userLogin } from "../../services/actions/profile/user-login";
+//custom hook
 import { useForm } from "../../hooks/useForm";
 
-
-export function LoginPage() {
-    const { loginErrorMessage, hasLoginError } = useSelector(store => store.profile);
+export const LoginPage: FC = () => {
+    const { loginErrorMessage, hasLoginError } = useSelector<any, IProfileStorage>(store => store.profile);
 
     const { values, handleChange } = useForm({
         email: "",
@@ -20,30 +26,30 @@ export function LoginPage() {
 
     const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
         const vals = Object.values(values);
         if (vals.some(el => el === ""))
-            return;       
+            return;
 
-        dispatch(userLogin(values.email, values.password));
+        dispatch(userLogin(values.email, values.password) as any);
     }
 
     return (
         <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
             <h1>Вход</h1>
             <EmailInput
-                name="email"                
+                name="email"
                 value={values.email}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 placeholder={"E-mail"}
                 extraClass="mt-6"
             />
             <PasswordInput
                 name="password"
                 value={values.password}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 placeholder={"Пароль"}
                 extraClass="mt-6"
                 icon={"ShowIcon"}

@@ -6,6 +6,8 @@ interface IProfileStorage{
     isLoading: boolean;
     isFailed: boolean;
     user: IUser;
+    hasLoginError: boolean;
+    loginErrorMessage:string;
 }
 
 
