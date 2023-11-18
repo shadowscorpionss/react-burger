@@ -1,4 +1,5 @@
-import { IIngredient, IIngredientsListObject } from "./ingredient-interface";
+import { IIngredient, IIngredientsListObject } from "./ingredient-types";
+
 interface IBurgerConstructorStorage extends IIngredientsListObject{    
     bun: IIngredient;
 }

@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import burgerIngredientsSectionStyles from "./burger-ingredients-section.module.css";
 import BurgerIngredient from "./burger-ingredient";
 import React,{ FC, RefObject, useEffect, useRef } from "react";
-import {  IIngredientsStorage } from "../../types/ingredient-interface";
-
+import {  IIngredientsStorage } from "../../types/ingredient-types";
 
 interface IBurgerIngredientsSection {
   filter: string;

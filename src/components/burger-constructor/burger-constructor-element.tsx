@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
 //types
 import type { Identifier, XYCoord } from 'dnd-core';
-import { ITheIngredient } from "../../types/burger-constructor-storage-interface";
+import { ITheIngredient } from "../../types/constructor-types";
 import { ItemTypes } from "../../types/item-types";
 
 interface IBurgerConstructorElement {

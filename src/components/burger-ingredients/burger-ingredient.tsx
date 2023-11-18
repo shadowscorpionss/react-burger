@@ -7,14 +7,14 @@ import { addConstructorIngredientAction, setConstructorBunAction } from "../../s
 import { useDrag } from "react-dnd";
 import { INGREDIENTS_PATH } from "../../pages/pages-paths";
 import { Link, useLocation } from "react-router-dom";
-import { IIngredient } from "../../types/ingredient-interface";
-import { IBurgerConstructorStorage } from "../../types/burger-constructor-storage-interface";
+import { IIngredient } from "../../types/ingredient-types";
+import { IBurgerConstructorStorage } from "../../types/constructor-types";
 
 interface IBurgerIngredient{
   ingredient: IIngredient;
 };
 
-export const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
+const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   

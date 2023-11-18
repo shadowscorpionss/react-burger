@@ -1,13 +1,16 @@
+//react, redux, router
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom"
-import PropTypes from "prop-types";
+import { FC, PropsWithChildren } from "react";
+//constants
 import { HOME_PATH } from "../../pages";
+//types
+import { IProfileStorage } from "../../types/profile-types";
 
-
-export const ProtectedUserRoute = ({ children }) => {
+export const ProtectedUserRoute : FC<PropsWithChildren>  = ({ children }) => {
     const location = useLocation();
 
-    const { isLoading, user } = useSelector(store => store.profile);
+    const { isLoading, user } = useSelector<any,IProfileStorage>(store => store.profile);
 
     if (user.email)         
         return (<Navigate to={location.state?.path || HOME_PATH} replace />);
@@ -18,6 +21,4 @@ export const ProtectedUserRoute = ({ children }) => {
     return children;
 }
 
-ProtectedUserRoute.propTypes = {
-    children: PropTypes.node.isRequired
-};
+export default ProtectedUserRoute;
