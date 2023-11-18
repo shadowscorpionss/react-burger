@@ -1,8 +1,18 @@
-import AppHeader from "../app-header/app-header";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+//styles
 import appStyles from './app.module.css';
+//react, redux, router
+import { FC, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+//components
+import AppHeader from "../app-header/app-header";
 import ProtectedUserRoute from "../protected-user-route/protected-user-route";
 import ProtectedRoute  from "../protected-route/protected-route";
+import ProfileInfo from "../../pages/profile/profile-info";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+//constants, pages
 import {
   FORGOT_PATH,
   ForgotPasswordPage,
@@ -24,33 +34,28 @@ import {
   INGREDIENTS_DETAILS_PATH
 
 } from "../../pages";
-import ProfileInfo from "../../pages/profile/profile-info";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
-import { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+//actions
 import { getProfileData } from "../../services/actions/profile/get-profile-data";
 import { getIngredients, resetCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
 
 
-function App() {
+const App:FC = ()=> {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCloseIngredientDetails = useCallback(() => {
     dispatch(resetCurrentIngredientActionCreator());
-    navigate('/');
+    navigate(-1);
   }, [dispatch]);
 
   const handleCloseOrderDetails = useCallback(() => {    
-    navigate('/');
+    navigate(-1);
   }, [dispatch]);
 
 
   useEffect(() => {
-    dispatch(getProfileData());
-    dispatch(getIngredients())
+    dispatch(getProfileData() as any);
+    dispatch(getIngredients() as any)
   }, [dispatch]);
 
   const location = useLocation();
