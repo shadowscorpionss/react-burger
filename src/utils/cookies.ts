@@ -1,9 +1,13 @@
-export const ACCESS_TOKEN_PATH= "accessSEREJA_URSULA";
-export const REFRESH_TOKEN_PATH="refreshSEREJA_URSULA";
+export const ACCESS_TOKEN_PATH = "accessSEREJA_URSULA";//костыли =) было бы неплохо назвать по-другому
+export const REFRESH_TOKEN_PATH = "refreshSEREJA_URSULA";
 
 
-export function setCookie(name, value, options = {}) {
-    
+type TOptions = {
+    [name: string]: any;
+}
+
+export const setCookie = (name: string, value: string, options: TOptions = {}) => {
+
     //обязательно указываем область действия для печеньки - корень сайта
     //чтобы нигде не потерялась =)
     options = {
@@ -31,14 +35,14 @@ export function setCookie(name, value, options = {}) {
     document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export const getCookie = (name: string): string | undefined => {
     const matches = document.cookie.match(
         new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
+export const deleteCookie = (name: string) => {
     setCookie(name, "", {
         "max-age": -1
     })
