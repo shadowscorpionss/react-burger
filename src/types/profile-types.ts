@@ -2,6 +2,7 @@ interface IUser{
     email:string;
     name: string;
     password:string;
+    passwordReset:number;
 }
 
 interface IProfileStorage{

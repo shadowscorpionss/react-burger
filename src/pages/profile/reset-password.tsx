@@ -4,13 +4,14 @@ import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burg
 import { Link } from "react-router-dom";
 
 import { resetPassword } from "../../services/actions/profile/reset-password"
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC, FormEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FORGOT_PATH, LOGIN_PATH, PROFILE_PATH } from "../pages-paths";
+import { IProfileStorage } from "../../types/profile-types";
 
-export const ResetPasswordPage = () => {
-    const { user: { passwordReset } } = useSelector(store => store.profile);
+export const ResetPasswordPage:FC = () => {
+    const { user: { passwordReset } } = useSelector<any,IProfileStorage> (store => store.profile);
 
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("")
@@ -19,13 +20,13 @@ export const ResetPasswordPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const handleSubmit = (e) => {
+    const handleSubmit:FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         if (password === "" || token === "") {
             return;
         }
 
-        dispatch(resetPassword(password, token));
+        dispatch(resetPassword(password, token)as any);
     }
 
 
@@ -36,7 +37,6 @@ export const ResetPasswordPage = () => {
     }, [passwordReset]);
 
     useEffect(() => {
-
         if (!location.state?.resetPassword) {
             navigate(FORGOT_PATH, { state: { resetPassword: false } })
         }
