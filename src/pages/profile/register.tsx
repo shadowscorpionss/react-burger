@@ -8,31 +8,30 @@ import { Link } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { LOGIN_PATH } from "../pages-paths";
+import { FC, FormEventHandler } from "react";
 
 
-export const RegisterPage = () => {
+export const RegisterPage: FC = () => {
     const { values, handleChange } = useForm({
         name: "",
         email: "",
         password: "",
     });
-    
+
     const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
         const vals = Object.values(values);
         if (vals.some(el => el === ""))
             return;
 
-
         dispatch(userRegistration(
             values.email,
             values.password,
             values.name
-        ))
-
+        ) as any);
     }
 
     return (
@@ -41,21 +40,21 @@ export const RegisterPage = () => {
             <Input
                 name="name"
                 value={values.name}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 placeholder={"Имя"}
                 extraClass="mt-6"
             />
             <EmailInput
                 name="email"
                 value={values.email}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 placeholder={"E-mail"}
                 extraClass="mt-6"
             />
             <PasswordInput
                 name="password"
                 value={values.password}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 placeholder={"Пароль"}
                 extraClass="mt-6"
                 icon={"ShowIcon"}
