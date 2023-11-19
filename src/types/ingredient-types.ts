@@ -21,7 +21,6 @@ interface IIngredientsListObject {
 }
 
 interface IIngredientsStorage extends IIngredientsListObject, IStorage {
-    currentTab: string;
     currentIngredient: IIngredient;
 }
 
