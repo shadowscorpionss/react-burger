@@ -1,23 +1,27 @@
+//styles
 import styles from "./profile.module.css";
-
+//react, router, redux
 import { NavLink, Outlet } from "react-router-dom";
+import { FC, MouseEventHandler } from "react";
+import { useDispatch } from "react-redux";
+//constants
+import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../pages-paths";
+//actions
 import { userLogout } from "../../services/actions/profile/user-logout";
 
-import { useDispatch } from "react-redux";
-import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../pages-paths";
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = () => {
     const dispatch = useDispatch();
 
-    const logOut = (e) => {
-        dispatch(userLogout());
+    const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
+        dispatch(userLogout() as any);
     }
 
     return (
         <div>
             <div className={`${styles.wrapperCol} pl-2`}>
                 <div className={styles.menu}>
-                    
+
                     <NavLink
                         end
                         to={PROFILE_PATH}
