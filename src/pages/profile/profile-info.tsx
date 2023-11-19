@@ -1,20 +1,33 @@
+//styles
 import styles from "./profile.module.css"
-import { useForm } from "../../hooks/useForm"
-import { Input, EmailInput, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { useState } from "react";
+import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
+
+//components
+import { Input, EmailInput, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+//actions
 import { changeUserData } from "../../services/actions/profile/change-user-data";
+//types
+import { IUser } from "../../types/profile-types";
 
-const ProfileInfo = () => {
+//custom hook
+import { useForm } from "../../hooks/useForm"
+
+
+const ProfileInfo: FC = () => {
     const [isBottonsOpen, setIsBottonsOpen] = useState(false);
-
-    const user = useSelector((state) => state.profile.user);
+    const [nameEditDisabled, setNameEditDisabled] = useState(true);
+    const user = useSelector<any, IUser>((state) => state.profile.user);
     const { values, handleChange, setValues } = useForm({
         name: user.name,
         email: user.email,
         password: "",
     });
+
+    useEffect(() => {
+        cancelInput();
+    }, [user]);
+
 
     const dispatch = useDispatch();
 
@@ -24,47 +37,55 @@ const ProfileInfo = () => {
             email: user.email,
             password: "",
         })
-        setIsBottonsOpen(false)
+        setIsBottonsOpen(false);
+        setNameEditDisabled(true);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+        e.preventDefault();
+
+        if (values.email + values.name + values.password === '')
+            return;
+
         dispatch(changeUserData(
             values.name,
             values.email,
             values.password
-        ));
+        ) as any);
     }
 
-    const changeInputs = (e) => {
+    const changeInputs = (e: ChangeEvent<HTMLInputElement>) => {
         handleChange(e);
-        setIsBottonsOpen(true)
+        setIsBottonsOpen(true);
     }
 
     return (
         <form onSubmit={handleSubmit} className={`${styles.inputs} ml-15`}>
             <Input
+                disabled={nameEditDisabled}
                 name="name"
                 value={values.name}
-                onChange={(e) => changeInputs(e)}
+                onChange={changeInputs}
                 placeholder={"Имя"}
                 extraClass="mt-6"
                 icon={"EditIcon"}
+                onIconClick={e => setNameEditDisabled(!nameEditDisabled)}
             />
             <EmailInput
                 name="email"
                 value={values.email}
-                onChange={(e) => changeInputs(e)}
+                onChange={changeInputs}
                 placeholder={"e-mail"}
                 extraClass="mt-6"
-                icon={"EditIcon"}
+                isIcon={true}
             />
             <PasswordInput
                 name="password"
                 value={values.password}
-                onChange={(e) => changeInputs(e)}
+                onChange={changeInputs}
                 placeholder={"Пароль"}
                 extraClass="mt-6"
-                icon={"EditIcon"}
+                icon={"ShowIcon"}
             />
             {isBottonsOpen &&
                 <div className={`${styles.inner} mt-8`}>
