@@ -8,6 +8,7 @@ export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const RESET_CURRENT_INGREDIENT = "RESET_CURRENT_INGREDIENT";
 
+
 //action creators
 export const getIngredientsSuccessActionCreator = ({ data }) => ({ ...actionCreator(GET_INGREDIENTS_SUCCESS), data });
 export const getIngredientsRequestActionCreator = () => actionCreator(GET_INGREDIENTS_REQUEST);

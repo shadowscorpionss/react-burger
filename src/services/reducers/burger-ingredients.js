@@ -17,6 +17,7 @@ const inititialState = {
 
 export const burgerIngredientsReducer = (state = inititialState, action) => {
     switch (action.type) {
+
         case GET_INGREDIENTS_REQUEST:
             return { ...state, isLoading: true };
         case GET_INGREDIENTS_SUCCESS:
