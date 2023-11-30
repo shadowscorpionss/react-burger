@@ -1,6 +1,5 @@
 import { actionCreator, requestErrorActionCreator } from "..";
 import { loginRequest } from "../../../utils/api";
-import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, setCookie } from "../../../utils/cookies";
 
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";

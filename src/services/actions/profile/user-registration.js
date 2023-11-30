@@ -1,6 +1,5 @@
 import { actionCreator, requestErrorActionCreator } from "..";
 import { registrationRequest } from "../../../utils/api";
-import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, setCookie } from "../../../utils/cookies";
 
 export const USER_REGISTRATION_REQUEST = "USER_REGISTRATION_REQUEST";
 export const USER_REGISTRATION_SUCCESS = "USER_REGISTRATION_SUCCESS";
