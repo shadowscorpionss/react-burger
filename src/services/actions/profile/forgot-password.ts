@@ -1,4 +1,4 @@
-import { IAction, IErrorAction, IReqError, actionCreator, requestErrorActionCreator } from '..';
+import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
 import { passwordResetRequest } from '../../../utils/api';
 
 export const FORGOT_PASSWORD_REQUEST: 'FORGOT_PASSWORD_REQUEST' = 'FORGOT_PASSWORD_REQUEST';
@@ -11,12 +11,12 @@ export interface IForgotPasswordSuccessAction extends IAction<typeof FORGOT_PASS
 
 export type TForgotPasswordActions = IForgotPasswordAction | IForgotPasswordFailedAction | IForgotPasswordSuccessAction;
 
-const forgotPasswordFailedAction = (err: IReqError): IForgotPasswordFailedAction => requestErrorActionCreator(FORGOT_PASSWORD_FAILED, err);
+const forgotPasswordFailedAction = (err: IRequestError): IForgotPasswordFailedAction => requestErrorActionCreator(FORGOT_PASSWORD_FAILED, err);
 const forgotPasswordSuccessAction = (): IForgotPasswordSuccessAction => actionCreator(FORGOT_PASSWORD_SUCCESS);
 const forgotPasswordAction = (): IForgotPasswordAction => actionCreator(FORGOT_PASSWORD_REQUEST);
 
 export const forgotPassword = (email: string): any => (dispatch: any) => {
-    const dispatchError = (err: IReqError) => dispatch(forgotPasswordFailedAction(err));
+    const dispatchError = (err: IRequestError) => dispatch(forgotPasswordFailedAction(err));
     const dispatchSuccess = () => dispatch(forgotPasswordSuccessAction());
 
     dispatch(forgotPasswordAction());

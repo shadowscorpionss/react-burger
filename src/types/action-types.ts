@@ -4,27 +4,26 @@ export interface IAction <T> {
 }
 
 export interface IErrorAction <T> extends IAction<T> {
-    err: IReqError
+    err: IRequestError
 }
 
-export interface IReqError {
+export interface IRequestError {
     status:number;
     message: string;
     additional: string;
 }
 
 export const actionCreator = <T>(type:T)=> {
-    return {type: type};
+    return {type: type, };
 }
-
 
 export const errorActionCreator = <T,E>(type:T, errorMessage:string, err:E) =>{
     return {...actionCreator(type), errorMessage: errorMessage, err};
 }
 
-export const requestErrorActionCreator =<T>(type:T,err:IReqError)=> errorActionCreator(type, requestErrorMessage(err), err)
+export const requestErrorActionCreator =<T>(type:T,err:IRequestError)=> errorActionCreator(type, requestErrorMessage(err), err)
 
-export const requestErrorMessage= (err:IReqError)=>{
+export const requestErrorMessage= (err:IRequestError)=>{
     const {status, message, additional}=err;
     return `Error. Status: ${status}. Message: ${message}. Additional info: ${additional}`;
 }

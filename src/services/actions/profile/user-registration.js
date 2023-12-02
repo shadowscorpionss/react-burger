@@ -1,4 +1,4 @@
-import { actionCreator, requestErrorActionCreator } from "..";
+import { actionCreator, requestErrorActionCreator } from "../../../types/action-types";
 import { registrationRequest } from "../../../utils/api";
 
 export const USER_REGISTRATION_REQUEST = "USER_REGISTRATION_REQUEST";

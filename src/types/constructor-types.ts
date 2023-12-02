@@ -1,4 +1,3 @@
-import { TStorage } from "./common-types";
 import { IIngredient } from "./ingredient-types";
 
 type TBurgerConstructorStorage = {

@@ -1,4 +1,4 @@
-import { actionCreator, requestErrorActionCreator } from "..";
+import { actionCreator, requestErrorActionCreator } from "../../../types/action-types";
 import { passwordRecoveryRequest } from "../../../utils/api";
 
 export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";

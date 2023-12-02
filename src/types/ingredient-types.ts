@@ -1,4 +1,4 @@
-import { TStorage } from "./common-types";
+import { TStorage } from "./storage-types";
 
 interface IIngredient {
     _id: string;

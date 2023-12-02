@@ -1,4 +1,4 @@
-import { actionCreator, requestErrorActionCreator } from "..";
+import { actionCreator, requestErrorActionCreator } from "../../../types/action-types";
 import { logoutRequest } from "../../../utils/api";
 
 export const USER_LOGOUT_REQUEST = "USER_LOGOUT_REQUEST";

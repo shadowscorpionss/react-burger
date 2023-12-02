@@ -1,6 +1,6 @@
 import { IOrder, TOrder } from '../../types/order-types';
 
-import { IAction, IErrorAction, IReqError, actionCreator, errorActionCreator, requestErrorActionCreator } from '.';
+import { IAction, IErrorAction, IRequestError, actionCreator, errorActionCreator, requestErrorActionCreator } from '../../types/action-types';
 import { IResSuccess, postOrderRequest } from '../../utils/api';
 import { clearConstructorDataAction } from './burger-constructor';
 
@@ -17,7 +17,7 @@ export interface IMakeOrderSuccessAction extends IAction<typeof MAKE_ORDER_SUCCE
 export type TMakeOrderActions = IMakeOrderAction | IMakeOrderFailedAction | IMakeOrderSuccessAction;
 
 export const makeOrderAction = (): IMakeOrderAction => (actionCreator(MAKE_ORDER_REQUEST));
-export const makeOrderFailedAction = (err: IReqError): IMakeOrderFailedAction => (requestErrorActionCreator(MAKE_ORDER_FAILED, err));
+export const makeOrderFailedAction = (err: IRequestError): IMakeOrderFailedAction => (requestErrorActionCreator(MAKE_ORDER_FAILED, err));
 export const makeOrderSuccessAction = (order: TOrder) => ({ ...actionCreator(MAKE_ORDER_SUCCESS), order });
 
 interface IOrderResponse extends IOrder, IResSuccess { }

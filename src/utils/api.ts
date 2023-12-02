@@ -97,18 +97,20 @@ interface ITokens extends IResSuccess {
 }
 
 //вспомогательная функция "попутного" сохранения токена
-const saveTokens = (res: ITokens): ITokens => {
+const saveTokens = <T extends IResSuccess>(res: T): T => {
 
     if (!res)
         return res;
 
-    if (res.accessToken) {
-        const accessToken = res.accessToken.split("Bearer ")[1];
+    const tokens = res as ITokens;
+
+    if (tokens.accessToken) {
+        const accessToken = tokens.accessToken.split("Bearer ")[1];
         setCookie(ACCESS_TOKEN_PATH, accessToken);
     }
 
-    if (res.refreshToken) {
-        const refreshToken = res.refreshToken;
+    if (tokens.refreshToken) {
+        const {refreshToken} = tokens;
         localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);
     }
 
@@ -122,7 +124,7 @@ const clearTokens = <T>(res: T): T => {
     return res;
 }
 
-export const getUserRequest = async () => {
+export const getUserRequest = async <T extends IResSuccess>() => {
     try {
         const options = {
             method: "GET",
@@ -132,8 +134,8 @@ export const getUserRequest = async () => {
             }
         }
 
-        const response = await requestWithRefresh("auth/user", options) as ITokens;
-        return saveTokens(response);
+        const response = await requestWithRefresh<T>("auth/user", options);
+        return saveTokens<T>(response);
     } catch (err) {
         return Promise.reject(err);
     }

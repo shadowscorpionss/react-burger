@@ -1,6 +1,6 @@
 
 import { IResSuccess, getIngredientsRequest } from '../../utils/api';
-import { IAction, IErrorAction, IReqError, actionCreator, requestErrorActionCreator } from '.';
+import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../types/action-types';
 import { IIngredient } from '../../types/ingredient-types';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
@@ -27,7 +27,7 @@ export type TIngredientsActions = IGetIngredientsAction | IGetIngredientsFailedA
 
 //action creators
 export const getIngredientsAction = (): IGetIngredientsAction => actionCreator(GET_INGREDIENTS_REQUEST);
-export const getIngredientsFailedAction = (err: IReqError): IGetIngredientsFailedAction => requestErrorActionCreator(GET_INGREDIENTS_FAILED, err);
+export const getIngredientsFailedAction = (err: IRequestError): IGetIngredientsFailedAction => requestErrorActionCreator(GET_INGREDIENTS_FAILED, err);
 export const getIngredientsSuccessAction = (ingredients: Array<IIngredient>): IGetIngredientsSuccessAction => ({ ...actionCreator(GET_INGREDIENTS_SUCCESS), ingredients });
 export const setCurrentIngredientAction = (currentIngredient: IIngredient): ISetCurrentIngredientAction => ({ ...actionCreator(SET_CURRENT_INGREDIENT), currentIngredient });
 export const resetCurrentIngredientAction = (): IResetCurrentIngredientAction => actionCreator(RESET_CURRENT_INGREDIENT);
@@ -38,7 +38,7 @@ interface IIngredientsResponse extends IResSuccess {
 
 //ingredients load promise with dispatch
 export const getIngredientsThunk = (): any => (dispatch: any) => {
-    const dispatchError = (err: IReqError) => dispatch(getIngredientsFailedAction(err));
+    const dispatchError = (err: IRequestError) => dispatch(getIngredientsFailedAction(err));
     const dispatchSuccess = (res: IIngredientsResponse) => dispatch(getIngredientsSuccessAction(res.data));
 
     dispatch(getIngredientsAction());

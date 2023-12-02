@@ -1,4 +1,4 @@
-import { IAction, actionCreator } from '.';
+import { IAction, actionCreator } from '../../types/action-types';
 import { v4 as uuid4 } from 'uuid';
 import { IIngredient } from '../../types/ingredient-types';
 import { ITheIngredient } from '../../types/constructor-types';

@@ -1,4 +1,4 @@
-import { actionCreator, requestErrorActionCreator } from "..";
+import { actionCreator, requestErrorActionCreator } from "../../../types/action-types";
 import { loginRequest } from "../../../utils/api";
 
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";

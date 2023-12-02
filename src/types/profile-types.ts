@@ -1,6 +1,12 @@
+import { IResSuccess } from "../utils/api";
+
 type TUser = {
     email: string;
     name: string;
+}
+
+export interface IUserResponse extends IResSuccess{
+    user: TUser;
 }
 
 interface IUser extends TUser{    

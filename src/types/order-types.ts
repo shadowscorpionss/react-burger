@@ -1,4 +1,4 @@
-import { IStorage, TStorage } from "./common-types";
+import { IStorage, TStorage } from "./storage-types";
 
 type TOrder = {
     number:number | undefined;
