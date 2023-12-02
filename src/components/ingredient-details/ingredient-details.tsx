@@ -7,18 +7,18 @@ import IngredientCard from "../ingredient-card/ingredient-card";
 //types
 import { IIngredientsStorage } from "../../types/ingredient-types";
 //actions
-import { setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { setCurrentIngredientAction } from "../../services/actions/burger-ingredients";
 
-const IngredientDetails:FC<{}> = ()=> {
+const IngredientDetails: FC<{}> = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { ingredients, isLoading, currentIngredient } = useSelector<any, IIngredientsStorage> (store => store.burgerIngredients);
+  const { ingredients, isLoading, currentIngredient } = useSelector<any, IIngredientsStorage>(store => store.burgerIngredients);
   const current = useMemo(() => ingredients.find((ingredient) => ingredient._id === id), [id, ingredients]);
 
   useEffect(() => {
     if (current) {
-      dispatch(setCurrentIngredientActionCreator(current))
+      dispatch(setCurrentIngredientAction(current))
     }
   }, [dispatch, current]);
 

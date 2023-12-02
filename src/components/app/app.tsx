@@ -7,7 +7,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 //components
 import AppHeader from "../app-header/app-header";
 import ProtectedUserRoute from "../protected-user-route/protected-user-route";
-import ProtectedRoute  from "../protected-route/protected-route";
+import ProtectedRoute from "../protected-route/protected-route";
 import ProfileInfo from "../../pages/profile/profile-info";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -36,26 +36,26 @@ import {
 } from "../../pages";
 //actions
 import { getProfileData } from "../../services/actions/profile/get-profile-data";
-import { getIngredients, resetCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
 
 
-const App:FC = ()=> {
+const App: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCloseIngredientDetails = useCallback(() => {
-    dispatch(resetCurrentIngredientActionCreator());
+    dispatch(resetCurrentIngredientAction());
     navigate(-1);
   }, [dispatch]);
 
-  const handleCloseOrderDetails = useCallback(() => {    
+  const handleCloseOrderDetails = useCallback(() => {
     navigate(-1);
   }, [dispatch]);
 
 
   useEffect(() => {
     dispatch(getProfileData() as any);
-    dispatch(getIngredients() as any)
+    dispatch(getIngredientsThunk() as any)
   }, [dispatch]);
 
   const location = useLocation();

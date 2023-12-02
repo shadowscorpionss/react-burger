@@ -15,13 +15,9 @@ interface IIngredient {
     __v: number;
 };
 
-
-interface IIngredientsListObject {
+interface IIngredientsStorage extends IStorage {
     ingredients: Array<IIngredient>;
-}
-
-interface IIngredientsStorage extends IIngredientsListObject, IStorage {
     currentIngredient: IIngredient;
 }
 
-export type { IIngredient, IIngredientsListObject, IIngredientsStorage };
+export type { IIngredient, IIngredientsStorage };

@@ -1,5 +1,5 @@
 import { IStorage } from "./common-types";
-import { IIngredient, IIngredientsListObject } from "./ingredient-types";
+import { IIngredient } from "./ingredient-types";
 
 interface IBurgerConstructorStorage extends IStorage {    
     bun: ITheIngredient;

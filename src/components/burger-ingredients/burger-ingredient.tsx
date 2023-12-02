@@ -1,7 +1,7 @@
 import burgerIngredientStyles from "./burger-ingredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { setCurrentIngredientAction } from "../../services/actions/burger-ingredients";
 import { useMemo, FC, MouseEventHandler } from "react";
 import { addConstructorIngredientAction, setConstructorBunAction } from "../../services/actions/burger-constructor";
 import { useDrag } from "react-dnd";
@@ -47,7 +47,7 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
         dispatch(setConstructorBunAction(ingredient));
       return;
     }
-    dispatch(setCurrentIngredientActionCreator(ingredient));
+    dispatch(setCurrentIngredientAction(ingredient));
   }
 
   return (

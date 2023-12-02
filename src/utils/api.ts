@@ -50,8 +50,8 @@ export const request = async <T extends IResSuccess>(endpoint: string, options: 
         .then<T>(checkSuccess);
 }
 
-export const getIngredientsRequest = () => {
-    return request("ingredients");
+export const getIngredientsRequest = <T extends IResSuccess>() => {
+    return request<T>("ingredients");
 }
 
 export const postRequest = <T extends IResSuccess>(endpoint: string, data: any, options: RequestInit = {}) => {
