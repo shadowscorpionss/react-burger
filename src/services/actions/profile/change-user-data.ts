@@ -12,6 +12,8 @@ export interface IUpdateUserDataSuccessAction extends IAction<typeof UPDATE_USER
     user: TUser;
 }
 
+export type TUpdateUserDataActions = IUpdateUserDataAction | IUpdateUserDataFailedAction | IUpdateUserDataSuccessAction;
+
 const updateUserDataRequestAction = (): IUpdateUserDataAction => actionCreator(UPDATE_USER_DATA_REQUEST);
 const updateUserDataFailedAction = (err: IReqError): IUpdateUserDataFailedAction => requestErrorActionCreator(UPDATE_USER_DATA_FAILED, err);
 const updateUserDataSuccessAction = (user: TUser): IUpdateUserDataSuccessAction => ({ ...actionCreator(UPDATE_USER_DATA_SUCCESS), user });
