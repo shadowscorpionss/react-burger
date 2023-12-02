@@ -35,7 +35,7 @@ import {
 
 } from "../../pages";
 //actions
-import { getProfileData } from "../../services/actions/profile/get-profile-data";
+import { getProfileDataThunk } from "../../services/actions/profile/get-profile-data";
 import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
 
 
@@ -54,7 +54,7 @@ const App: FC = () => {
 
 
   useEffect(() => {
-    dispatch(getProfileData() as any);
+    dispatch(getProfileDataThunk() as any);
     dispatch(getIngredientsThunk() as any)
   }, [dispatch]);
 

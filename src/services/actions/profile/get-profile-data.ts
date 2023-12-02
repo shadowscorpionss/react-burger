@@ -22,7 +22,7 @@ const getProfileDataSuccessAction = (user: TUser): IGetProfileDataSuccessAction 
 const getProfileDataFailedAction = (err: IRequestError): IGetPfofileDataFailedAction => requestErrorActionCreator(GET_PROFILE_DATA_FAILED, err);
 
 
-export const getProfileData = (): any => (dispatch: any) => {
+export const getProfileDataThunk = (): any => (dispatch: any) => {
     const dispatchError = (err: IRequestError) => dispatch(getProfileDataFailedAction(err));
     const dispatchSuccess = (res: IUserResponse) => dispatch(getProfileDataSuccessAction(res.user));
     dispatch(getProfileDataAction());

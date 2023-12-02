@@ -3,7 +3,7 @@ import styles from "./profile.module.css";
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
-import { resetPassword } from "../../services/actions/profile/reset-password"
+import { resetPasswordThunk } from "../../services/actions/profile/reset-password"
 import { useState, useEffect, FC, FormEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -26,7 +26,7 @@ export const ResetPasswordPage:FC = () => {
             return;
         }
 
-        dispatch(resetPassword(password, token)as any);
+        dispatch(resetPasswordThunk(password, token)as any);
     }
 
 

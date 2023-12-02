@@ -15,7 +15,7 @@ const forgotPasswordFailedAction = (err: IRequestError): IForgotPasswordFailedAc
 const forgotPasswordSuccessAction = (): IForgotPasswordSuccessAction => actionCreator(FORGOT_PASSWORD_SUCCESS);
 const forgotPasswordAction = (): IForgotPasswordAction => actionCreator(FORGOT_PASSWORD_REQUEST);
 
-export const forgotPassword = (email: string): any => (dispatch: any) => {
+export const forgotPasswordThunk = (email: string): any => (dispatch: any) => {
     const dispatchError = (err: IRequestError) => dispatch(forgotPasswordFailedAction(err));
     const dispatchSuccess = () => dispatch(forgotPasswordSuccessAction());
 

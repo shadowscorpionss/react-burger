@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 //constans
 import { LOGIN_PATH, RESET_PATH } from "../pages-paths";
 //actions
-import { forgotPassword } from "../../services/actions/profile/forgot-password";
+import { forgotPasswordThunk } from "../../services/actions/profile/forgot-password";
 //custom hook
 import { useForm } from "../../hooks/useForm";
 
@@ -29,7 +29,7 @@ export const ForgotPasswordPage: FC = () => {
             return;
         }
 
-        dispatch(forgotPassword(values.email) as any);
+        dispatch(forgotPasswordThunk(values.email) as any);
         navigate(RESET_PATH, { state: { resetPassword: true } });
 
     }
