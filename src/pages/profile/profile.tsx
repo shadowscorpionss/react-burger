@@ -7,14 +7,14 @@ import { useDispatch } from "react-redux";
 //constants
 import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../pages-paths";
 //actions
-import { userLogout } from "../../services/actions/profile/user-logout";
+import { userLogoutThunk } from "../../services/actions/profile/user-logout";
 
 
 export const ProfilePage: FC = () => {
     const dispatch = useDispatch();
 
     const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        dispatch(userLogout() as any);
+        dispatch(userLogoutThunk() as any);
     }
 
     return (

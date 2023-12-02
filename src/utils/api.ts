@@ -198,7 +198,7 @@ export const loginRequest = async <T extends IResSuccess> (email: string, passwo
         .then(saveTokens);
 }
 
-export const logoutRequest = () => {
+export const logoutRequest = async ()=> {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
     if (!refreshToken)
         return;

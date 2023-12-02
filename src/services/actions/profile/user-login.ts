@@ -16,7 +16,7 @@ const userLoginAction = (): IUserLoginAction => actionCreator(USER_LOGIN_REQUEST
 const userLoginFailedAction = (err: IRequestError): IUserLoginFailedAction => requestErrorActionCreator(USER_LOGIN_FAILED, err);
 const userLoginSuccessAction = (user: TUser): IUserLoginSuccesAction => ({ ...actionCreator(USER_LOGIN_SUCCESS), user });
 
-export const userLogin = (email: string, password: string): any => (dispatch: any) => {
+export const userLoginThunk = (email: string, password: string): any => (dispatch: any) => {
     const dispatchError = (err: IRequestError) => dispatch(userLoginFailedAction(err));
     const dispatchSuccess = (res: IUserResponse) => dispatch(userLoginSuccessAction(res.user));
     dispatch(userLoginAction());

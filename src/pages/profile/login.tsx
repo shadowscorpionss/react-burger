@@ -12,7 +12,7 @@ import { IProfileStorage } from "../../types/profile-types";
 //constants
 import { FORGOT_PATH, REGISTER_PATH } from "../pages-paths";
 //actions
-import { userLogin } from "../../services/actions/profile/user-login";
+import { userLoginThunk } from "../../services/actions/profile/user-login";
 //custom hook
 import { useForm } from "../../hooks/useForm";
 
@@ -33,7 +33,7 @@ export const LoginPage: FC = () => {
         if (vals.some(el => el === ""))
             return;
 
-        dispatch(userLogin(values.email, values.password) as any);
+        dispatch(userLoginThunk(values.email, values.password) as any);
     }
 
     return (
