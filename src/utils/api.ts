@@ -217,7 +217,7 @@ export const passwordRecoveryRequest = (password: string, token: string) => {
     return postRequest("password-reset/reset", { password, token });
 }
 
-export const updateUserRequest = async (name: string, email: string, password: string) => {
+export const updateUserRequest = async <T extends IResSuccess>(name: string, email: string, password: string) => {
     const data = { name, email, password };
     const options = {
         method: "PATCH",
@@ -227,6 +227,6 @@ export const updateUserRequest = async (name: string, email: string, password: s
             Authorization: getAuthorizationString(),
         }
     };
-    return requestWithRefresh("auth/user", options);
+    return requestWithRefresh<T>("auth/user", options);
 
 }

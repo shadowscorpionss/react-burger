@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 //components
 import { Input, EmailInput, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 //actions
-import { changeUserData } from "../../services/actions/profile/change-user-data";
+import { changeUserDataThunk } from "../../services/actions/profile/change-user-data";
 //types
 import { IUser } from "../../types/profile-types";
 
@@ -47,7 +47,7 @@ const ProfileInfo: FC = () => {
         if (values.email + values.name + values.password === '')
             return;
 
-        dispatch(changeUserData(
+        dispatch(changeUserDataThunk(
             values.name,
             values.email,
             values.password

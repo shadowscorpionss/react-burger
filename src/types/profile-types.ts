@@ -1,6 +1,9 @@
-interface IUser{
-    email:string;
+type TUser = {
+    email: string;
     name: string;
+}
+
+interface IUser extends TUser{    
     password:string;
     passwordReset:number;
 }
@@ -14,4 +17,4 @@ interface IProfileStorage{
 }
 
 
-export type {IUser, IProfileStorage}
+export type {IUser, IProfileStorage, TUser}
