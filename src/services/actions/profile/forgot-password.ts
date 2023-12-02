@@ -1,4 +1,5 @@
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
+import { ForgotPasswordFunction } from '../../../types/profile-types';
 import { passwordResetRequest } from '../../../utils/api';
 
 export const FORGOT_PASSWORD_REQUEST: 'FORGOT_PASSWORD_REQUEST' = 'FORGOT_PASSWORD_REQUEST';
@@ -15,7 +16,7 @@ const forgotPasswordFailedAction = (err: IRequestError): IForgotPasswordFailedAc
 const forgotPasswordSuccessAction = (): IForgotPasswordSuccessAction => actionCreator(FORGOT_PASSWORD_SUCCESS);
 const forgotPasswordAction = (): IForgotPasswordAction => actionCreator(FORGOT_PASSWORD_REQUEST);
 
-export const forgotPasswordThunk = (email: string): any => (dispatch: any) => {
+export const forgotPasswordThunk: ForgotPasswordFunction = (email) => (dispatch: any) => {
     const dispatchError = (err: IRequestError) => dispatch(forgotPasswordFailedAction(err));
     const dispatchSuccess = () => dispatch(forgotPasswordSuccessAction());
 

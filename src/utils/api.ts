@@ -206,8 +206,8 @@ export const logoutRequest = async ()=> {
         .then(clearTokens);
 }
 
-export const registrationRequest = async (email: string, password: string, name: string) => {
-    return postAuthRequest<ITokens>("register", { email, password, name })
+export const registrationRequest = async<T extends IResSuccess> (email: string, password: string, name: string) => {
+    return postAuthRequest<T>("register", { email, password, name })
         .then(saveTokens);
 }
 

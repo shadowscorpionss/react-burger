@@ -1,6 +1,6 @@
 
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
-import { IUserResponse, TUser } from '../../../types/profile-types';
+import { IUserResponse, RegUpdateProfileFunction, TUser } from '../../../types/profile-types';
 import { updateUserRequest } from '../../../utils/api';
 
 export const UPDATE_USER_DATA_REQUEST: 'UPDATE_USER_DATA_REQUEST' = 'UPDATE_USER_DATA_REQUEST';
@@ -18,7 +18,7 @@ const updateUserDataFailedAction = (err: IRequestError): IUpdateUserDataFailedAc
 const updateUserDataSuccessAction = (user: TUser): IUpdateUserDataSuccessAction => ({ ...actionCreator(UPDATE_USER_DATA_SUCCESS), user });
 
 
-export const changeUserDataThunk = (name:string, email:string, password: string):any => (dispatch:any) => {
+export const changeUserDataThunk:RegUpdateProfileFunction = (email, password, name) => (dispatch:any) => {
     const dispatchError = (err:IRequestError) => dispatch(updateUserDataFailedAction(err));
     const dispatchSuccess = (res:IUserResponse) => dispatch(updateUserDataSuccessAction(res.user));
     dispatch(updateUserDataRequestAction());

@@ -1,4 +1,5 @@
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
+import { ResetPasswordFunction } from '../../../types/profile-types';
 import { passwordRecoveryRequest } from '../../../utils/api';
 
 //consts
@@ -19,7 +20,7 @@ const resetPasswordFailedAction = (err: IRequestError): IResetPasswordFailedActi
 const resetPasswordSuccessAction = (): IResetPasswordSuccessAction => actionCreator(RESET_PASSWORD_SUCCESS);
 
 
-export const resetPasswordThunk = (password: string, token: string): any => (dispatch: any) => {
+export const resetPasswordThunk: ResetPasswordFunction = (password, token) => (dispatch: any) => {
     const dispatchError = (err: IRequestError) => dispatch(resetPasswordFailedAction(err));
     const dispatchSuccess = () => dispatch(resetPasswordSuccessAction());
     dispatch(resetPasswordAction());

@@ -1,5 +1,5 @@
 import styles from "./profile.module.css";
-import { userRegistration } from "../../services/actions/profile/user-registration";
+import { userRegistrationThunk } from "../../services/actions/profile/user-registration";
 import { useForm } from "../../hooks/useForm";
 
 import { EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -27,7 +27,7 @@ export const RegisterPage: FC = () => {
         if (vals.some(el => el === ""))
             return;
 
-        dispatch(userRegistration(
+        dispatch(userRegistrationThunk(
             values.email,
             values.password,
             values.name

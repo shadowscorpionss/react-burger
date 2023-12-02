@@ -1,26 +1,28 @@
 import { IResSuccess } from "../utils/api";
 
-type TUser = {
+export type TUser = {
     email: string;
     name: string;
 }
 
-export interface IUserResponse extends IResSuccess{
+export interface IUserResponse extends IResSuccess {
     user: TUser;
 }
 
-interface IUser extends TUser{    
-    password:string;
-    passwordReset:number;
+export interface IUser extends TUser {
+    password: string;
+    passwordReset: number;
 }
 
-interface IProfileStorage{
+export interface IProfileStorage {
     isLoading: boolean;
     isFailed: boolean;
     user: IUser;
     hasLoginError: boolean;
-    loginErrorMessage:string;
+    loginErrorMessage: string;
 }
 
-
-export type {IUser, IProfileStorage, TUser}
+export type RegUpdateProfileFunction = (email: string, password: string, name: string) => any;
+export type LoginFunction = (email: string, password: string) => any;
+export type ResetPasswordFunction = (password: string, token: string) => any;
+export type ForgotPasswordFunction = (password: string) => any;

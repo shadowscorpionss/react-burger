@@ -47,10 +47,10 @@ const ProfileInfo: FC = () => {
         if (values.email + values.name + values.password === '')
             return;
 
-        dispatch(changeUserDataThunk(
-            values.name,
+        dispatch(changeUserDataThunk(            
             values.email,
-            values.password
+            values.password,
+            values.name
         ) as any);
     }
 

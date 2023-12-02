@@ -26,9 +26,10 @@ export interface IResetCurrentIngredientAction extends IAction<typeof RESET_CURR
 export type TIngredientsActions = IGetIngredientsAction | IGetIngredientsFailedAction | IGetIngredientsSuccessAction | ISetCurrentIngredientAction | IResetCurrentIngredientAction;
 
 //action creators
-export const getIngredientsAction = (): IGetIngredientsAction => actionCreator(GET_INGREDIENTS_REQUEST);
-export const getIngredientsFailedAction = (err: IRequestError): IGetIngredientsFailedAction => requestErrorActionCreator(GET_INGREDIENTS_FAILED, err);
-export const getIngredientsSuccessAction = (ingredients: Array<IIngredient>): IGetIngredientsSuccessAction => ({ ...actionCreator(GET_INGREDIENTS_SUCCESS), ingredients });
+const getIngredientsAction = (): IGetIngredientsAction => actionCreator(GET_INGREDIENTS_REQUEST);
+const getIngredientsFailedAction = (err: IRequestError): IGetIngredientsFailedAction => requestErrorActionCreator(GET_INGREDIENTS_FAILED, err);
+const getIngredientsSuccessAction = (ingredients: Array<IIngredient>): IGetIngredientsSuccessAction => ({ ...actionCreator(GET_INGREDIENTS_SUCCESS), ingredients });
+//public actions
 export const setCurrentIngredientAction = (currentIngredient: IIngredient): ISetCurrentIngredientAction => ({ ...actionCreator(SET_CURRENT_INGREDIENT), currentIngredient });
 export const resetCurrentIngredientAction = (): IResetCurrentIngredientAction => actionCreator(RESET_CURRENT_INGREDIENT);
 
