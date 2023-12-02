@@ -1,5 +1,4 @@
-import { TStorage } from "../../types/common-types";
-import { IIngredient } from "../../types/ingredient-types";
+import { TIngredientsStorage } from "../../types/ingredient-types";
 import {
     GET_INGREDIENTS_FAILED,
     GET_INGREDIENTS_REQUEST,
@@ -9,11 +8,6 @@ import {
     TIngredientsActions
 } from "../actions/burger-ingredients";
 
-//type
-export type TIngredientsStorage = {
-    ingredients: Array<IIngredient>
-    currentIngredient: IIngredient | null
-} & TStorage;
 
 //
 const ingredientsInititialState: TIngredientsStorage = {

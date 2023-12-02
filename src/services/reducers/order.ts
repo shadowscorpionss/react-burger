@@ -1,14 +1,7 @@
-import { TStorage } from '../../types/common-types';
-import { TOrder } from '../../types/order-types';
+import { TOrderStorage } from '../../types/order-types';
 import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions } from '../actions/order';
 
-
-export type TOrderState = {
-    order: TOrder;
-} & TStorage;
-
-
-const orderInititialState: TOrderState = {
+const orderInititialState: TOrderStorage = {
     order: {
         number: undefined
     },

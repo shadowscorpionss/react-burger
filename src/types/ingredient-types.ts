@@ -1,4 +1,4 @@
-import { IStorage } from "./common-types";
+import { TStorage } from "./common-types";
 
 interface IIngredient {
     _id: string;
@@ -15,9 +15,12 @@ interface IIngredient {
     __v: number;
 };
 
-interface IIngredientsStorage extends IStorage {
-    ingredients: Array<IIngredient>;
-    currentIngredient: IIngredient;
-}
+export type TIngredientsStorage = {
+    ingredients: Array<IIngredient>
+    currentIngredient: IIngredient | null
+} & TStorage;
+
+
+interface IIngredientsStorage extends TIngredientsStorage { }
 
 export type { IIngredient, IIngredientsStorage };
