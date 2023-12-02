@@ -8,9 +8,7 @@ export const GET_PROFILE_DATA_FAILED: 'GET_PROFILE_DATA_FAILED' = 'GET_PROFILE_D
 
 export interface IGetProfileDataAction extends IAction<typeof GET_PROFILE_DATA_REQUEST> { }
 export interface IGetPfofileDataFailedAction extends IErrorAction<typeof GET_PROFILE_DATA_FAILED> { }
-export interface IGetProfileDataSuccessAction extends IAction<typeof GET_PROFILE_DATA_SUCCESS> {
-    user: TUser
-}
+export interface IGetProfileDataSuccessAction extends IAction<typeof GET_PROFILE_DATA_SUCCESS>, IUserResponse {}
 
 export type TGetProfileActions = IGetProfileDataAction | IGetPfofileDataFailedAction | IGetProfileDataSuccessAction;
 

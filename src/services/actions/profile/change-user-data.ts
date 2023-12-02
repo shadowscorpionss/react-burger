@@ -9,9 +9,7 @@ export const UPDATE_USER_DATA_FAILED: 'UPDATE_USER_DATA_FAILED' = 'UPDATE_USER_D
 
 export interface IUpdateUserDataAction extends IAction<typeof UPDATE_USER_DATA_REQUEST> { }
 export interface IUpdateUserDataFailedAction extends IErrorAction<typeof UPDATE_USER_DATA_FAILED> { }
-export interface IUpdateUserDataSuccessAction extends IAction<typeof UPDATE_USER_DATA_SUCCESS> {
-    user: TUser;
-}
+export interface IUpdateUserDataSuccessAction extends IAction<typeof UPDATE_USER_DATA_SUCCESS>, IUserResponse {}
 
 export type TUpdateUserDataActions = IUpdateUserDataAction | IUpdateUserDataFailedAction | IUpdateUserDataSuccessAction;
 

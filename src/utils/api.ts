@@ -193,8 +193,8 @@ const postAuthRequest = <T extends IResSuccess>(authEndpoint: string, data: any)
     return postRequest<T>(`auth/${authEndpoint}`, data);
 }
 
-export const loginRequest = async (email: string, password: string) => {
-    return postAuthRequest<ITokens>('login', { email, password })
+export const loginRequest = async <T extends IResSuccess> (email: string, password: string) => {
+    return postAuthRequest<T>('login', { email, password })
         .then(saveTokens);
 }
 
