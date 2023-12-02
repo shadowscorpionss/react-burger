@@ -1,26 +1,29 @@
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
-import { makeOrder } from "../../services/actions/order";
+import { makeOrderThunk } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_PATH, ORDER_PATH } from "../../pages";
+import { IProfileStorage } from "../../types/profile-types";
+import { IBurgerConstructorStorage, ITheIngredient } from "../../types/constructor-types";
+import { IIngredient } from "../../types/ingredient-types";
 
-function BurgerConstructor() {
-  const navigate= useNavigate();
-  const {user} = useSelector(store=> store.profile);
+const BurgerConstructor: FC = () => {
+  const navigate = useNavigate();
+  const { user } = useSelector<any, IProfileStorage>(store => store.profile);
   //states and context
-  const { ingredients, bun } = useSelector(store => store.burgerConstructor);
-  const lref = useRef();
+  const { ingredients, bun } = useSelector<any, IBurgerConstructorStorage>(store => store.burgerConstructor);
+  const lref = useRef<HTMLLIElement>({} as HTMLLIElement);
   const [isDragging, setIsDragging] = useState(false);
-  
-  const dispatch = useDispatch(); 
+
+  const dispatch = useDispatch();
 
   //structured data
-  const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id], [ingredients, bun]);
+  const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id] as Array<string>, [ingredients, bun]);
 
   //total
   const total = useMemo(() =>
@@ -29,15 +32,15 @@ function BurgerConstructor() {
 
   //methods
   const callMakeOrder = () => {
-    if (!user.email)    {
+    if (!user.email) {
       navigate(LOGIN_PATH, { replace: true });
       return;
     }
-    dispatch(makeOrder(ingredientsIds));
-    navigate(ORDER_PATH);    
+    dispatch(makeOrderThunk(ingredientsIds));
+    navigate(ORDER_PATH);
   };
 
-  const moveIngredient = (dragIndex, hoverIndex) => {
+  const moveIngredient = (dragIndex: number, hoverIndex: number) => {
     // Получаем перетаскиваемый ингредиент
     const dragCard = ingredients[dragIndex];
     const newCards = [...ingredients];
@@ -53,9 +56,9 @@ function BurgerConstructor() {
   //drop ingredients
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop: (item: { ingredient: IIngredient }) => {
       const dropItem = item.ingredient;
-      if (dropItem.type!=="bun")
+      if (dropItem.type !== "bun")
         dispatch(addConstructorIngredientAction(dropItem));
       else
         dispatch(setConstructorBunAction(dropItem));
@@ -64,7 +67,7 @@ function BurgerConstructor() {
   });
 
   //render
-  const renderConstructorElement = useCallback((item, index) => {
+  const renderConstructorElement = useCallback((item:ITheIngredient, index:number) => {
     return (
       (
         <li ref={lref} key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>
@@ -76,14 +79,14 @@ function BurgerConstructor() {
 
   //scroll into the end after adding (not when dragging)
   useEffect(() => {
-    if (lref.current && !isDragging)
+    if (lref.current && !isDragging && typeof lref.current.scrollIntoView === 'function')
       lref.current.scrollIntoView({
         behavior: "smooth",
       });
   }, [ingredients]);
 
   return (
-    <section className={burgerConstructorStyles.constructor} ref={dropTarget}>
+    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget}>
       <div>
         <div >
           <div><ConstructorElement
@@ -112,7 +115,7 @@ function BurgerConstructor() {
       <div className={burgerConstructorStyles.currency}>
         <div className={burgerConstructorStyles.orderButton}>
           <span
-            className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon />
+            className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon type="primary" />
             &nbsp;
           </span>
           <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={callMakeOrder}>Оформить заказ</Button>

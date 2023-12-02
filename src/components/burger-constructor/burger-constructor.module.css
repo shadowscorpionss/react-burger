@@ -1,4 +1,4 @@
-.constructor {    
+.bconstructor {    
     display: grid;
     grid-template-rows: auto 1fr;    
     margin-top: 40px;
@@ -12,11 +12,11 @@
 
 
 
-.constructor>.list>* {
+.bconstructor>.list>* {
     flex: 0 auto;
 }
 
-.constructor  span {
+.bconstructor  span {
     margin-right: 0 ;
 }
 

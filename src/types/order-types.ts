@@ -1,11 +1,13 @@
 import { IStorage } from "./common-types";
 
+type TOrder = {
+    number:number | undefined;
+}
+
 interface IOrder {
-    number:number;
+    order: TOrder;
 }
 
-interface IOrderStorage extends IStorage{
-    order:IOrder;
-}
+interface IOrderStorage extends IOrder,IStorage{}
 
-export type {IOrderStorage};
+export type {IOrderStorage, TOrder, IOrder};

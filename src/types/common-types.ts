@@ -1,7 +1,9 @@
-interface IStorage{
-    isLoading:boolean;
-    isFailed:boolean;
-    errorMessage:string;
+type TStorage = {
+    isLoading: boolean;
+    isFailed: boolean;
+    errorMessage: string;
 }
 
-export type {IStorage};
+interface IStorage extends TStorage { }
+
+export type { IStorage, TStorage };

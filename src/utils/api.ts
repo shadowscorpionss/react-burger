@@ -5,14 +5,14 @@ export const NORMA_API = "https://norma.nomoreparties.space/api";
 const JSON_CONTENT_TYPE = "application/json;charset=utf-8";
 const JSON_SIMPLE_CONTENT_TYPE = "application/json";
 
-interface successType {
+export interface IResSuccess {
     success?: boolean
 }
-interface errorType {
+export interface IResError {
     message?: string;
 }
 
-const checkResponse = <T extends successType>(res: Response): Promise<T> => {
+const checkResponse = <T extends IResSuccess>(res: Response): Promise<T> => {
     return res.ok ?
         res.json() :
         res.json().then(err =>
@@ -28,12 +28,12 @@ const checkResponse = <T extends successType>(res: Response): Promise<T> => {
 }
 
 // создаем функцию проверки на `success`
-const checkSuccess = async <T extends successType>(res: T): Promise<T> => {
+const checkSuccess = async <T extends IResSuccess>(res: T): Promise<T> => {
     if (res && res.success) {
         return res;
     }
     const errObj = {
-        message: (res as errorType)?.message,
+        message: (res as IResError)?.message,
         status: 200,
         additional: ""
     };
@@ -44,7 +44,7 @@ const checkSuccess = async <T extends successType>(res: T): Promise<T> => {
     );
 };
 
-export const request = async <T extends successType>(endpoint: string, options: RequestInit = {}) => {
+export const request = async <T extends IResSuccess>(endpoint: string, options: RequestInit = {}) => {
     return fetch(`${NORMA_API}/${endpoint}`, options)
         .then<T>(checkResponse)
         .then<T>(checkSuccess);
@@ -54,7 +54,7 @@ export const getIngredientsRequest = () => {
     return request("ingredients");
 }
 
-export const postRequest = <T extends successType>(endpoint: string, data: any, options: RequestInit = {}) => {
+export const postRequest = <T extends IResSuccess>(endpoint: string, data: any, options: RequestInit = {}) => {
     return request<T>(endpoint, {
         ...options,
         method: "POST",
@@ -66,7 +66,7 @@ export const postRequest = <T extends successType>(endpoint: string, data: any, 
     })
 }
 
-export const postOrderRequest = (data: string[]) => {
+export const postOrderRequest = <T extends IResSuccess> (data: string[]) => {
     let options: RequestInit = {
         body: JSON.stringify({ ingredients: data }),
         method: "POST",
@@ -84,14 +84,14 @@ export const postOrderRequest = (data: string[]) => {
         };
 
     }
-    return requestWithRefresh("orders", options);
+    return requestWithRefresh <T>("orders", options);
 }
 
 const getAuthorizationString = (): string => {
     return `Bearer ${getCookie(ACCESS_TOKEN_PATH)}`;
 }
 
-interface ITokens extends successType {
+interface ITokens extends IResSuccess {
     accessToken?: string;
     refreshToken?: string;
 }
@@ -162,7 +162,7 @@ export const refreshTokenRequest = async () => {
 };
 
 
-export const requestWithRefresh = async <T extends successType>(endpoint: string, options: ResponseInit) => {
+export const requestWithRefresh = async <T extends IResSuccess>(endpoint: string, options: ResponseInit) => {
     try {
         return await request<T>(endpoint, options);
     } catch (err: any) {
@@ -187,7 +187,7 @@ export const requestWithRefresh = async <T extends successType>(endpoint: string
     }
 }
 
-const postAuthRequest = <T extends successType>(authEndpoint: string, data: any) => {
+const postAuthRequest = <T extends IResSuccess>(authEndpoint: string, data: any) => {
     return postRequest<T>(`auth/${authEndpoint}`, data);
 }
 
