@@ -1,4 +1,11 @@
 import { IResSuccess } from "../utils/api";
+import { TStorage } from "./storage-types";
+
+export enum ResetPasswordStatus{
+    None,
+    Failed,    
+    Finish
+}
 
 export type TUser = {
     email: string;
@@ -11,16 +18,17 @@ export interface IUserResponse extends IResSuccess {
 
 export interface IUser extends TUser {
     password: string;
-    passwordReset: number;
+    resetStatus: ResetPasswordStatus;
 }
 
-export interface IProfileStorage {
-    isLoading: boolean;
-    isFailed: boolean;
+export type TProfileStorage = {
     user: IUser;
     hasLoginError: boolean;
     loginErrorMessage: string;
-}
+} & Omit<TStorage, 'errorMessage'>;
+
+
+export interface IProfileStorage extends TProfileStorage { }
 
 export type RegUpdateProfileFunction = (email: string, password: string, name: string) => any;
 export type LoginFunction = (email: string, password: string) => any;

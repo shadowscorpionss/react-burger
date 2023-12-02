@@ -8,10 +8,10 @@ import { useState, useEffect, FC, FormEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FORGOT_PATH, LOGIN_PATH, PROFILE_PATH } from "../pages-paths";
-import { IProfileStorage } from "../../types/profile-types";
+import { IProfileStorage, ResetPasswordStatus } from "../../types/profile-types";
 
 export const ResetPasswordPage:FC = () => {
-    const { user: { passwordReset } } = useSelector<any,IProfileStorage> (store => store.profile);
+    const { user: { resetStatus: passwordReset } } = useSelector<any,IProfileStorage> (store => store.profile);
 
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("")
@@ -31,7 +31,7 @@ export const ResetPasswordPage:FC = () => {
 
 
     useEffect(() => {
-        if (passwordReset === 2)
+        if (passwordReset === ResetPasswordStatus.Finish)
             navigate(LOGIN_PATH, { state: { resetPassword: false } });
         
     }, [passwordReset]);

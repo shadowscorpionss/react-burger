@@ -1,9 +1,10 @@
-import { TUpdateUserDataActions } from "./change-user-data";
-import { TForgotPasswordActions } from "./forgot-password";
-import { TGetProfileActions } from "./get-profile-data";
-import { TResetPasswordActions } from "./reset-password";
-import { TUserLoginActions } from "./user-login";
-import { TUserLogoutActions } from "./user-logout";
+import { TUpdateUserDataActions, UPDATE_USER_DATA_FAILED, UPDATE_USER_DATA_REQUEST, UPDATE_USER_DATA_SUCCESS } from "./change-user-data";
+import { FORGOT_PASSWORD_FAILED, FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, TForgotPasswordActions } from "./forgot-password";
+import { GET_PROFILE_DATA_FAILED, GET_PROFILE_DATA_REQUEST, GET_PROFILE_DATA_SUCCESS, TGetProfileActions } from "./get-profile-data";
+import { RESET_PASSWORD_FAILED, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, TResetPasswordActions } from "./reset-password";
+import { TUserLoginActions, USER_LOGIN_FAILED, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS } from "./user-login";
+import { TUserLogoutActions, USER_LOGOUT_FAILED, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS } from "./user-logout";
+import { TUserRegistrationActions, USER_REGISTRATION_FAILED, USER_REGISTRATION_REQUEST, USER_REGISTRATION_SUCCESS } from "./user-registration";
 
 export type TProfileActions =
     | TUpdateUserDataActions
@@ -12,4 +13,30 @@ export type TProfileActions =
     | TResetPasswordActions
     | TUserLoginActions
     | TUserLogoutActions
+    | TUserRegistrationActions
     ;
+
+
+export {
+    USER_LOGIN_FAILED,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_REQUEST,
+    UPDATE_USER_DATA_FAILED,
+    UPDATE_USER_DATA_REQUEST,
+    UPDATE_USER_DATA_SUCCESS,
+    FORGOT_PASSWORD_FAILED,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    GET_PROFILE_DATA_FAILED,
+    GET_PROFILE_DATA_REQUEST,
+    GET_PROFILE_DATA_SUCCESS,
+    RESET_PASSWORD_FAILED,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    USER_LOGOUT_FAILED,
+    USER_LOGOUT_REQUEST,
+    USER_LOGOUT_SUCCESS,
+    USER_REGISTRATION_FAILED,
+    USER_REGISTRATION_REQUEST,
+    USER_REGISTRATION_SUCCESS,
+}
