@@ -46,18 +46,24 @@ export const OrderCardDetails: FC<IOrderCardDetails> = ({ order }) => {
 
     return (
         <div className={styles.wrapper}>
-            <h1 className={styles.name}>{name}</h1>
-            <p className={translatedStatus === 'Выполнен' ? styles.success : ''}>{translatedStatus}</p>
-            <h2 className={styles.content}>Состав:</h2>
-            <ul className={`${styles.list} custom-scroll`}>
-                {Object.entries(totalPriceDetails)
-                    .map((item, index) => (
-                        <OrderCardIngridient
-                            key={index}
-                            {...item[1]}
-                        />
-                    ))}
-            </ul>
+            <div className={styles.header}>
+                <h1 className={styles.name}>{name}</h1>
+                <p className={translatedStatus === 'Выполнен' ? styles.success : ''}>{translatedStatus}</p>
+            </div>
+            <div className={styles.container}>
+                <div><h2 className={styles.content}>Состав:</h2></div>
+                <div>
+                    <ul className={`${styles.list} custom-scroll`}>
+                        {Object.entries(totalPriceDetails)
+                            .map((item, index) => (
+                                <OrderCardIngridient
+                                    key={index}
+                                    {...item[1]}
+                                />
+                            ))}
+                    </ul>
+                </div>
+            </div>
             <div className={styles.orderDetails}>
                 <p className={styles.data}>{data}</p>
                 <div className={styles.inner}>
