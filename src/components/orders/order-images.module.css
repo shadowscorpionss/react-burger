@@ -1,0 +1,38 @@
+.iconsWrapper {
+    display: flex;
+    position: relative;
+    height: 70px;
+}
+
+.icon {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    background-color: black;
+    border-radius: 100%;
+    border: 2px solid rgba(128, 26, 178, 1);
+}
+
+.lastIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 270px;
+    position: relative;
+}
+
+.numbers {
+    font-size: large;
+    font-weight: 500;
+    right: 0;
+    position: absolute;
+}
+
+.iconBlurred {
+    z-index: 1;
+    left: 5 * 45;
+    opacity: 0.3;
+}
