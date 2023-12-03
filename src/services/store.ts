@@ -1,14 +1,11 @@
-import thunk from 'redux-thunk';
 import { rootReducer } from './reducers/index';
-
-import { WebSocketMiddleware } from './middleware/websocket-mw';
 import { configureStore } from '@reduxjs/toolkit';
-import { feedConfig } from './middleware/feed-ws';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { defaultMiddleware } from './middleware';
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: [thunk, WebSocketMiddleware(feedConfig)]
+    middleware: defaultMiddleware
 });
 
 export type RootState = ReturnType<typeof store.getState>;
