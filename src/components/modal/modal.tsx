@@ -1,11 +1,12 @@
 //styles
 import modalStyles from "./modal.module.css";
 //react
-import { FC, MouseEventHandler, PropsWithChildren, useEffect } from "react";
+import { FC, MouseEventHandler, PropsWithChildren, useCallback, useEffect } from "react";
 import ReactDom from "react-dom";
 //components
 import ModalOverlay from "./modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useLocation, useNavigate } from "react-router-dom";
 
 //types
 interface IModal extends PropsWithChildren {
@@ -17,12 +18,31 @@ interface IModal extends PropsWithChildren {
 const modalPortal = document.getElementById("modal-root");
 
 const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
-  const closeOnEscapeKeyDown = (e: KeyboardEvent) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const closeModal = useCallback(() => {
+    location?.state?.background && navigate(location.state.background)
+}, [location.state, navigate]);
 
-    if (e.key === "Escape" && typeof onClose === 'function') {
+  const handleClose = () => {
+    if (typeof onClose === 'function') {
       onClose();
+      return;
+    }
+    closeModal();
+  }
+
+  const closeOnEscapeKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      handleClose();
     }
   };
+
+  const onOverlayClose: MouseEventHandler = (e) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  }
 
   //escape button for closing modal window
   useEffect(() => {
@@ -37,12 +57,7 @@ const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
   }, []);
 
 
-  const onOverlayClose: MouseEventHandler = (e) => {
-    if (e.target === e.currentTarget) {
-      if (typeof (onClose) === 'function')
-        onClose()
-    }
-  }
+
 
   return (ReactDom.createPortal((
     <div className={modalStyles.modal}>
@@ -50,7 +65,7 @@ const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
       <div className={modalStyles.container} onClick={e => e.stopPropagation()}>
         <div className={modalStyles.header}>
           <div className={modalStyles.closeButton}>
-            <CloseIcon type="primary" onClick={onClose}></CloseIcon>
+            <CloseIcon type="primary" onClick={handleClose}></CloseIcon>
           </div>
           <h4 className="text text_type_main-large">
             {title}

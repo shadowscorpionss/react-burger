@@ -37,6 +37,9 @@ import {
 //actions
 import { getProfileDataThunk } from "../../services/actions/profile/get-profile-data";
 import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
+import { FEED_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
+import { OrderInfo } from '../orders/order-info';
+import { OrderCardModal } from '../orders/order-card-modal';
 
 
 const App: FC = () => {
@@ -86,6 +89,7 @@ const App: FC = () => {
         </Route>
 
         <Route path={FEED_PATH} element={<FeedPage />} />
+        <Route path={FEED_ORDER_DETAILS_PATH} element={<OrderInfo />} />
 
       </Routes>
 
@@ -95,6 +99,9 @@ const App: FC = () => {
             <OrderDetails />
           </Modal>
           </ProtectedRoute>} />
+          <Route path={FEED_ORDER_DETAILS_PATH} element={
+            <OrderCardModal />
+          } />
           <Route path={INGREDIENTS_DETAILS_PATH} element={<Modal onClose={handleCloseIngredientDetails} title={'Детали ингредиента'}>
             <IngredientDetails />
           </Modal>}

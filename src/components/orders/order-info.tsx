@@ -1,19 +1,20 @@
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCurrentOrder } from '../../../services/actions/current-order';
-import { OrderCardDetails } from '../order-card-details/order-card-datails';
-import styles from './order-card-page.module.css';
+
+import styles from './order-info.module.css';
 import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
+import { getCurrentOrderThunk } from '../../services/actions/current-order';
+import { OrderCardDetails } from './order-card-details';
 
 
 export const OrderInfo: FC = () => {
     const dispatch = useAppDispatch();
     const { number = '' } = useParams();
-    const { order } = useAppSelector((store) => store.currentOrder);
+    const order  = useAppSelector((store) => store.currentOrder.order);
     const { isLoading } = useAppSelector(store => store.burgerIngredients);
 
     useEffect(() => {
-        dispatch(getCurrentOrder(number))
+        dispatch(getCurrentOrderThunk(number));
     }, [dispatch, number]);
 
     return (

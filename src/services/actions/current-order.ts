@@ -21,7 +21,7 @@ interface ICurrentOrderResponse extends IResSuccess {
     orders: Array<TOrder>
 }
 
-export const getCurrentOrderThunk = (orderNumber: number): AppThunk => (dispatch: AppDispatch) => {
+export const getCurrentOrderThunk = (orderNumber: string): AppThunk => (dispatch: AppDispatch) => {
     const dispatchError = (err: IRequestError) => dispatch(getCurrentOrderFailedAction(err));
     const dispatchSuccess = (res: ICurrentOrderResponse) => dispatch(getCurrentOrderSuccessAction(res.orders[0]));
 

@@ -233,7 +233,7 @@ export const updateUserRequest = async <T extends IResSuccess>(name: string, ema
 
 }
 
-export function getCurrentOrderRequest<T extends IResSuccess>(orderNumber: number) {
+export function getCurrentOrderRequest<T extends IResSuccess>(orderNumber: string) {
     const options = {
         method: "GET",
         headers: {
