@@ -3,10 +3,10 @@ import styles from './order-card.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 import { FC, useMemo } from 'react';
-import { useAppSelector } from '../../services/store';
 import { TOrder } from '../../types/order-types';
 import { IIngredient } from '../../types/ingredient-types';
 import { OrderImages } from './order-images';
+import { useAppSelector } from '../../types/app-redux-thunk';
 
 const convertStatus = (status: string) => {
     let translatedStatus;

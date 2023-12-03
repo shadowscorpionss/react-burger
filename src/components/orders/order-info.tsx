@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getCurrentOrder } from '../../../services/actions/current-order';
 import { OrderCardDetails } from '../order-card-details/order-card-datails';
 import styles from './order-card-page.module.css';
-import { useAppDispatch, useAppSelector } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
 
 
 export const OrderInfo: FC = () => {

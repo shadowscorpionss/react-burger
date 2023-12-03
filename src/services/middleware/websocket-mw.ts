@@ -2,8 +2,8 @@ import { Middleware, MiddlewareAPI } from "redux";
 import { TApplicationActions } from "../actions";
 import { ACCESS_TOKEN_PATH, getCookie } from "../../utils/cookies";
 import { refreshTokenRequest } from "../../utils/api";
-import { AppDispatch, RootState } from "../store";
 import { IWSActions } from "./mw-types";
+import { AppDispatch, RootState } from "../../types/app-redux-thunk";
 
 export const WebSocketMiddleware = (WSActions: IWSActions<TApplicationActions>): Middleware => {
     return (store: MiddlewareAPI<AppDispatch, RootState>) => {
