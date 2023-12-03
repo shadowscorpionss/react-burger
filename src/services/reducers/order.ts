@@ -1,10 +1,19 @@
-import { TOrderStorage } from '../../types/order-types';
+import { TOrder, TOrderStorage } from '../../types/order-types';
 import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions } from '../actions/order';
 
+const defaultOrder : TOrder ={
+    number:0,
+    _id:'',
+    name:'',
+    ingredients:[],
+    status:'',
+    updatedAt:'',
+    createdAt:''
+}
+
+
 const orderInititialState: TOrderStorage = {
-    order: {
-        number: undefined
-    },
+    order: defaultOrder,
     isFailed: false,
     isLoading: false,
     errorMessage: ''

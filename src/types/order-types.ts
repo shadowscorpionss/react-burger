@@ -1,10 +1,18 @@
 import { IStorage, TStorage } from "./storage-types";
 
-type TOrder = {
-    number:number | undefined;
+export type TOrder = {
+    _id: string;
+    name: string;
+    ingredients: Array<string>;
+    number: number;
+    status: string;
+    visibleStatus?: boolean;
+    updatedAt: string;
+    createdAt: string;
+    page?: string;
 }
 
-interface IOrder {
+export interface IOrder {
     order: TOrder;
 }
 
@@ -12,7 +20,5 @@ export type TOrderStorage = {
     order: TOrder;
 } & TStorage;
 
+export interface IOrderStorage extends IOrder, IStorage { }
 
-interface IOrderStorage extends IOrder,IStorage{}
-
-export type {IOrderStorage, TOrder, IOrder};
