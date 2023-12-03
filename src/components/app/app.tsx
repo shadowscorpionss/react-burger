@@ -34,16 +34,18 @@ import {
   INGREDIENTS_DETAILS_PATH
 
 } from "../../pages";
+import { FEED_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
 //actions
 import { getProfileDataThunk } from "../../services/actions/profile/get-profile-data";
 import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
-import { FEED_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
+
 import { OrderInfo } from '../orders/order-info';
 import { OrderCardModal } from '../orders/order-card-modal';
+import { useAppDispatch } from '../../types/app-redux-thunk';
 
 
 const App: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleCloseIngredientDetails = useCallback(() => {
