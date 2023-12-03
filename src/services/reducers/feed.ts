@@ -17,22 +17,13 @@ const feedInitialState: IFeedStorage = {
 export const feedReducer = (state = feedInitialState, action: TFeedActions): IFeedStorage => {
     switch (action.type) {
         case FEED_OPEN:
-            return {
-                ...state,
-                wsConnected: true
-            };
+            return { ...state, wsConnected: true };
 
         case FEED_ERROR:
-            return {
-                ...state,
-                wsConnected: false
-            };
+            return { ...state, wsConnected: false };
 
         case FEED_CLOSE:
-            return {
-                ...state,
-                wsConnected: false
-            };
+            return { ...state, wsConnected: false };
 
         case FEED_MESSAGE:
             return {

@@ -1,9 +1,9 @@
 import styles from './feed.module.css';
 
-import { FC, useEffect, useMemo } from "react"
-import { feedStopAction, feedStartAction } from "../services/actions/feed";
-import { useAppDispatch, useAppSelector } from "../services/store";
-import { ListOrders } from "../components/orders/orders-list";
+import { FC, useEffect, useMemo } from 'react'
+import { feedStopAction, feedStartAction } from '../services/actions/feed';
+import { ListOrders } from '../components/orders/orders-list';
+import { useAppDispatch, useAppSelector } from '../types/app-redux-thunk';
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
