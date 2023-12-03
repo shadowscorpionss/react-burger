@@ -66,7 +66,7 @@ export const postRequest = <T extends IResSuccess>(endpoint: string, data: any, 
     })
 }
 
-export const postOrderRequest = <T extends IResSuccess> (data: string[]) => {
+export const postOrderRequest = <T extends IResSuccess>(data: string[]) => {
     let options: RequestInit = {
         body: JSON.stringify({ ingredients: data }),
         method: "POST",
@@ -84,7 +84,7 @@ export const postOrderRequest = <T extends IResSuccess> (data: string[]) => {
         };
 
     }
-    return requestWithRefresh <T>("orders", options);
+    return requestWithRefresh<T>("orders", options);
 }
 
 const getAuthorizationString = (): string => {
@@ -110,7 +110,7 @@ const saveTokens = <T extends IResSuccess>(res: T): T => {
     }
 
     if (tokens.refreshToken) {
-        const {refreshToken} = tokens;
+        const { refreshToken } = tokens;
         localStorage.setItem(REFRESH_TOKEN_PATH, refreshToken);
     }
 
@@ -193,12 +193,12 @@ const postAuthRequest = <T extends IResSuccess>(authEndpoint: string, data: any)
     return postRequest<T>(`auth/${authEndpoint}`, data);
 }
 
-export const loginRequest = async <T extends IResSuccess> (email: string, password: string) => {
+export const loginRequest = async <T extends IResSuccess>(email: string, password: string) => {
     return postAuthRequest<T>('login', { email, password })
         .then(saveTokens);
 }
 
-export const logoutRequest = async ()=> {
+export const logoutRequest = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
     if (!refreshToken)
         return;
@@ -206,7 +206,7 @@ export const logoutRequest = async ()=> {
         .then(clearTokens);
 }
 
-export const registrationRequest = async<T extends IResSuccess> (email: string, password: string, name: string) => {
+export const registrationRequest = async<T extends IResSuccess>(email: string, password: string, name: string) => {
     return postAuthRequest<T>("register", { email, password, name })
         .then(saveTokens);
 }
@@ -231,4 +231,14 @@ export const updateUserRequest = async <T extends IResSuccess>(name: string, ema
     };
     return requestWithRefresh<T>("auth/user", options);
 
+}
+
+export function getCurrentOrderRequest<T extends IResSuccess>(orderNumber: string) {
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": JSON_SIMPLE_CONTENT_TYPE,
+        }
+    };
+    return request<T>(`orders/${orderNumber}`, options);
 }
