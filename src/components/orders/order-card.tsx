@@ -7,20 +7,9 @@ import { TOrder } from '../../types/order-types';
 import { IIngredient } from '../../types/ingredient-types';
 import { OrderImages } from './order-images';
 import { useAppSelector } from '../../types/app-redux-thunk';
+import { convertStatus } from '../../utils/convert-status';
 
-const convertStatus = (status: string) => {
-    let translatedStatus;
 
-    if (status === 'done') {
-        translatedStatus = 'Выполнен'
-    } else if (status === 'pending') {
-        translatedStatus = 'Готовится'
-    } else if (status === 'created') {
-        translatedStatus = 'Создан'
-    }
-
-    return translatedStatus;
-};
 
 const getOrderIngridients = (ids: Array<string | null>, ingredients: IIngredient[]): IIngredient[] => {
 
