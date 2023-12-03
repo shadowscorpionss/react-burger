@@ -30,8 +30,11 @@ export const FeedPage: FC = () => {
 
     useEffect(() => {
         dispatch(feedStartAction(wsUrl));
-        //return function cleanup() { dispatch(feedStopAction()) };
     }, [dispatch]);
+
+    useEffect(() => function cleanup() {
+        dispatch(feedStopAction());
+    }, []);
 
     return (
         <div>
