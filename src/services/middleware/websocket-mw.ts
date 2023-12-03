@@ -5,7 +5,7 @@ import { refreshTokenRequest } from "../../utils/api";
 import { AppDispatch, RootState } from "../store";
 import { IWSActions } from "./mw-types";
 
-export const WebSocketMiddleware = (WSActions: IWSActions): Middleware => {
+export const WebSocketMiddleware = (WSActions: IWSActions<TApplicationActions>): Middleware => {
     return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
         let wsUrl: string | null = null;
@@ -32,8 +32,7 @@ export const WebSocketMiddleware = (WSActions: IWSActions): Middleware => {
                     const parsedData = JSON.parse(data);
 
                     if (parsedData.message === 'Invalid or missing token') {
-                        console.log(parsedData.message)
-                        socket?.close()
+                        socket?.close();
                         refreshTokenRequest()
                             .then(() => {
                                 const newToken = getCookie(ACCESS_TOKEN_PATH);
@@ -46,18 +45,17 @@ export const WebSocketMiddleware = (WSActions: IWSActions): Middleware => {
                             })
                     } else {
                         dispatch(WSActions.onMessage(event));
-                        console.log('Идет обмен данными')
                     }
                 }
+
                 socket.onclose = event => {
                     socket?.close();
                     dispatch(WSActions.onClose(event));
-                    console.log('Соединение закрыто')
+
                 }
 
                 if (action.type === WSActions.wsStop) {
                     socket.close();
-                    console.log('сокет стоп')
                 }
             }
             next(action);
