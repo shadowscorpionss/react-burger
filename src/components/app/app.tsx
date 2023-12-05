@@ -88,13 +88,15 @@ const App: FC = () => {
           <Route path={PROFILE_PATH} element={<ProfileInfo />} />
           <Route path={PROFILE_ORDERS_PATH} element={<ProfileOrdersPage />} />
         </Route>
+        <Route path={USER_ORDER_DETAILS_PATH} element={<ProtectedRoute>
+          <OrderInfo />
+        </ProtectedRoute>}
+        />
 
         <Route path={FEED_PATH} element={<FeedPage />} />
         <Route path={FEED_ORDER_DETAILS_PATH} element={<OrderInfo />} />
 
-        <Route path={USER_ORDER_DETAILS_PATH} element={
-            <OrderInfo />}
-          />
+
       </Routes>
 
       {background &&
