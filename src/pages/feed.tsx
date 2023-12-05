@@ -70,7 +70,7 @@ export const FeedPage: FC = () => {
                         </div>
                         <h1 className={styles.totalAll}>Выполнено за все время:</h1>
                         <p className={styles.count}>{total}</p>
-                        <h1 className={styles.totalToday}>Выполнено за все сегодня:</h1>
+                        <h1 className={styles.totalToday}>Выполнено за сегодня:</h1>
                         <p className={styles.count}>{totalToday}</p>
                     </div>
                 </div>
