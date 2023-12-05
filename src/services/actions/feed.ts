@@ -1,5 +1,6 @@
 import { IAction, actionCreator } from '../../types/action-types';
 import { IEventAction, IFeedAction, IStringAction } from '../../types/feed-types';
+import { NORMA_WS_ORDERS_ALL } from '../../utils/api';
 
 export const FEED_START: 'FEED_START' = 'FEED_START';
 export const FEED_STOP: 'FEED_STOP' = 'FEED_STOP';
@@ -28,7 +29,7 @@ export type TFeedActions =
     | IFeedCloseAction
     | IFeedMessageAction
 
-export const feedStartAction = (url: string): IFeedStartAction => ({ ...actionCreator(FEED_START), payload: url });
+export const feedStartAction = (): IFeedStartAction => ({ ...actionCreator(FEED_START), payload: NORMA_WS_ORDERS_ALL });
 export const feedStopAction = (): IFeedStopAction => actionCreator(FEED_STOP);
 
 export const feedOpenAction = (event: Event): IFeedOpenAction => ({ ...actionCreator(FEED_OPEN), payload: event });

@@ -5,8 +5,6 @@ import { feedStopAction, feedStartAction } from '../services/actions/feed';
 import { ListOrders } from '../components/orders/orders-list';
 import { useAppDispatch, useAppSelector } from '../types/app-redux-thunk';
 
-const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-
 const displayCount: number = 10;
 
 export const FeedPage: FC = () => {
@@ -29,7 +27,7 @@ export const FeedPage: FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(feedStartAction(wsUrl));
+        dispatch(feedStartAction());
     }, [dispatch]);
 
     useEffect(() => function cleanup() {

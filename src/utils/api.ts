@@ -1,6 +1,10 @@
 import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, deleteCookie, getCookie, setCookie } from "./cookies";
 
 export const NORMA_API = "https://norma.nomoreparties.space/api";
+export const NORMA_WS_ORDERS= 'wss://norma.nomoreparties.space/orders';
+export const NORMA_WS_ORDERS_ALL = `${NORMA_WS_ORDERS}/all`;
+
+export const userOrdersUrl = ()=> `${NORMA_WS_ORDERS}?token=${getCookie(ACCESS_TOKEN_PATH)}`;
 
 const JSON_CONTENT_TYPE = "application/json;charset=utf-8";
 const JSON_SIMPLE_CONTENT_TYPE = "application/json";
