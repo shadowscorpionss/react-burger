@@ -1,6 +1,6 @@
 import { TOrder } from "./order-types";
 
-export interface IFeedStorage {
+export interface IOrdersWSStorage {
     wsConnected: boolean;
     orders: Array<TOrder>;
     total: number;
@@ -15,12 +15,11 @@ export interface IStringAction{
     payload: string;
 }
 
-export interface IFeed {
+export interface IOrdersMessage {
     orders: Array<TOrder>;
     total: number;
     totalToday: number;
 }
-
-export interface IFeedAction{
-    payload: IFeed;
+export interface IOrdersMessageAction{
+    payload: IOrdersMessage;
 }

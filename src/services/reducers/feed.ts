@@ -5,16 +5,16 @@ import {
     FEED_MESSAGE,
     TFeedActions
 } from '../actions/feed';
-import { IFeedStorage } from '../../types/feed-types';
+import { IOrdersWSStorage } from '../../types/orders-ws-types';
 
-const feedInitialState: IFeedStorage = {
+const feedInitialState: IOrdersWSStorage = {
     wsConnected: false,
     orders: [],
     total: 0,
     totalToday: 0,
 };
 
-export const feedReducer = (state = feedInitialState, action: TFeedActions): IFeedStorage => {
+export const feedReducer = (state = feedInitialState, action: TFeedActions): IOrdersWSStorage => {
     switch (action.type) {
         case FEED_OPEN:
             return { ...state, wsConnected: true };
