@@ -7,6 +7,7 @@ export const PROFILE_PATH="/profile";
 export const PROFILE_ORDERS_PATH="/profile/orders";
 export const FEED_PATH="/feed";
 export const FEED_ORDER_DETAILS_PATH="/feed/:number";
+export const USER_ORDER_DETAILS_PATH="/profile/orders/:number";
 export const ORDER_PATH="/order";
 export const INGREDIENTS_DETAILS_PATH="/ingredients/:id";
 export const INGREDIENTS_PATH ="/ingredients";

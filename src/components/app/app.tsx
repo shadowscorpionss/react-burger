@@ -34,7 +34,7 @@ import {
   INGREDIENTS_DETAILS_PATH
 
 } from "../../pages";
-import { FEED_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
+import { FEED_ORDER_DETAILS_PATH, USER_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
 //actions
 import { getProfileDataThunk } from "../../services/actions/profile/get-profile-data";
 import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
@@ -93,6 +93,9 @@ const App: FC = () => {
         <Route path={FEED_PATH} element={<FeedPage />} />
         <Route path={FEED_ORDER_DETAILS_PATH} element={<OrderInfo />} />
 
+        <Route path={USER_ORDER_DETAILS_PATH} element={
+            <OrderInfo />}
+          />
       </Routes>
 
       {background &&
@@ -104,6 +107,9 @@ const App: FC = () => {
           <Route path={FEED_ORDER_DETAILS_PATH} element={
             <OrderCardModal />
           } />
+          <Route path={USER_ORDER_DETAILS_PATH} element={
+            <OrderCardModal />}
+          />
           <Route path={INGREDIENTS_DETAILS_PATH} element={<Modal onClose={handleCloseIngredientDetails} title={'Детали ингредиента'}>
             <IngredientDetails />
           </Modal>}
