@@ -2,25 +2,24 @@ import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-de
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
-import { useDispatch, useSelector } from "react-redux";
 import { makeOrderThunk } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_PATH, ORDER_PATH } from "../../pages";
-import { IProfileStorage } from "../../types/profile-types";
-import { IBurgerConstructorStorage, ITheIngredient } from "../../types/constructor-types";
+import { ITheIngredient } from "../../types/constructor-types";
 import { IIngredient } from "../../types/ingredient-types";
+import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
-  const { user } = useSelector<any, IProfileStorage>(store => store.profile);
+  const { user } = useAppSelector(store => store.profile);
   //states and context
-  const { ingredients, bun } = useSelector<any, IBurgerConstructorStorage>(store => store.burgerConstructor);
+  const { ingredients, bun } = useAppSelector(store => store.burgerConstructor);
   const lref = useRef<HTMLLIElement>({} as HTMLLIElement);
   const [isDragging, setIsDragging] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   //structured data
   const ingredientsIds = useMemo(() => [bun._id, ...ingredients.map(el => el ? el._id : null), bun._id] as Array<string>, [ingredients, bun]);

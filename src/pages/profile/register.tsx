@@ -6,9 +6,9 @@ import { EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
 import { LOGIN_PATH } from "../pages-paths";
 import { FC, FormEventHandler } from "react";
+import { useAppDispatch } from "../../types/app-redux-thunk";
 
 
 export const RegisterPage: FC = () => {
@@ -18,7 +18,7 @@ export const RegisterPage: FC = () => {
         password: "",
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();

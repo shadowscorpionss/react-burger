@@ -2,7 +2,6 @@
 import appStyles from './app.module.css';
 //react, redux, router
 import { FC, useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 //components
 import AppHeader from "../app-header/app-header";

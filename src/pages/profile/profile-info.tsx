@@ -1,23 +1,22 @@
 //styles
 import styles from "./profile.module.css"
 import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"
 
 //components
 import { Input, EmailInput, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 //actions
 import { changeUserDataThunk } from "../../services/actions/profile/change-user-data";
 //types
-import { IUser } from "../../types/profile-types";
 
 //custom hook
 import { useForm } from "../../hooks/useForm"
+import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
 
 
 const ProfileInfo: FC = () => {
     const [isBottonsOpen, setIsBottonsOpen] = useState(false);
     const [nameEditDisabled, setNameEditDisabled] = useState(true);
-    const user = useSelector<any, IUser>((state) => state.profile.user);
+    const user = useAppSelector((state) => state.profile.user);
     const { values, handleChange, setValues } = useForm({
         name: user.name,
         email: user.email,
@@ -29,7 +28,7 @@ const ProfileInfo: FC = () => {
     }, [user]);
 
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const cancelInput = () => {
         setValues({

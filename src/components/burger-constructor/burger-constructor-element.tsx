@@ -5,13 +5,13 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 //react,redux,dnd
 import { useDrag, useDrop } from "react-dnd";
 import { FC, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 //redux actions
 import { removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
 //types
 import type { Identifier, XYCoord } from 'dnd-core';
 import { ITheIngredient } from "../../types/constructor-types";
 import { ItemTypes } from "../../types/item-types";
+import { useAppDispatch } from "../../types/app-redux-thunk";
 
 interface IBurgerConstructorElement {
     ingredient: ITheIngredient;
@@ -27,7 +27,7 @@ interface DragItem {
 }
 
 const BurgerConstructorElement: FC<IBurgerConstructorElement> = ({ ingredient, index, moveIngredient, setIsDragging }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement>(null);
 
     //event handlers

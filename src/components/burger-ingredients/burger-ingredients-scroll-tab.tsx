@@ -1,8 +1,6 @@
-import { FC, MouseEventHandler, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IIngredientsStorage } from "../../types/ingredient-types";
 
 interface IBurgerIngredientsScrollTab extends PropsWithChildren {
     tabName: string;

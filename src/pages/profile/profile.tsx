@@ -3,15 +3,15 @@ import styles from "./profile.module.css";
 //react, router, redux
 import { NavLink, Outlet } from "react-router-dom";
 import { FC, MouseEventHandler } from "react";
-import { useDispatch } from "react-redux";
 //constants
 import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../pages-paths";
 //actions
 import { userLogoutThunk } from "../../services/actions/profile/user-logout";
+import { useAppDispatch } from "../../types/app-redux-thunk";
 
 
 export const ProfilePage: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
         dispatch(userLogoutThunk() as any);

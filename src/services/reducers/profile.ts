@@ -1,5 +1,5 @@
 import { IRequestError } from "../../types/action-types";
-import { IUser, ResetPasswordStatus, TProfileStorage, TUser } from "../../types/profile-types";
+import { IProfileStorage, IUser, ResetPasswordStatus, TProfileStorage, TUser } from "../../types/profile-types";
 import {
     GET_PROFILE_DATA_REQUEST,
     GET_PROFILE_DATA_SUCCESS,
@@ -41,7 +41,7 @@ const profileInitialState: TProfileStorage = {
     loginErrorMessage: ""
 }
 
-const updateRequest = (state: TProfileStorage) => {
+const updateRequest = (state: TProfileStorage): TProfileStorage => {
     return {
         ...state,
         isLoading: true,
@@ -50,7 +50,7 @@ const updateRequest = (state: TProfileStorage) => {
     }
 }
 
-const updateRequestSuccess = (state: TProfileStorage) => {
+const updateRequestSuccess = (state: TProfileStorage): TProfileStorage => {
     return {
         ...state,
         isLoading: false,
@@ -59,18 +59,18 @@ const updateRequestSuccess = (state: TProfileStorage) => {
     }
 }
 
-const updateRequestFailed = (state: TProfileStorage, err: IRequestError, loginError: boolean = false) => {
+const updateRequestFailed = (state: TProfileStorage, err: IRequestError, loginError: boolean = false): TProfileStorage => {
     return {
         ...state,
         isLoading: false,
         isFailed: true,
         loginErrorMessage: loginError ? err.message : '',
-        hasLoginError: loginError && err.message,
+        hasLoginError: loginError && (err.message ? true : false),
     }
 }
 
 
-const updateUser = (state: TProfileStorage, user: TUser) => {
+const updateUser = (state: TProfileStorage, user: TUser): TProfileStorage => {
     return {
         ...state,
         user: {
@@ -81,7 +81,7 @@ const updateUser = (state: TProfileStorage, user: TUser) => {
     }
 }
 
-const updateNullPassword = (state: TProfileStorage) => {
+const updateNullPassword = (state: TProfileStorage): TProfileStorage => {
     return {
         ...state,
         user: {
@@ -91,7 +91,7 @@ const updateNullPassword = (state: TProfileStorage) => {
     }
 }
 
-const updateResetStatus = (state: TProfileStorage, resetStatus: ResetPasswordStatus = ResetPasswordStatus.None) => {
+const updateResetStatus = (state: TProfileStorage, resetStatus: ResetPasswordStatus = ResetPasswordStatus.None): TProfileStorage => {
     return {
         ...state,
         user: {
@@ -102,7 +102,7 @@ const updateResetStatus = (state: TProfileStorage, resetStatus: ResetPasswordSta
 }
 
 
-export const profileReducer = (state = profileInitialState, action: TProfileActions) => {
+export const profileReducer = (state = profileInitialState, action: TProfileActions): TProfileStorage => {
 
     switch (action.type) {
         case FORGOT_PASSWORD_REQUEST: {
@@ -181,37 +181,37 @@ export const profileReducer = (state = profileInitialState, action: TProfileActi
         }
         case USER_LOGOUT_FAILED: {
             return {
-                ...updateRequestFailed(state,action.err)                
+                ...updateRequestFailed(state, action.err)
             };
         }
         case UPDATE_USER_DATA_REQUEST: {
             return {
-                ...updateRequest(state)                
+                ...updateRequest(state)
             };
         }
         case UPDATE_USER_DATA_SUCCESS: {
             return {
-                ...updateRequestSuccess(updateUser(state,action.user))                
+                ...updateRequestSuccess(updateUser(state, action.user))
             };
         }
         case UPDATE_USER_DATA_FAILED: {
             return {
-                ...updateRequestFailed(state,action.err)
+                ...updateRequestFailed(state, action.err)
             };
         }
         case GET_PROFILE_DATA_REQUEST: {
             return {
-                ...updateRequest(state)                
+                ...updateRequest(state)
             };
         }
         case GET_PROFILE_DATA_SUCCESS: {
             return {
-                ...updateRequestSuccess(updateUser(state,action.user))                
+                ...updateRequestSuccess(updateUser(state, action.user))
             };
         }
         case GET_PROFILE_DATA_FAILED: {
             return {
-                ...updateRequestFailed(state,action.err)
+                ...updateRequestFailed(state, action.err)
             };
         }
 

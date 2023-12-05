@@ -1,30 +1,29 @@
 //styles
 import styles from "./profile.module.css";
 //react, redux
-import { useDispatch, useSelector } from "react-redux";
 import { FC, FormEventHandler } from "react";
 //components
 import { EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 //types
-import { IProfileStorage } from "../../types/profile-types";
 //constants
 import { FORGOT_PATH, REGISTER_PATH } from "../pages-paths";
 //actions
 import { userLoginThunk } from "../../services/actions/profile/user-login";
 //custom hook
 import { useForm } from "../../hooks/useForm";
+import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
 
 export const LoginPage: FC = () => {
-    const { loginErrorMessage, hasLoginError } = useSelector<any, IProfileStorage>(store => store.profile);
+    const { loginErrorMessage, hasLoginError } = useAppSelector(store => store.profile);
 
     const { values, handleChange } = useForm({
         email: "",
         password: "",
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();

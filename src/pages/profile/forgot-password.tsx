@@ -2,7 +2,6 @@
 import styles from "./profile.module.css";
 //react
 import { FC, FormEventHandler } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 //components
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -14,12 +13,13 @@ import { LOGIN_PATH, RESET_PATH } from "../pages-paths";
 import { forgotPasswordThunk } from "../../services/actions/profile/forgot-password";
 //custom hook
 import { useForm } from "../../hooks/useForm";
+import { useAppDispatch } from "../../types/app-redux-thunk";
 
 export const ForgotPasswordPage: FC = () => {
     const { values, handleChange } = useForm({
         email: "",
     });
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
