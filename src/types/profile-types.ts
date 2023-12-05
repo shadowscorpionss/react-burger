@@ -1,4 +1,5 @@
 import { IResSuccess } from "../utils/api";
+import { AppThunk } from "./app-redux-thunk";
 import { TStorage } from "./storage-types";
 
 export enum ResetPasswordStatus{
@@ -30,7 +31,7 @@ export type TProfileStorage = {
 
 export interface IProfileStorage extends TProfileStorage { }
 
-export type RegUpdateProfileFunction = (email: string, password: string, name: string) => any;
-export type LoginFunction = (email: string, password: string) => any;
-export type ResetPasswordFunction = (password: string, token: string) => any;
-export type ForgotPasswordFunction = (password: string) => any;
+export type RegUpdateProfileThunk = (email: string, password: string, name: string) => AppThunk;
+export type LoginThunk = (email: string, password: string) => AppThunk;
+export type ResetPasswordThunk = (password: string, token: string) => AppThunk;
+export type ForgotPasswordThunk = (password: string) => AppThunk;

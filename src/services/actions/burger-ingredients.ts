@@ -2,6 +2,7 @@
 import { IResSuccess, getIngredientsRequest } from '../../utils/api';
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../types/action-types';
 import { IIngredient } from '../../types/ingredient-types';
+import { AppDispatch, AppThunk } from '../../types/app-redux-thunk';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
@@ -38,7 +39,7 @@ interface IIngredientsResponse extends IResSuccess {
 }
 
 //ingredients load promise with dispatch
-export const getIngredientsThunk = (): any => (dispatch: any) => {
+export const getIngredientsThunk = (): AppThunk => (dispatch: AppDispatch) => {
     const dispatchError = (err: IRequestError) => dispatch(getIngredientsFailedAction(err));
     const dispatchSuccess = (res: IIngredientsResponse) => dispatch(getIngredientsSuccessAction(res.data));
 

@@ -3,6 +3,7 @@ import { IOrder, TOrder } from '../../types/order-types';
 import { IAction, IErrorAction, IRequestError, actionCreator, errorActionCreator, requestErrorActionCreator } from '../../types/action-types';
 import { IResSuccess, postOrderRequest } from '../../utils/api';
 import { clearConstructorDataAction } from './burger-constructor';
+import { AppDispatch, AppThunk } from '../../types/app-redux-thunk';
 
 export const MAKE_ORDER_REQUEST: 'MAKE_ORDER_REQUEST' = 'MAKE_ORDER_REQUEST';
 export const MAKE_ORDER_FAILED: 'MAKE_ORDER_FAILED' = 'MAKE_ORDER_FAILED';
@@ -21,7 +22,7 @@ export const makeOrderFailedAction = (err: IRequestError): IMakeOrderFailedActio
 export const makeOrderSuccessAction = (order: TOrder) => ({ ...actionCreator(MAKE_ORDER_SUCCESS), order });
 
 interface IOrderResponse extends IOrder, IResSuccess { }
-export const makeOrderThunk = (ingredientsIds: Array<string>): any => (dispatch: any) => {
+export const makeOrderThunk = (ingredientsIds: Array<string>): AppThunk => (dispatch: AppDispatch) => {
     dispatch(makeOrderAction());
     postOrderRequest<IOrderResponse>(ingredientsIds)
         .then(res => {

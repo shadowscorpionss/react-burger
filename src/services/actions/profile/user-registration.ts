@@ -1,5 +1,6 @@
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
-import { IUserResponse, RegUpdateProfileFunction, TUser } from '../../../types/profile-types';
+import { AppDispatch } from '../../../types/app-redux-thunk';
+import { IUserResponse, RegUpdateProfileThunk, TUser } from '../../../types/profile-types';
 import { registrationRequest } from '../../../utils/api';
 
 export const USER_REGISTRATION_REQUEST: 'USER_REGISTRATION_REQUEST' = 'USER_REGISTRATION_REQUEST';
@@ -16,7 +17,7 @@ const userRegistrationAction = (): IUserRegistrationAction => actionCreator(USER
 const userRegistrationFailedAction = (err: IRequestError): IUserRegistrationFailedAction => requestErrorActionCreator(USER_REGISTRATION_FAILED, err);
 const userRegistrationSucessAction = (user: TUser): IUserRegistrationSuccessAction => ({ ...actionCreator(USER_REGISTRATION_SUCCESS), user });
 
-export const userRegistrationThunk: RegUpdateProfileFunction = (email, password, name) => (dispatch: any) => {
+export const userRegistrationThunk: RegUpdateProfileThunk = (email, password, name) => (dispatch: AppDispatch) => {
     const dispatchError = (err: IRequestError) => dispatch(userRegistrationFailedAction(err));
     const dispatchSuccess = (res: IUserResponse) => dispatch(userRegistrationSucessAction(res.user))
     dispatch(userRegistrationAction());

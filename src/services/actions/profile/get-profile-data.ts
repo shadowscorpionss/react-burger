@@ -1,4 +1,5 @@
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
+import { AppDispatch, AppThunk } from '../../../types/app-redux-thunk';
 import { IUserResponse, TUser } from '../../../types/profile-types';
 import { getUserRequest } from '../../../utils/api';
 
@@ -20,7 +21,7 @@ const getProfileDataSuccessAction = (user: TUser): IGetProfileDataSuccessAction 
 const getProfileDataFailedAction = (err: IRequestError): IGetPfofileDataFailedAction => requestErrorActionCreator(GET_PROFILE_DATA_FAILED, err);
 
 
-export const getProfileDataThunk = (): any => (dispatch: any) => {
+export const getProfileDataThunk = (): AppThunk => (dispatch: AppDispatch) => {
     const dispatchError = (err: IRequestError) => dispatch(getProfileDataFailedAction(err));
     const dispatchSuccess = (res: IUserResponse) => dispatch(getProfileDataSuccessAction(res.user));
     dispatch(getProfileDataAction());

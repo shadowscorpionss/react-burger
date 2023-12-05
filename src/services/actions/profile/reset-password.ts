@@ -1,5 +1,6 @@
 import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../../types/action-types';
-import { ResetPasswordFunction } from '../../../types/profile-types';
+import { AppDispatch } from '../../../types/app-redux-thunk';
+import { ResetPasswordThunk } from '../../../types/profile-types';
 import { passwordRecoveryRequest } from '../../../utils/api';
 
 //consts
@@ -20,7 +21,7 @@ const resetPasswordFailedAction = (err: IRequestError): IResetPasswordFailedActi
 const resetPasswordSuccessAction = (): IResetPasswordSuccessAction => actionCreator(RESET_PASSWORD_SUCCESS);
 
 
-export const resetPasswordThunk: ResetPasswordFunction = (password, token) => (dispatch: any) => {
+export const resetPasswordThunk: ResetPasswordThunk = (password, token) => (dispatch: AppDispatch) => {
     const dispatchError = (err: IRequestError) => dispatch(resetPasswordFailedAction(err));
     const dispatchSuccess = () => dispatch(resetPasswordSuccessAction());
     dispatch(resetPasswordAction());
