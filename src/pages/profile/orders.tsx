@@ -10,11 +10,11 @@ export const ProfileOrdersPage = () => {
 
     useEffect(() => {
         dispatch(userOrdersStartAction());
+        return function cleanup() {
+            dispatch(userOrdersStopAction());
+        }
     }, [dispatch]);
 
-    useEffect(() => function cleanup() {
-        dispatch(userOrdersStopAction());
-    }, []);
     return (
         <div className={styles.wrapper}>
             {orders
