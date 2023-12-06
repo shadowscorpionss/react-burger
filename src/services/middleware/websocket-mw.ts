@@ -5,7 +5,7 @@ import { refreshTokenRequest } from "../../utils/api";
 import { IWSActions } from "./mw-types";
 import { AppDispatch, RootState } from "../../types/app-redux-thunk";
 
-export const WebSocketMiddleware = (WSActions: IWSActions<TApplicationActions>): Middleware => {
+export const webSocketMiddleware = (WSActions: IWSActions<TApplicationActions>): Middleware => {
     return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
         let wsUrl: string | null = null;
