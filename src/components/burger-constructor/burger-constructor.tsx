@@ -5,7 +5,7 @@ import { addConstructorIngredientAction, setConstructorBunAction, sortConstructo
 import { makeOrderThunk } from "../../services/actions/order";
 import BurgerConstructorElement from "./burger-constructor-element";
 import { useDrop } from "react-dnd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_PATH, ORDER_PATH } from "../../pages";
 import { ITheIngredient } from "../../types/constructor-types";
 import { IIngredient } from "../../types/ingredient-types";
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAppSelector(store => store.profile);
   //states and context
   const { ingredients, bun } = useAppSelector(store => store.burgerConstructor);
@@ -36,7 +37,7 @@ const BurgerConstructor: FC = () => {
       return;
     }
     dispatch(makeOrderThunk(ingredientsIds));
-    navigate(ORDER_PATH);
+    navigate(ORDER_PATH, { state: { background: location } });
   };
 
   const moveIngredient = (dragIndex: number, hoverIndex: number) => {
@@ -66,7 +67,7 @@ const BurgerConstructor: FC = () => {
   });
 
   //render
-  const renderConstructorElement = useCallback((item:ITheIngredient, index:number) => {
+  const renderConstructorElement = useCallback((item: ITheIngredient, index: number) => {
     return (
       (
         <li ref={lref} key={item.uniqueId} className={`${burgerConstructorStyles.listItem} `}>

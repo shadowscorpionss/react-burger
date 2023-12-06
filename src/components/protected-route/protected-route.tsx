@@ -15,7 +15,7 @@ const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
         return (<h1>Пожайлуста, подождите ...</h1>);
 
     if (isFailed || !user.email)
-        return (<Navigate to={LOGIN_PATH} state={{ path: location }} replace />);
+        return (<Navigate to={LOGIN_PATH} state={{ path: location, back: location?.state?.background }} replace />);
 
     return (<>{children}</>);
 }

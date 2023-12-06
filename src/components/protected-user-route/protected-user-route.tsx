@@ -12,7 +12,7 @@ export const ProtectedUserRoute : FC<PropsWithChildren>  = ({ children }) => {
     const { isLoading, user } = useAppSelector(store => store.profile);
 
     if (user.email)         
-        return (<Navigate to={location.state?.path || HOME_PATH} replace />);
+        return (<Navigate to={location.state?.path || HOME_PATH} state={{background: location.state?.back}} replace />);
 
     if (isLoading)
         return (<h1>Пожайлуста, подождите ...</h1>);    

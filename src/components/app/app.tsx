@@ -78,38 +78,35 @@ const App: FC = () => {
 
         <Route path={INGREDIENTS_DETAILS_PATH} element={<IngredientDetails />} />
 
-        <Route path={ORDER_PATH} element={<ProtectedRoute>
-          <Modal onClose={handleCloseOrderDetails}>
-            <OrderDetails />
-          </Modal>
-        </ProtectedRoute>} />
-
         <Route path={PROFILE_PATH} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}>
           <Route path={PROFILE_PATH} element={<ProfileInfo />} />
           <Route path={PROFILE_ORDERS_PATH} element={<ProfileOrdersPage />} />
         </Route>
         <Route path={USER_ORDER_DETAILS_PATH} element={<ProtectedRoute>
           <OrderInfo />
-        </ProtectedRoute>}
-        />
+        </ProtectedRoute>} />
 
         <Route path={FEED_PATH} element={<FeedPage />} />
         <Route path={FEED_ORDER_DETAILS_PATH} element={<OrderInfo />} />
 
-
+        <Route path='*' element={<h1 style={{ textAlign: "center" }}>Ошибка 404: страница не найдена</h1>} />
       </Routes>
 
       {background &&
         <Routes>
-          <Route path={ORDER_PATH} element={<ProtectedRoute><Modal >
-            <OrderDetails />
-          </Modal>
-          </ProtectedRoute>} />
+          <Route path={ORDER_PATH} element={
+            <ProtectedRoute>
+              <Modal>
+                <OrderDetails />
+              </Modal>
+            </ProtectedRoute>} />
           <Route path={FEED_ORDER_DETAILS_PATH} element={
             <OrderCardModal />
           } />
           <Route path={USER_ORDER_DETAILS_PATH} element={
-            <OrderCardModal />}
+            <ProtectedRoute>
+              <OrderCardModal />
+            </ProtectedRoute>}
           />
           <Route path={INGREDIENTS_DETAILS_PATH} element={<Modal onClose={handleCloseIngredientDetails} title={'Детали ингредиента'}>
             <IngredientDetails />
