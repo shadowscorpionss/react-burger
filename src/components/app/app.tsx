@@ -58,8 +58,8 @@ const App: FC = () => {
 
 
   useEffect(() => {
-    dispatch(getProfileDataThunk() as any);
-    dispatch(getIngredientsThunk() as any)
+    dispatch(getProfileDataThunk());
+    dispatch(getIngredientsThunk())
   }, [dispatch]);
 
   const location = useLocation();

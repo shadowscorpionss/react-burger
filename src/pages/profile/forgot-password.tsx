@@ -29,7 +29,7 @@ export const ForgotPasswordPage: FC = () => {
             return;
         }
 
-        dispatch(forgotPasswordThunk(values.email) as any);
+        dispatch(forgotPasswordThunk(values.email));
         navigate(RESET_PATH, { state: { resetPassword: true } });
 
     }

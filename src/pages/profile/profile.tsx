@@ -14,7 +14,7 @@ export const ProfilePage: FC = () => {
     const dispatch = useAppDispatch();
 
     const logOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        dispatch(userLogoutThunk() as any);
+        dispatch(userLogoutThunk());
     }
 
     return (

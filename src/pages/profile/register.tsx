@@ -31,7 +31,7 @@ export const RegisterPage: FC = () => {
             values.email,
             values.password,
             values.name
-        ) as any);
+        ));
     }
 
     return (

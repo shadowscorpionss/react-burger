@@ -32,7 +32,7 @@ export const LoginPage: FC = () => {
         if (vals.some(el => el === ""))
             return;
 
-        dispatch(userLoginThunk(values.email, values.password) as any);
+        dispatch(userLoginThunk(values.email, values.password));
     }
 
     return (

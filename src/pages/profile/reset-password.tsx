@@ -26,7 +26,7 @@ export const ResetPasswordPage:FC = () => {
             return;
         }
 
-        dispatch(resetPasswordThunk(password, token)as any);
+        dispatch(resetPasswordThunk(password, token));
     }
 
 

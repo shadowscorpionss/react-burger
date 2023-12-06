@@ -50,7 +50,7 @@ const ProfileInfo: FC = () => {
             values.email,
             values.password,
             values.name
-        ) as any);
+        ) );
     }
 
     const changeInputs = (e: ChangeEvent<HTMLInputElement>) => {
