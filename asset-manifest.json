@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "./index.html/static/css/main.fb921a02.css",
-    "main.js": "./index.html/static/js/main.7b99a6f6.js",
-    "static/media/JetBrainsMono-Bold.woff": "./index.html/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
-    "static/media/JetBrainsMono-Regular.woff": "./index.html/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
-    "static/media/JetBrainsMono-Bold.woff2": "./index.html/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
-    "static/media/JetBrainsMono-Regular.woff2": "./index.html/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
-    "static/media/done.png": "./index.html/static/media/done.c1e4143d6520599d0eb3.png",
-    "static/media/iceland.woff": "./index.html/static/media/iceland.77ad7fc2baffd9305538.woff",
-    "static/media/iceland.woff2": "./index.html/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
-    "index.html": "./index.html/index.html",
-    "main.fb921a02.css.map": "./index.html/static/css/main.fb921a02.css.map",
-    "main.7b99a6f6.js.map": "./index.html/static/js/main.7b99a6f6.js.map"
+    "main.css": "./public/index.html/static/css/main.fb921a02.css",
+    "main.js": "./public/index.html/static/js/main.01cd8c31.js",
+    "static/media/JetBrainsMono-Bold.woff": "./public/index.html/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "./public/index.html/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/JetBrainsMono-Bold.woff2": "./public/index.html/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "./public/index.html/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/done.png": "./public/index.html/static/media/done.c1e4143d6520599d0eb3.png",
+    "static/media/iceland.woff": "./public/index.html/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "./public/index.html/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "index.html": "./public/index.html/index.html",
+    "main.fb921a02.css.map": "./public/index.html/static/css/main.fb921a02.css.map",
+    "main.01cd8c31.js.map": "./public/index.html/static/js/main.01cd8c31.js.map"
   },
   "entrypoints": [
     "static/css/main.fb921a02.css",
-    "static/js/main.7b99a6f6.js"
+    "static/js/main.01cd8c31.js"
   ]
 }
