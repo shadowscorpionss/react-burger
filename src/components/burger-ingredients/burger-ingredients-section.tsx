@@ -1,8 +1,7 @@
-import { useSelector } from "react-redux";
 import burgerIngredientsSectionStyles from "./burger-ingredients-section.module.css";
 import BurgerIngredient from "./burger-ingredient";
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
-import { IIngredientsStorage } from "../../types/ingredient-types";
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import { useAppSelector } from "../../types/app-redux-thunk";
 
 interface IBurgerIngredientsSection {
   filter: string;
@@ -12,7 +11,7 @@ interface IBurgerIngredientsSection {
 //generates section of items 
 const BurgerIngredientsSection = forwardRef<HTMLElement, IBurgerIngredientsSection>(
   ({ filter, title }, ref) => {
-    const { ingredients } = useSelector<any, IIngredientsStorage>(store => store.burgerIngredients);
+    const { ingredients } = useAppSelector(store => store.burgerIngredients);
     const sectionRef = useRef<HTMLElement>({} as HTMLElement);
 
     useImperativeHandle(ref, () => sectionRef.current, [])

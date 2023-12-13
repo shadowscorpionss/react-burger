@@ -2,12 +2,11 @@
 import appStyles from './app.module.css';
 //react, redux, router
 import { FC, useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 //components
 import AppHeader from "../app-header/app-header";
 import ProtectedUserRoute from "../protected-user-route/protected-user-route";
-import ProtectedRoute  from "../protected-route/protected-route";
+import ProtectedRoute from "../protected-route/protected-route";
 import ProfileInfo from "../../pages/profile/profile-info";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -34,28 +33,33 @@ import {
   INGREDIENTS_DETAILS_PATH
 
 } from "../../pages";
+import { FEED_ORDER_DETAILS_PATH, USER_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
 //actions
-import { getProfileData } from "../../services/actions/profile/get-profile-data";
-import { getIngredients, resetCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { getProfileDataThunk } from "../../services/actions/profile/get-profile-data";
+import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
+
+import { OrderInfo } from '../orders/order-info';
+import { OrderCardModal } from '../orders/order-card-modal';
+import { useAppDispatch } from '../../types/app-redux-thunk';
 
 
-const App:FC = ()=> {
-  const dispatch = useDispatch();
+const App: FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleCloseIngredientDetails = useCallback(() => {
-    dispatch(resetCurrentIngredientActionCreator());
+    dispatch(resetCurrentIngredientAction());
     navigate(-1);
   }, [dispatch]);
 
-  const handleCloseOrderDetails = useCallback(() => {    
+  const handleCloseOrderDetails = useCallback(() => {
     navigate(-1);
   }, [dispatch]);
 
 
   useEffect(() => {
-    dispatch(getProfileData() as any);
-    dispatch(getIngredients() as any)
+    dispatch(getProfileDataThunk());
+    dispatch(getIngredientsThunk())
   }, [dispatch]);
 
   const location = useLocation();
@@ -74,27 +78,36 @@ const App:FC = ()=> {
 
         <Route path={INGREDIENTS_DETAILS_PATH} element={<IngredientDetails />} />
 
-        <Route path={ORDER_PATH} element={<ProtectedRoute>
-          <Modal onClose={handleCloseOrderDetails}>
-            <OrderDetails />
-          </Modal>
-        </ProtectedRoute>} />
-
         <Route path={PROFILE_PATH} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}>
           <Route path={PROFILE_PATH} element={<ProfileInfo />} />
           <Route path={PROFILE_ORDERS_PATH} element={<ProfileOrdersPage />} />
         </Route>
+        <Route path={USER_ORDER_DETAILS_PATH} element={<ProtectedRoute>
+          <OrderInfo />
+        </ProtectedRoute>} />
 
         <Route path={FEED_PATH} element={<FeedPage />} />
+        <Route path={FEED_ORDER_DETAILS_PATH} element={<OrderInfo />} />
 
+        <Route path='*' element={<h1 style={{ textAlign: "center" }}>Ошибка 404: страница не найдена</h1>} />
       </Routes>
 
       {background &&
         <Routes>
-          <Route path={ORDER_PATH} element={<ProtectedRoute><Modal >
-            <OrderDetails />
-          </Modal>
-          </ProtectedRoute>} />
+          <Route path={ORDER_PATH} element={
+            <ProtectedRoute>
+              <Modal>
+                <OrderDetails />
+              </Modal>
+            </ProtectedRoute>} />
+          <Route path={FEED_ORDER_DETAILS_PATH} element={
+            <OrderCardModal />
+          } />
+          <Route path={USER_ORDER_DETAILS_PATH} element={
+            <ProtectedRoute>
+              <OrderCardModal />
+            </ProtectedRoute>}
+          />
           <Route path={INGREDIENTS_DETAILS_PATH} element={<Modal onClose={handleCloseIngredientDetails} title={'Детали ингредиента'}>
             <IngredientDetails />
           </Modal>}

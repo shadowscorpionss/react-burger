@@ -1,22 +1,21 @@
 //react
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom'
 import { FC, PropsWithChildren } from 'react';
 //constants
 import { LOGIN_PATH } from '../../pages';
 //types
-import { IProfileStorage } from '../../types/profile-types';
+import { useAppSelector } from '../../types/app-redux-thunk';
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
     const location = useLocation();
 
-    const { isLoading, isFailed, user } = useSelector<any, IProfileStorage>(store => store.profile);
+    const { isLoading, isFailed, user } = useAppSelector(store => store.profile);
 
     if (isLoading && !user.email)
         return (<h1>Пожайлуста, подождите ...</h1>);
 
     if (isFailed || !user.email)
-        return (<Navigate to={LOGIN_PATH} state={{ path: location }} replace />);
+        return (<Navigate to={LOGIN_PATH} state={{ path: location, back: location?.state?.background }} replace />);
 
     return (<>{children}</>);
 }

@@ -1,12 +1,12 @@
 //styles
 import styles from "./burger-ingredients-container.module.css";
 //react, redux
-import { FC, MutableRefObject, RefObject, UIEvent, useState } from "react";
+import { FC, RefObject, UIEvent, useState } from "react";
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 //custom components
 import BurgerIngredientsSection from "./burger-ingredients-section";
 import BurgerIngredientsScrollTab from "./burger-ingredients-scroll-tab";
+import { useAppSelector } from "../../types/app-redux-thunk";
 
 //constants
 const sections = ["bun", "sauce", "main"] as const;
@@ -27,7 +27,7 @@ type TTabs = {
 
 const BurgerIngredientsContainer: FC<{}> = () => {
   //store
-  const { ingredients, isLoading, isFailed, errorMessage } = useSelector<any, any>(store => store.burgerIngredients);
+  const { ingredients, isLoading, isFailed, errorMessage } = useAppSelector(store => store.burgerIngredients);
 
   const [activeTab, setActiveTab] = useState("bunTab");
 

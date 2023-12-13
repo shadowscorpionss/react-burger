@@ -2,13 +2,12 @@
 import orderConfirmStyles from "./order-details.module.css";
 import doneImage from "../../images/done.png";
 //react, redux
-import { useSelector } from "react-redux";
 import { FC, useMemo } from "react";
 //types
-import { IOrderStorage } from "../../types/order-types";
+import { useAppSelector } from "../../types/app-redux-thunk";
 
 const OrderDetails: FC<{}> = () => {
-  const { isLoading, isFailed, order, errorMessage } = useSelector<any, IOrderStorage>(store => store.order);
+  const { isLoading, isFailed, order, errorMessage } = useAppSelector(store => store.order);
 
   const messages = useMemo(() => isFailed ?
     ["Ошибка выполнения запроса", errorMessage] :
@@ -25,7 +24,7 @@ const OrderDetails: FC<{}> = () => {
     <div className={orderConfirmStyles.orderCard}>
       <div className={orderConfirmStyles.topSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.orderId}>
-        <p className=" text text_type_digits-large ">{order.number}</p>
+        {!isLoading && (<p className=" text text_type_digits-large ">{order.number}</p>)}
       </div>
       <div className={orderConfirmStyles.orderIdSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.orderIdLabel}>

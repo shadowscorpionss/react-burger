@@ -1,14 +1,13 @@
 import burgerIngredientStyles from "./burger-ingredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentIngredientActionCreator } from "../../services/actions/burger-ingredients";
+import { setCurrentIngredientAction } from "../../services/actions/burger-ingredients";
 import { useMemo, FC, MouseEventHandler } from "react";
 import { addConstructorIngredientAction, setConstructorBunAction } from "../../services/actions/burger-constructor";
 import { useDrag } from "react-dnd";
 import { INGREDIENTS_PATH } from "../../pages/pages-paths";
 import { Link, useLocation } from "react-router-dom";
 import { IIngredient } from "../../types/ingredient-types";
-import { IBurgerConstructorStorage } from "../../types/constructor-types";
+import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
 
 interface IBurgerIngredient{
   ingredient: IIngredient;
@@ -16,10 +15,10 @@ interface IBurgerIngredient{
 
 const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   //store
-  const { ingredients, bun } = useSelector<any, IBurgerConstructorStorage>(store => store.burgerConstructor);
+  const { ingredients, bun } = useAppSelector(store => store.burgerConstructor);
 
   const [{ opacity }, drag] = useDrag({
     type: "ingredient",
@@ -47,7 +46,7 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
         dispatch(setConstructorBunAction(ingredient));
       return;
     }
-    dispatch(setCurrentIngredientActionCreator(ingredient));
+    dispatch(setCurrentIngredientAction(ingredient));
   }
 
   return (

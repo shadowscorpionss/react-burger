@@ -2,7 +2,6 @@
 import styles from "./profile.module.css";
 //react
 import { FC, FormEventHandler } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 //components
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,15 +10,16 @@ import { Link } from "react-router-dom";
 //constans
 import { LOGIN_PATH, RESET_PATH } from "../pages-paths";
 //actions
-import { forgotPassword } from "../../services/actions/profile/forgot-password";
+import { forgotPasswordThunk } from "../../services/actions/profile/forgot-password";
 //custom hook
 import { useForm } from "../../hooks/useForm";
+import { useAppDispatch } from "../../types/app-redux-thunk";
 
 export const ForgotPasswordPage: FC = () => {
     const { values, handleChange } = useForm({
         email: "",
     });
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -29,7 +29,7 @@ export const ForgotPasswordPage: FC = () => {
             return;
         }
 
-        dispatch(forgotPassword(values.email) as any);
+        dispatch(forgotPasswordThunk(values.email));
         navigate(RESET_PATH, { state: { resetPassword: true } });
 
     }

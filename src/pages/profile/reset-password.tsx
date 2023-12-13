@@ -3,20 +3,20 @@ import styles from "./profile.module.css";
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
-import { resetPassword } from "../../services/actions/profile/reset-password"
+import { resetPasswordThunk } from "../../services/actions/profile/reset-password"
 import { useState, useEffect, FC, FormEventHandler } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FORGOT_PATH, LOGIN_PATH, PROFILE_PATH } from "../pages-paths";
-import { IProfileStorage } from "../../types/profile-types";
+import { FORGOT_PATH, LOGIN_PATH } from "../pages-paths";
+import { ResetPasswordStatus } from "../../types/profile-types";
+import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
 
 export const ResetPasswordPage:FC = () => {
-    const { user: { passwordReset } } = useSelector<any,IProfileStorage> (store => store.profile);
+    const { user: { resetStatus: passwordReset } } = useAppSelector(store => store.profile);
 
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("")
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -26,12 +26,12 @@ export const ResetPasswordPage:FC = () => {
             return;
         }
 
-        dispatch(resetPassword(password, token)as any);
+        dispatch(resetPasswordThunk(password, token));
     }
 
 
     useEffect(() => {
-        if (passwordReset === 2)
+        if (passwordReset === ResetPasswordStatus.Finish)
             navigate(LOGIN_PATH, { state: { resetPassword: false } });
         
     }, [passwordReset]);
