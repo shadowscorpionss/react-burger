@@ -15,7 +15,7 @@ export const currentOrderReducer = (state = currentOrderInitialState, action: TG
             return { ...state, isLoading: true, errorMessage: '', isFailed: false };
 
         case GET_CURRENT_ORDER_FAILED:
-            return { ...state, isLoading: true, errorMessage: action.err.message, isFailed: false };
+            return { ...state, isLoading: false, errorMessage: action.err.message, isFailed: true };
 
         case GET_CURRENT_ORDER_SUCCESS:
             return { ...state, isLoading: false, isFailed: false, errorMessage: '', order: action.order };
