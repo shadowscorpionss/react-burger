@@ -1,6 +1,6 @@
 import { TOrder, TOrderStorage, defaultOrder } from "../../types/order-types";
 import { TUser } from "../../types/profile-types";
-import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, makeOrderFailedAction } from "../actions/order";
+import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions, makeOrderFailedAction } from "../actions/order";
 import { orderReducer } from "./order";
 
 const order: TOrder =
@@ -25,6 +25,9 @@ const initialState: TOrderStorage = {
 }
 
 describe('test orderReducer', () => {
+    it('should return the initial state', () => {
+        expect(orderReducer(undefined, {} as TMakeOrderActions)).toEqual(initialState)
+    });
 
     it('should return loading state on request', () => {
         const expected = {
@@ -61,10 +64,10 @@ describe('test orderReducer', () => {
         };
         const received = orderReducer(initialState, {
             type: MAKE_ORDER_FAILED,
-            err: {message:'failed', status:0, additional:''}
+            err: { message: 'failed', status: 0, additional: '' }
         });
         expect(received).toEqual(expected)
     });
-   
+
 
 });
