@@ -1,5 +1,5 @@
 import { IRequestError } from "../../types/action-types";
-import { IProfileStorage, IUser, ResetPasswordStatus, TProfileStorage, TUser } from "../../types/profile-types";
+import { IUser, ResetPasswordStatus, TProfileStorage, TUser } from "../../types/profile-types";
 import {
     GET_PROFILE_DATA_REQUEST,
     GET_PROFILE_DATA_SUCCESS,

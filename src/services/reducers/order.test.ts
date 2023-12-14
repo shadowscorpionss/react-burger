@@ -1,6 +1,5 @@
 import { TOrder, TOrderStorage, defaultOrder } from "../../types/order-types";
-import { TUser } from "../../types/profile-types";
-import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions, makeOrderFailedAction } from "../actions/order";
+import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions } from "../actions/order";
 import { orderReducer } from "./order";
 
 const order: TOrder =
