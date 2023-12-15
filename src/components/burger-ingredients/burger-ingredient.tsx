@@ -9,14 +9,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { IIngredient } from '../../types/ingredient-types';
 import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
 
-interface IBurgerIngredient{
+interface IBurgerIngredient {
   ingredient: IIngredient;
 };
 
-const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
+const BurgerIngredient: FC<IBurgerIngredient> = ({ ingredient }) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  
+
   //store
   const { ingredients, bun } = useAppSelector(store => store.burgerConstructor);
 
@@ -38,7 +38,7 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
   }, [ingredients, bun]);
 
   //event handlers
-  const handleIngredientClick:MouseEventHandler<HTMLDivElement> = (e) => {
+  const handleIngredientClick: MouseEventHandler<HTMLDivElement> = (e) => {
     if (e.ctrlKey) {
       e.preventDefault();
       e.stopPropagation();
@@ -47,7 +47,7 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
       else
         dispatch(setConstructorBunAction(ingredient));
       return;
-      
+
     }
     dispatch(setCurrentIngredientAction(ingredient));
   }
@@ -60,7 +60,9 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
         state={{ background: location }}
         className={burgerIngredientStyles.container}
       >
-        <div style={{ opacity: opacity }} ref={drag} onClick={handleIngredientClick} title='Зажмите CTRL и кликните по ингридиенту, чтобы добавить в корзину'>
+        <div style={{ opacity: opacity }} ref={drag} onClick={handleIngredientClick}
+          title='Зажмите CTRL и кликните по ингридиенту, чтобы добавить в корзину'
+          data-test-id={ingredient._id}>
           {!!count && <Counter count={count} size='default' />}
           <img src={ingredient.image} alt={ingredient.name} className='ml-4 mr-4 mb-1' />
           <div className={`${burgerIngredientStyles.currency} mb-1`}>
