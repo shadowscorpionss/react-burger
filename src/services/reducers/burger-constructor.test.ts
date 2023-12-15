@@ -1,11 +1,7 @@
 
-import exp from 'constants';
 import { ITheIngredient, TBurgerConstructorStorage } from '../../types/constructor-types';
-import { IIngredient } from '../../types/ingredient-types';
-import { ADD_CONSTRUCTOR_INGREDIENT, CLEAR_CONSTRUCTOR_DATA, REMOVE_CONSTRUCTOR_INGREDIENT, SET_CONSTRUCTOR_BUN, SORT_CONSTRUCTOR_DATA, TBurgerConstructorActions, addUniqueId } from '../actions/burger-constructor';
-import { GET_CURRENT_ORDER_FAILED, GET_CURRENT_ORDER_SUCCESS } from '../actions/current-order';
+import { ADD_CONSTRUCTOR_INGREDIENT, CLEAR_CONSTRUCTOR_DATA, REMOVE_CONSTRUCTOR_INGREDIENT, SET_CONSTRUCTOR_BUN, SORT_CONSTRUCTOR_DATA, TBurgerConstructorActions } from '../actions/burger-constructor';
 import { burgerConstructorReducer } from './burger-constructor';
-import { currentOrderReducer } from './current-order';
 
 const defaultBun: ITheIngredient = {
     uniqueId: '22',
