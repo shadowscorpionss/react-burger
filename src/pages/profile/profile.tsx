@@ -1,13 +1,13 @@
 //styles
-import styles from "./profile.module.css";
+import styles from './profile.module.css';
 //react, router, redux
-import { NavLink, Outlet } from "react-router-dom";
-import { FC, MouseEventHandler } from "react";
+import { NavLink, Outlet } from 'react-router-dom';
+import { FC, MouseEventHandler } from 'react';
 //constants
-import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../pages-paths";
+import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from '../pages-paths';
 //actions
-import { userLogoutThunk } from "../../services/actions/profile/user-logout";
-import { useAppDispatch } from "../../types/app-redux-thunk";
+import { userLogoutThunk } from '../../services/actions/profile/user-logout';
+import { useAppDispatch } from '../../types/app-redux-thunk';
 
 
 export const ProfilePage: FC = () => {
@@ -29,7 +29,7 @@ export const ProfilePage: FC = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p className="text text_type_main-medium">Профиль</p>
+                        <p className='text text_type_main-medium'>Профиль</p>
                     </NavLink>
 
                     <NavLink
@@ -39,7 +39,7 @@ export const ProfilePage: FC = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p className="text text_type_main-medium">История заказов</p>
+                        <p className='text text_type_main-medium'>История заказов</p>
                     </NavLink>
 
                     <NavLink
@@ -50,7 +50,7 @@ export const ProfilePage: FC = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p className="text text_type_main-medium">Выход</p>
+                        <p className='text text_type_main-medium'>Выход</p>
                     </NavLink>
 
                     <p className={`${styles.text} mt-30`}>

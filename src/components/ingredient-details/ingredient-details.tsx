@@ -1,11 +1,11 @@
 //react, redux, router
-import { useParams } from "react-router-dom";
-import { FC, useEffect, useMemo } from "react";
+import { useParams } from 'react-router-dom';
+import { FC, useEffect, useMemo } from 'react';
 //components
-import IngredientCard from "../ingredient-card/ingredient-card";
+import IngredientCard from '../ingredient-card/ingredient-card';
 //actions
-import { setCurrentIngredientAction } from "../../services/actions/burger-ingredients";
-import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
+import { setCurrentIngredientAction } from '../../services/actions/burger-ingredients';
+import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
 
 const IngredientDetails: FC<{}> = () => {
   const dispatch = useAppDispatch();

@@ -1,4 +1,4 @@
-import { TIngredientsStorage } from "../../types/ingredient-types";
+import { TIngredientsStorage } from '../../types/ingredient-types';
 import {
     GET_INGREDIENTS_FAILED,
     GET_INGREDIENTS_REQUEST,
@@ -6,7 +6,7 @@ import {
     SET_CURRENT_INGREDIENT,
     RESET_CURRENT_INGREDIENT,
     TIngredientsActions
-} from "../actions/burger-ingredients";
+} from '../actions/burger-ingredients';
 
 
 //

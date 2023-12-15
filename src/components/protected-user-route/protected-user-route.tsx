@@ -1,10 +1,10 @@
 //react, redux, router
-import { Navigate, useLocation } from "react-router-dom"
-import { FC, PropsWithChildren } from "react";
+import { Navigate, useLocation } from 'react-router-dom'
+import { FC, PropsWithChildren } from 'react';
 //constants
-import { HOME_PATH } from "../../pages";
+import { HOME_PATH } from '../../pages';
 //types
-import { useAppSelector } from "../../types/app-redux-thunk";
+import { useAppSelector } from '../../types/app-redux-thunk';
 
 export const ProtectedUserRoute : FC<PropsWithChildren>  = ({ children }) => {
     const location = useLocation();

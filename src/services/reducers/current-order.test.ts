@@ -1,18 +1,18 @@
-import { IOrderStorage, TOrder, defaultOrder } from "../../types/order-types";
-import { GET_CURRENT_ORDER_FAILED, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS, TGetCurrentOrderActions } from "../actions/current-order";
-import { currentOrderReducer } from "./current-order";
+import { IOrderStorage, TOrder, defaultOrder } from '../../types/order-types';
+import { GET_CURRENT_ORDER_FAILED, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS, TGetCurrentOrderActions } from '../actions/current-order';
+import { currentOrderReducer } from './current-order';
 
 const order: TOrder =
 {
-    _id: "657af14d7fd657001ba0916b",
-    ingredients: ["643d69a5c3f7b9001cfa093d",
-        "643d69a5c3f7b9001cfa093e",
-        "643d69a5c3f7b9001cfa0945",
-        "643d69a5c3f7b9001cfa093d"],
-    status: "done",
-    name: "Антарианский люминесцентный флюоресцентный бургер",
-    createdAt: "2023-12-14T12:13:01.548Z",
-    updatedAt: "2023-12-14T12:13:01.968Z",
+    _id: '657af14d7fd657001ba0916b',
+    ingredients: ['643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa093e',
+        '643d69a5c3f7b9001cfa0945',
+        '643d69a5c3f7b9001cfa093d'],
+    status: 'done',
+    name: 'Антарианский люминесцентный флюоресцентный бургер',
+    createdAt: '2023-12-14T12:13:01.548Z',
+    updatedAt: '2023-12-14T12:13:01.968Z',
     number: 29175,
 
 };

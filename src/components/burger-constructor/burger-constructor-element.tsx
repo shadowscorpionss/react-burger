@@ -1,17 +1,17 @@
 //styles
-import burgerConstructorElementStyles from "./burger-constructor-element.module.css";
+import burgerConstructorElementStyles from './burger-constructor-element.module.css';
 //components
-import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 //react,redux,dnd
-import { useDrag, useDrop } from "react-dnd";
-import { FC, useEffect, useRef } from "react";
+import { useDrag, useDrop } from 'react-dnd';
+import { FC, useEffect, useRef } from 'react';
 //redux actions
-import { removeConstructorIngredientAction } from "../../services/actions/burger-constructor";
+import { removeConstructorIngredientAction } from '../../services/actions/burger-constructor';
 //types
 import type { Identifier, XYCoord } from 'dnd-core';
-import { ITheIngredient } from "../../types/constructor-types";
-import { ItemTypes } from "../../types/item-types";
-import { useAppDispatch } from "../../types/app-redux-thunk";
+import { ITheIngredient } from '../../types/constructor-types';
+import { ItemTypes } from '../../types/item-types';
+import { useAppDispatch } from '../../types/app-redux-thunk';
 
 interface IBurgerConstructorElement {
     ingredient: ITheIngredient;
@@ -48,7 +48,7 @@ const BurgerConstructorElement: FC<IBurgerConstructorElement> = ({ ingredient, i
                 }
                 const dragIndex = item.index
                 const hoverIndex = index
-                // Don"t replace items with themselves
+                // Don't replace items with themselves
                 if (dragIndex === hoverIndex) {
                     return
                 }
@@ -74,11 +74,11 @@ const BurgerConstructorElement: FC<IBurgerConstructorElement> = ({ ingredient, i
                 }
 
                 // Time to actually perform the action
-                if (typeof (moveIngredient) === "function")
+                if (typeof (moveIngredient) === 'function')
                     moveIngredient(dragIndex, hoverIndex);
-                // Note: we"re mutating the monitor item here!
-                // Generally it"s better to avoid mutations,
-                // but it"s good here for the sake of performance
+                // Note: we're mutating the monitor item here!
+                // Generally it's better to avoid mutations,
+                // but it's good here for the sake of performance
                 // to avoid expensive index searches.
                 item.index = hoverIndex
 
@@ -108,13 +108,13 @@ const BurgerConstructorElement: FC<IBurgerConstructorElement> = ({ ingredient, i
 
     //
     useEffect(() => {
-        if (typeof setIsDragging === "function")
+        if (typeof setIsDragging === 'function')
             setIsDragging(isDragging)
     }, [isDragging]);
 
     return (
         <div ref={ref} onDrop={e => e.preventDefault()} style={{ opacity: opacity }} className={burgerConstructorElementStyles.constructorElementContainer} data-handler-id={handlerId}>
-            <div className={`${"mr-2"}  ${burgerConstructorElementStyles.selfCenter}`}> <DragIcon type="primary" /></div>
+            <div className={`${'mr-2'}  ${burgerConstructorElementStyles.selfCenter}`}> <DragIcon type='primary' /></div>
             <div className={burgerConstructorElementStyles.constructorElementContainer}>
                 <ConstructorElement
                     text={ingredient.name}

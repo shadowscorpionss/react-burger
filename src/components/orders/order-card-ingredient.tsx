@@ -20,7 +20,7 @@ export const OrderCardIngridient: FC<IOrderCardIngridient> = ({ name, image_mobi
             <div className={styles.price}>
                 <span>{count} x</span>
                 <span>{price}</span>
-                <CurrencyIcon type="primary" />
+                <CurrencyIcon type='primary' />
             </div>
         </li>
     )

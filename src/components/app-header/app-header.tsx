@@ -1,21 +1,21 @@
 //styles
-import appHeaderStyles from "./app-header.module.css";
+import appHeaderStyles from './app-header.module.css';
 //react, router
-import { FC, useMemo } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { FC, useMemo } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 //components
-import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 //constants
-import { FEED_PATH, HOME_PATH, PROFILE_PATH } from "../../pages";
+import { FEED_PATH, HOME_PATH, PROFILE_PATH } from '../../pages';
 const paths = [HOME_PATH,FEED_PATH];
 
 const AppHeader: FC = () => {
   const location = useLocation();
   const activePage = useMemo(() => paths.findIndex(el=> el===location.pathname), [location]);
 
-  const burgerIconType = useMemo(() => activePage === 0 ? "primary" : "secondary", [activePage]);
-  const listIconType = useMemo(() => activePage === 1 ? "primary" : "secondary", [activePage]);
-  const profileIconType = useMemo(() => activePage === -1 ? "primary" : "secondary", [activePage]);
+  const burgerIconType = useMemo(() => activePage === 0 ? 'primary' : 'secondary', [activePage]);
+  const listIconType = useMemo(() => activePage === 1 ? 'primary' : 'secondary', [activePage]);
+  const profileIconType = useMemo(() => activePage === -1 ? 'primary' : 'secondary', [activePage]);
 
   const constructorTextStyle = useMemo(()=> activePage===0 ?'':'text_color_inactive', [activePage]);
   const feedTextStyle = useMemo(()=> activePage===1 ?'':'text_color_inactive', [activePage]);

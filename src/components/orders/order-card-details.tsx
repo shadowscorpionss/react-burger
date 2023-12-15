@@ -68,7 +68,7 @@ export const OrderCardDetails: FC<IOrderCardDetails> = ({ order }) => {
                 <p className={styles.data}>{data}</p>
                 <div className={styles.inner}>
                     <p>{totalPrice}</p>
-                    <CurrencyIcon type="primary" />
+                    <CurrencyIcon type='primary' />
                 </div>
             </div>
         </div>

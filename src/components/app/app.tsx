@@ -1,16 +1,16 @@
 //styles
 import appStyles from './app.module.css';
 //react, redux, router
-import { FC, useCallback, useEffect } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { FC, useCallback, useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 //components
-import AppHeader from "../app-header/app-header";
-import ProtectedUserRoute from "../protected-user-route/protected-user-route";
-import ProtectedRoute from "../protected-route/protected-route";
-import ProfileInfo from "../../pages/profile/profile-info";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import AppHeader from '../app-header/app-header';
+import ProtectedUserRoute from '../protected-user-route/protected-user-route';
+import ProtectedRoute from '../protected-route/protected-route';
+import ProfileInfo from '../../pages/profile/profile-info';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 //constants, pages
 import {
   FORGOT_PATH,
@@ -32,11 +32,11 @@ import {
   PROFILE_ORDERS_PATH,
   INGREDIENTS_DETAILS_PATH
 
-} from "../../pages";
+} from '../../pages';
 import { FEED_ORDER_DETAILS_PATH, USER_ORDER_DETAILS_PATH } from '../../pages/pages-paths';
 //actions
-import { getProfileDataThunk } from "../../services/actions/profile/get-profile-data";
-import { getIngredientsThunk, resetCurrentIngredientAction } from "../../services/actions/burger-ingredients";
+import { getProfileDataThunk } from '../../services/actions/profile/get-profile-data';
+import { getIngredientsThunk, resetCurrentIngredientAction } from '../../services/actions/burger-ingredients';
 
 import { OrderInfo } from '../orders/order-info';
 import { OrderCardModal } from '../orders/order-card-modal';
@@ -89,7 +89,7 @@ const App: FC = () => {
         <Route path={FEED_PATH} element={<FeedPage />} />
         <Route path={FEED_ORDER_DETAILS_PATH} element={<OrderInfo />} />
 
-        <Route path='*' element={<h1 style={{ textAlign: "center" }}>Ошибка 404: страница не найдена</h1>} />
+        <Route path='*' element={<h1 style={{ textAlign: 'center' }}>Ошибка 404: страница не найдена</h1>} />
       </Routes>
 
       {background &&

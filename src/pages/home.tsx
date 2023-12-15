@@ -1,12 +1,12 @@
 //styles
-import homeStyles from "./home.module.css";
+import homeStyles from './home.module.css';
 //react, dnd
-import { FC } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { FC } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 //components
-import BurgerIngredientsContainer from "../components/burger-ingredients/burger-ingredients-container";
-import BurgerConstructor from "../components/burger-constructor/burger-constructor";
+import BurgerIngredientsContainer from '../components/burger-ingredients/burger-ingredients-container';
+import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 
 export const HomePage: FC = () => {
     return (
@@ -14,7 +14,7 @@ export const HomePage: FC = () => {
             <div className={homeStyles.grid}>
                 <DndProvider backend={HTML5Backend}>
                     <section className={homeStyles.column}>
-                        <h2 className="text text_type_main-large">Соберите бургер</h2>
+                        <h2 className='text text_type_main-large'>Соберите бургер</h2>
                         <div className={homeStyles.cellContent}>
                             <BurgerIngredientsContainer />
                         </div>

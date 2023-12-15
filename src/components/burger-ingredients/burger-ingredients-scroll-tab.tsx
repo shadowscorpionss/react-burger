@@ -1,6 +1,6 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from 'react';
 
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 interface IBurgerIngredientsScrollTab extends PropsWithChildren {
     tabName: string;

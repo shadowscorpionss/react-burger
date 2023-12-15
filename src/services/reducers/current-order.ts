@@ -1,5 +1,5 @@
-import { IOrderStorage, defaultOrder } from "../../types/order-types";
-import { GET_CURRENT_ORDER_FAILED, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS, TGetCurrentOrderActions } from "../actions/current-order";
+import { IOrderStorage, defaultOrder } from '../../types/order-types';
+import { GET_CURRENT_ORDER_FAILED, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS, TGetCurrentOrderActions } from '../actions/current-order';
 
 
 const currentOrderInitialState: IOrderStorage = {

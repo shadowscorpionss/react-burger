@@ -1,26 +1,26 @@
 //styles
-import styles from "./profile.module.css";
+import styles from './profile.module.css';
 //react, redux
-import { FC, FormEventHandler } from "react";
+import { FC, FormEventHandler } from 'react';
 //components
-import { EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 //types
 //constants
-import { FORGOT_PATH, REGISTER_PATH } from "../pages-paths";
+import { FORGOT_PATH, REGISTER_PATH } from '../pages-paths';
 //actions
-import { userLoginThunk } from "../../services/actions/profile/user-login";
+import { userLoginThunk } from '../../services/actions/profile/user-login';
 //custom hook
-import { useForm } from "../../hooks/useForm";
-import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
+import { useForm } from '../../hooks/useForm';
+import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
 
 export const LoginPage: FC = () => {
     const { loginErrorMessage, hasLoginError } = useAppSelector(store => store.profile);
 
     const { values, handleChange } = useForm({
-        email: "",
-        password: "",
+        email: '',
+        password: '',
     });
 
     const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ export const LoginPage: FC = () => {
         e.preventDefault();
 
         const vals = Object.values(values);
-        if (vals.some(el => el === ""))
+        if (vals.some(el => el === ''))
             return;
 
         dispatch(userLoginThunk(values.email, values.password));
@@ -39,24 +39,24 @@ export const LoginPage: FC = () => {
         <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
             <h1>Вход</h1>
             <EmailInput
-                name="email"
+                name='email'
                 value={values.email}
                 onChange={handleChange}
-                placeholder={"E-mail"}
-                extraClass="mt-6"
+                placeholder={'E-mail'}
+                extraClass='mt-6'
             />
             <PasswordInput
-                name="password"
+                name='password'
                 value={values.password}
                 onChange={handleChange}
-                placeholder={"Пароль"}
-                extraClass="mt-6"
-                icon={"ShowIcon"}
+                placeholder={'Пароль'}
+                extraClass='mt-6'
+                icon={'ShowIcon'}
             />
 
-            {hasLoginError && (<p className="mt-4 " >  {loginErrorMessage}</p>)}
+            {hasLoginError && (<p className='mt-4 ' >  {loginErrorMessage}</p>)}
 
-            <Button htmlType="submit" size="medium" extraClass="mt-6">Войти</Button>
+            <Button htmlType='submit' size='medium' extraClass='mt-6'>Войти</Button>
 
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >

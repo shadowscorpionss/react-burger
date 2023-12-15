@@ -1,6 +1,6 @@
-import emptybun from "../../images/emptybun.png";
-import { TBurgerConstructorStorage } from "../../types/constructor-types";
-import { IIngredient } from "../../types/ingredient-types";
+import emptybun from '../../images/emptybun.png';
+import { TBurgerConstructorStorage } from '../../types/constructor-types';
+import { IIngredient } from '../../types/ingredient-types';
 import {
     ADD_CONSTRUCTOR_INGREDIENT,
     CLEAR_CONSTRUCTOR_DATA,
@@ -9,16 +9,16 @@ import {
     SET_CONSTRUCTOR_BUN,
     TBurgerConstructorActions,
     addUniqueId
-} from "../actions/burger-constructor";
+} from '../actions/burger-constructor';
 
 const defaultBun: IIngredient = {
-    _id: "",
+    _id: '',
     price: 0,
-    name: "",
+    name: '',
     image: emptybun,
     image_mobile: emptybun,
     image_large: emptybun,
-    type: "bun",
+    type: 'bun',
     __v: 0
 };
 

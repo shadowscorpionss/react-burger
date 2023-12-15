@@ -1,7 +1,7 @@
 //styles
-import overlayStyles from "./modal-overlay.module.css";
+import overlayStyles from './modal-overlay.module.css';
 //react
-import { FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler } from 'react';
 
 //types
 interface IModalOverlay {

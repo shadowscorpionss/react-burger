@@ -60,7 +60,7 @@ export const OrderCard: FC<TOrder> = ({ ingredients, createdAt, name, number, st
                 <OrderImages icons={sortedIcons} />
                 <div className={styles.priceWrapper}>
                     <p className={styles.totalPrice}>{totalPrice}</p>
-                    <CurrencyIcon type="primary" />
+                    <CurrencyIcon type='primary' />
                 </div>
             </div>
         </Link>

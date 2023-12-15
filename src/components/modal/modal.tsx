@@ -1,12 +1,12 @@
 //styles
-import modalStyles from "./modal.module.css";
+import modalStyles from './modal.module.css';
 //react
-import { FC, MouseEventHandler, PropsWithChildren, useCallback, useEffect } from "react";
-import ReactDom from "react-dom";
+import { FC, MouseEventHandler, PropsWithChildren, useCallback, useEffect } from 'react';
+import ReactDom from 'react-dom';
 //components
-import ModalOverlay from "./modal-overlay";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useLocation, useNavigate } from "react-router-dom";
+import ModalOverlay from './modal-overlay';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 //types
 interface IModal extends PropsWithChildren {
@@ -15,9 +15,9 @@ interface IModal extends PropsWithChildren {
 }
 
 //constants
-const modalPortal = document.getElementById("modal-root");
+const modalPortal = document.getElementById('modal-root');
 
-const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
+const Modal: FC<IModal> = ({ onClose, title = '', children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const closeModal = useCallback(() => {
@@ -33,7 +33,7 @@ const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
   }
 
   const closeOnEscapeKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       handleClose();
     }
   };
@@ -48,11 +48,11 @@ const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
   useEffect(() => {
     document
       .body
-      .addEventListener("keydown", closeOnEscapeKeyDown);
+      .addEventListener('keydown', closeOnEscapeKeyDown);
     return function cleanup() {
       document
         .body
-        .removeEventListener("keydown", closeOnEscapeKeyDown);
+        .removeEventListener('keydown', closeOnEscapeKeyDown);
     };
   }, []);
 
@@ -65,9 +65,9 @@ const Modal: FC<IModal> = ({ onClose, title = "", children }) => {
       <div className={modalStyles.container} onClick={e => e.stopPropagation()}>
         <div className={modalStyles.header}>
           <div className={modalStyles.closeButton}>
-            <CloseIcon type="primary" onClick={handleClose}></CloseIcon>
+            <CloseIcon type='primary' onClick={handleClose}></CloseIcon>
           </div>
-          <h4 className="text text_type_main-large">
+          <h4 className='text text_type_main-large'>
             {title}
           </h4>
         </div>
