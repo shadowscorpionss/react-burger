@@ -1,3 +1,19 @@
+.currency {        
+    align-items: end;
+    justify-content: right; 
+}
+
+.orderButton {    
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.splitter {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+}
+
 .bconstructor {    
     display: grid;
     grid-template-rows: auto 1fr;    
@@ -12,7 +28,7 @@
 
 
 
-.bconstructor>.list>* {
+.bconstructor>.blist>* {
     flex: 0 auto;
 }
 
@@ -20,7 +36,7 @@
     margin-right: 0 ;
 }
 
-.list {   
+.blist {   
     margin-right: 0;
     width: 100%;
     flex: 1 1 auto;
@@ -53,19 +69,3 @@
     margin-top: 0.5%;
 }
 
-
-.currency {        
-    align-items: end;
-    justify-content: right; 
-}
-
-.orderButton {    
-    display: flex;
-    align-items: center;
-    justify-content: right;
-}
-
-.splitter {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-}

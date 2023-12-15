@@ -1,3 +1,7 @@
+.any {
+    background-color: var(--background-alt);
+}
+
 div.tabs {
     display: flex;
 }
@@ -12,8 +16,4 @@ div.tabs {
     grid-template-columns: 1fr 1fr;
     column-gap: 24px;
     list-style-type: none;
-}
-
-.any {
-    background-color: var(--background-alt);
 }

@@ -1,3 +1,11 @@
+.currency {
+    flex-direction: row;
+    break-inside: avoid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .ingredient {
     max-width: 272px;
     position: relative;
@@ -6,14 +14,6 @@
     align-items: center;
     box-sizing: border-box;
     text-align: center;
-}
-
-.currency {
-    flex-direction: row;
-    break-inside: avoid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .container {

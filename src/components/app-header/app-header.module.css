@@ -1,17 +1,18 @@
+.colLogo {
+    display: flex;
+    justify-content: center;
+}
+
+.colRight {
+    padding-right: 10vw;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .panel {
     padding: 16px 0;
-
     width: 100vw;
 }
-
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100vw;
-    justify-content: center;
-    gap: 16px;
-}
-
 
 .linkBlock {
     padding: 16px 20px;
@@ -22,7 +23,6 @@
     color:   white; /* #8585ad; */
     text-decoration: none;
 }
-
 
 .linkBlock p {
     white-space: nowrap;
@@ -39,15 +39,13 @@
     justify-content: center;
 }
 
-.colLogo {
-    display: flex;
-    justify-content: center;
-}
 
-.colRight {
-    padding-right: 10vw;
-    display: flex;
-    justify-content: flex-end;
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100vw;
+    justify-content: center;
+    gap: 16px;
 }
 
 
