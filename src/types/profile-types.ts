@@ -1,6 +1,6 @@
-import { IResSuccess } from "../utils/api";
-import { AppThunk } from "./app-redux-thunk";
-import { TStorage } from "./storage-types";
+import { IResSuccess } from '../utils/api';
+import { AppThunk } from './app-redux-thunk';
+import { TStorage } from './storage-types';
 
 export enum ResetPasswordStatus{
     None,

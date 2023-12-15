@@ -1,6 +1,8 @@
-import { IOrderStorage, TOrder, defaultOrder } from "../../types/order-types";
+import { IOrderStorage, TOrder, TOrderStorage, defaultOrder } from "../../types/order-types";
 import { GET_CURRENT_ORDER_FAILED, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS, TGetCurrentOrderActions } from "../actions/current-order";
+import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions } from "../actions/order";
 import { currentOrderReducer } from "./current-order";
+import { orderReducer } from "./order";
 
 const order: TOrder =
 {

@@ -1,13 +1,13 @@
-import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, deleteCookie, getCookie, setCookie } from "./cookies";
+import { ACCESS_TOKEN_PATH, REFRESH_TOKEN_PATH, deleteCookie, getCookie, setCookie } from './cookies';
 
-export const NORMA_API = "https://norma.nomoreparties.space/api";
+export const NORMA_API = 'https://norma.nomoreparties.space/api';
 export const NORMA_WS_ORDERS= 'wss://norma.nomoreparties.space/orders';
 export const NORMA_WS_ORDERS_ALL = `${NORMA_WS_ORDERS}/all`;
 
 export const userOrdersUrl = ()=> `${NORMA_WS_ORDERS}?token=${getCookie(ACCESS_TOKEN_PATH)}`;
 
-const JSON_CONTENT_TYPE = "application/json;charset=utf-8";
-const JSON_SIMPLE_CONTENT_TYPE = "application/json";
+const JSON_CONTENT_TYPE = 'application/json;charset=utf-8';
+const JSON_SIMPLE_CONTENT_TYPE = 'application/json';
 
 export interface IResSuccess {
     success?: boolean
@@ -39,7 +39,7 @@ const checkSuccess = async <T extends IResSuccess>(res: T): Promise<T> => {
     const errObj = {
         message: (res as IResError)?.message,
         status: 200,
-        additional: ""
+        additional: ''
     };
     console.log(errObj);
     // не забываем выкидывать ошибку, чтобы она попала в `catch`
@@ -55,16 +55,16 @@ export const request = async <T extends IResSuccess>(endpoint: string, options: 
 }
 
 export const getIngredientsRequest = <T extends IResSuccess>() => {
-    return request<T>("ingredients");
+    return request<T>('ingredients');
 }
 
 export const postRequest = <T extends IResSuccess>(endpoint: string, data: any, options: RequestInit = {}) => {
     return request<T>(endpoint, {
         ...options,
-        method: "POST",
+        method: 'POST',
         headers: {
             ...options.headers,
-            "Content-Type": JSON_CONTENT_TYPE,
+            'Content-Type': JSON_CONTENT_TYPE,
         },
         body: JSON.stringify(data)
     })
@@ -73,8 +73,8 @@ export const postRequest = <T extends IResSuccess>(endpoint: string, data: any, 
 export const postOrderRequest = <T extends IResSuccess>(data: string[]) => {
     let options: RequestInit = {
         body: JSON.stringify({ ingredients: data }),
-        method: "POST",
-        headers: { "Content-Type": JSON_SIMPLE_CONTENT_TYPE }
+        method: 'POST',
+        headers: { 'Content-Type': JSON_SIMPLE_CONTENT_TYPE }
 
     };
     const accessToken = getCookie(ACCESS_TOKEN_PATH);
@@ -88,7 +88,7 @@ export const postOrderRequest = <T extends IResSuccess>(data: string[]) => {
         };
 
     }
-    return requestWithRefresh<T>("orders", options);
+    return requestWithRefresh<T>('orders', options);
 }
 
 const getAuthorizationString = (): string => {
@@ -100,7 +100,7 @@ interface ITokens extends IResSuccess {
     refreshToken?: string;
 }
 
-//вспомогательная функция "попутного" сохранения токена
+//вспомогательная функция 'попутного' сохранения токена
 const saveTokens = <T extends IResSuccess>(res: T): T => {
 
     if (!res)
@@ -109,7 +109,7 @@ const saveTokens = <T extends IResSuccess>(res: T): T => {
     const tokens = res as ITokens;
 
     if (tokens.accessToken) {
-        const accessToken = tokens.accessToken.split("Bearer ")[1];
+        const accessToken = tokens.accessToken.split('Bearer ')[1];
         setCookie(ACCESS_TOKEN_PATH, accessToken);
     }
 
@@ -121,7 +121,7 @@ const saveTokens = <T extends IResSuccess>(res: T): T => {
     return res;
 }
 
-//вспомогательная функция "попутной" очистки сохраненных токенов
+//вспомогательная функция 'попутной' очистки сохраненных токенов
 const clearTokens = <T>(res: T): T => {
     deleteCookie(ACCESS_TOKEN_PATH);
     localStorage.removeItem(REFRESH_TOKEN_PATH);
@@ -131,14 +131,14 @@ const clearTokens = <T>(res: T): T => {
 export const getUserRequest = async <T extends IResSuccess>() => {
     try {
         const options = {
-            method: "GET",
+            method: 'GET',
             headers: {
-                "Content-Type": JSON_CONTENT_TYPE,
+                'Content-Type': JSON_CONTENT_TYPE,
                 Authorization: getAuthorizationString()
             }
         }
 
-        const response = await requestWithRefresh<T>("auth/user", options);
+        const response = await requestWithRefresh<T>('auth/user', options);
         return saveTokens<T>(response);
     } catch (err) {
         return Promise.reject(err);
@@ -149,10 +149,10 @@ export const getUserRequest = async <T extends IResSuccess>() => {
 export const refreshTokenRequest = async () => {
     try {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
-        const data = await request<ITokens>("auth/token", {
-            method: "POST",
+        const data = await request<ITokens>('auth/token', {
+            method: 'POST',
             headers: {
-                "Content-Type": JSON_CONTENT_TYPE
+                'Content-Type': JSON_CONTENT_TYPE
             },
             body: JSON.stringify({
                 token: refreshToken
@@ -172,10 +172,10 @@ export const requestWithRefresh = async <T extends IResSuccess>(endpoint: string
     try {
         return await request<T>(endpoint, options);
     } catch (err: any) {
-        if (err.message !== "jwt expired"
-            && err.message !== "invalid signature"
-            && err.message !== "jwt malformed"
-            && err.message !== "invalid token")
+        if (err.message !== 'jwt expired'
+            && err.message !== 'invalid signature'
+            && err.message !== 'jwt malformed'
+            && err.message !== 'invalid token')
             return Promise.reject(err);
 
         const refreshData = await refreshTokenRequest();
@@ -206,42 +206,42 @@ export const logoutRequest = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_PATH);
     if (!refreshToken)
         return;
-    return postAuthRequest("logout", { token: refreshToken })
+    return postAuthRequest('logout', { token: refreshToken })
         .then(clearTokens);
 }
 
 export const registrationRequest = async<T extends IResSuccess>(email: string, password: string, name: string) => {
-    return postAuthRequest<T>("register", { email, password, name })
+    return postAuthRequest<T>('register', { email, password, name })
         .then(saveTokens);
 }
 
 export const passwordResetRequest = (email: string) => {
-    return postRequest("password-reset", { email });
+    return postRequest('password-reset', { email });
 }
 
 export const passwordRecoveryRequest = (password: string, token: string) => {
-    return postRequest("password-reset/reset", { password, token });
+    return postRequest('password-reset/reset', { password, token });
 }
 
 export const updateUserRequest = async <T extends IResSuccess>(name: string, email: string, password: string) => {
     const data = { name, email, password };
     const options = {
-        method: "PATCH",
+        method: 'PATCH',
         body: JSON.stringify(data),
         headers: {
-            "Content-Type": JSON_SIMPLE_CONTENT_TYPE,
+            'Content-Type': JSON_SIMPLE_CONTENT_TYPE,
             Authorization: getAuthorizationString(),
         }
     };
-    return requestWithRefresh<T>("auth/user", options);
+    return requestWithRefresh<T>('auth/user', options);
 
 }
 
 export function getCurrentOrderRequest<T extends IResSuccess>(orderNumber: string) {
     const options = {
-        method: "GET",
+        method: 'GET',
         headers: {
-            "Content-Type": JSON_SIMPLE_CONTENT_TYPE,
+            'Content-Type': JSON_SIMPLE_CONTENT_TYPE,
         }
     };
     return request<T>(`orders/${orderNumber}`, options);

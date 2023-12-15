@@ -1,8 +1,8 @@
-import { TStorage } from "./storage-types";
+import { TStorage } from './storage-types';
 
 interface IIngredient {
     _id: string;
-    type: "bun" | "main" | "sauce";
+    type: 'bun' | 'main' | 'sauce';
     name: string;
     proteins?: number;
     fat?: number;

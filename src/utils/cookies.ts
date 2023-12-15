@@ -1,5 +1,5 @@
-export const ACCESS_TOKEN_PATH = "accessSEREJA_URSULA";//костыли =) было бы неплохо назвать по-другому
-export const REFRESH_TOKEN_PATH = "refreshSEREJA_URSULA";
+export const ACCESS_TOKEN_PATH = 'accessSEREJA_URSULA';//костыли =) было бы неплохо назвать по-другому
+export const REFRESH_TOKEN_PATH = 'refreshSEREJA_URSULA';
 
 
 type TOptions = {
@@ -11,7 +11,7 @@ export const setCookie = (name: string, value: string, options: TOptions = {}) =
     //обязательно указываем область действия для печеньки - корень сайта
     //чтобы нигде не потерялась =)
     options = {
-        path: "/",
+        path: '/',
         ...options
     };
 
@@ -21,14 +21,14 @@ export const setCookie = (name: string, value: string, options: TOptions = {}) =
     }
 
     //кодируем в православный УРИ имя и значение
-    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+    let updatedCookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
 
     //далее какая-то магия =)
     for (let optionKey in options) {
-        updatedCookie += "; " + optionKey;
+        updatedCookie += '; ' + optionKey;
         let optionValue = options[optionKey];
         if (optionValue !== true) {
-            updatedCookie += "=" + optionValue;
+            updatedCookie += '=' + optionValue;
         }
     }
     //вот именно здесь сохраняется печенька
@@ -37,13 +37,13 @@ export const setCookie = (name: string, value: string, options: TOptions = {}) =
 
 export const getCookie = (name: string): string | undefined => {
     const matches = document.cookie.match(
-        new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
+        new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 export const deleteCookie = (name: string) => {
-    setCookie(name, "", {
-        "max-age": -1
+    setCookie(name, '', {
+        'max-age': -1
     })
 }

@@ -97,7 +97,7 @@ const BurgerConstructor: FC = () => {
             thumbnail={bun.image}
           /></div>
         </div>
-        <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
+        <ul className={`${burgerConstructorStyles.blist} custom-scroll`}>
           {ingredients && ingredients.length ?
             (
               ingredients.map((item, index) => renderConstructorElement(item, index))

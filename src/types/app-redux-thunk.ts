@@ -1,7 +1,7 @@
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { TApplicationActions } from "../services/actions";
-import { store } from "../services/store";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { TApplicationActions } from '../services/actions';
+import { store } from '../services/store';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, never, TApplicationActions>;
 export type RootState = ReturnType<typeof store.getState>;
