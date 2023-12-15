@@ -38,28 +38,28 @@ export const RegisterPage: FC = () => {
         <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
             <h1>Регистрация</h1>
             <Input
-                name='name'
+                name="name"
                 value={values.name}
                 onChange={handleChange}
-                placeholder={'Имя'}
-                extraClass='mt-6'
+                placeholder={"Имя"}
+                extraClass="mt-6"
             />
             <EmailInput
-                name='email'
+                name="email"
                 value={values.email}
                 onChange={handleChange}
-                placeholder={'E-mail'}
-                extraClass='mt-6'
+                placeholder="E-Mail"
+                extraClass="mt-6"
             />
             <PasswordInput
-                name='password'
+                name="password"
                 value={values.password}
                 onChange={handleChange}
-                placeholder={'Пароль'}
-                extraClass='mt-6'
-                icon={'ShowIcon'}
+                placeholder="Пароль"
+                extraClass="mt-6"
+                icon="ShowIcon"
             />
-            <Button htmlType='submit' size='medium' extraClass='mt-6'>Зарегистрироваться</Button>
+            <Button htmlType="submit" size="medium" extraClass="mt-6">Зарегистрироваться</Button>
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text}>Уже зарегистрированы?</p>

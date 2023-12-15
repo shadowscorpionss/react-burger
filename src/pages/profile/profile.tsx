@@ -29,7 +29,7 @@ export const ProfilePage: FC = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p className='text text_type_main-medium'>Профиль</p>
+                        <p className="text text_type_main-medium">Профиль</p>
                     </NavLink>
 
                     <NavLink
@@ -39,7 +39,7 @@ export const ProfilePage: FC = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p className='text text_type_main-medium'>История заказов</p>
+                        <p className="text text_type_main-medium">История заказов</p>
                     </NavLink>
 
                     <NavLink
@@ -50,7 +50,7 @@ export const ProfilePage: FC = () => {
                         className={({ isActive }) =>
                             `${styles.link} p-4 ${isActive ? styles.active : ''}`
                         }>
-                        <p className='text text_type_main-medium'>Выход</p>
+                        <p className="text text_type_main-medium">Выход</p>
                     </NavLink>
 
                     <p className={`${styles.text} mt-30`}>

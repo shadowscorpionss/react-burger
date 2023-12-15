@@ -52,11 +52,6 @@ const App: FC = () => {
     navigate(-1);
   }, [dispatch]);
 
-  const handleCloseOrderDetails = useCallback(() => {
-    navigate(-1);
-  }, [dispatch]);
-
-
   useEffect(() => {
     dispatch(getProfileDataThunk());
     dispatch(getIngredientsThunk())

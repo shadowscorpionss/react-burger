@@ -38,14 +38,14 @@ export const ForgotPasswordPage: FC = () => {
         <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
             <h1>Восстановление пароля</h1>
             <EmailInput
-                name='email'
+                name="email"
                 value={values.email}
                 onChange={handleChange}
-                placeholder={'Укажите e-mail'}
-                extraClass='mt-6'
+                placeholder="Укажите e-mail"
+                extraClass="mt-6"
                 isIcon={false}
             />
-            <Button htmlType='submit' size='medium' extraClass='mt-6'>Воccтановить</Button>
+            <Button htmlType="submit" size="medium" extraClass="mt-6">Воccтановить</Button>
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text} >Вспомнили пароль?</p>

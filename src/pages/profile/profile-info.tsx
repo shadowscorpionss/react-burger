@@ -62,41 +62,41 @@ const ProfileInfo: FC = () => {
         <form onSubmit={handleSubmit} className={`${styles.inputs} ml-15`}>
             <Input
                 disabled={nameEditDisabled}
-                name='name'
+                name="name"
                 value={values.name}
                 onChange={changeInputs}
-                placeholder={'Имя'}
-                extraClass='mt-6'
-                icon={'EditIcon'}
+                placeholder="Имя"
+                extraClass="mt-6"
+                icon="EditIcon"
                 onIconClick={e => setNameEditDisabled(!nameEditDisabled)}
             />
             <EmailInput
-                name='email'
+                name="email"
                 value={values.email}
                 onChange={changeInputs}
-                placeholder={'e-mail'}
-                extraClass='mt-6'
+                placeholder={"E-Mail"}
+                extraClass="mt-6"
                 isIcon={true}
             />
             <PasswordInput
-                name='password'
+                name="password"
                 value={values.password}
                 onChange={changeInputs}
-                placeholder={'Пароль'}
-                extraClass='mt-6'
-                icon={'ShowIcon'}
+                placeholder="Пароль"
+                extraClass="mt-6"
+                icon="ShowIcon"
             />
             {isBottonsOpen &&
                 <div className={`${styles.inner} mt-8`}>
                     <Button
                         onClick={cancelInput}
-                        type='secondary'
-                        htmlType='button'
-                        size='medium'
+                        type="secondary"
+                        htmlType="button"
+                        size="medium"
                     >
                         Отмена
                     </Button>
-                    <Button htmlType='submit' size='medium'>
+                    <Button htmlType="submit" size="medium">
                         Coхранить
                     </Button>
                 </div>

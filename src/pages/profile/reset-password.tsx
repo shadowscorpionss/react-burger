@@ -50,17 +50,17 @@ export const ResetPasswordPage:FC = () => {
             <PasswordInput
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder={'Введите новый пароль'}
-                extraClass='mt-6'
-                icon={'ShowIcon'}
+                placeholder="Введите новый пароль"
+                extraClass="mt-6"
+                icon="ShowIcon"
             />
             <Input
                 value={token}
                 onChange={e => setToken(e.target.value)}
-                placeholder={'Введите код из письма'}
-                extraClass='mt-6'
+                placeholder="Введите код из письма"
+                extraClass="mt-6"
             />
-            <Button htmlType='submit' size='medium' extraClass='mt-6'>Сохранить</Button>
+            <Button htmlType="submit" size="medium" extraClass="mt-6">Сохранить</Button>
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >
                     <p className={styles.text} >Вспомнили пароль?</p>

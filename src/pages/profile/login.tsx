@@ -39,24 +39,24 @@ export const LoginPage: FC = () => {
         <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
             <h1>Вход</h1>
             <EmailInput
-                name='email'
+                name="email"
                 value={values.email}
                 onChange={handleChange}
-                placeholder={'E-mail'}
-                extraClass='mt-6'
+                placeholder="E-Mail"
+                extraClass="mt-6"
             />
             <PasswordInput
-                name='password'
+                name="password"
                 value={values.password}
                 onChange={handleChange}
-                placeholder={'Пароль'}
-                extraClass='mt-6'
-                icon={'ShowIcon'}
+                placeholder="Пароль"
+                extraClass="mt-6"
+                icon="ShowIcon"
             />
 
-            {hasLoginError && (<p className='mt-4 ' >  {loginErrorMessage}</p>)}
+            {hasLoginError && (<p className="mt-4 " >  {loginErrorMessage}</p>)}
 
-            <Button htmlType='submit' size='medium' extraClass='mt-6'>Войти</Button>
+            <Button htmlType="submit" size="medium" extraClass="mt-6">Войти</Button>
 
             <div className={styles.block}>
                 <div className={`${styles.inner} mt-4`} >

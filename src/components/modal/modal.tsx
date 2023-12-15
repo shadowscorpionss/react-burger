@@ -65,9 +65,9 @@ const Modal: FC<IModal> = ({ onClose, title = '', children }) => {
       <div className={modalStyles.container} onClick={e => e.stopPropagation()}>
         <div className={modalStyles.header}>
           <div className={modalStyles.closeButton}>
-            <CloseIcon type='primary' onClick={handleClose}></CloseIcon>
+            <CloseIcon type="primary" onClick={handleClose}></CloseIcon>
           </div>
-          <h4 className='text text_type_main-large'>
+          <h4 className="text text_type_main-large">
             {title}
           </h4>
         </div>
