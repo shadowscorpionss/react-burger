@@ -39,12 +39,15 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
 
   //event handlers
   const handleIngredientClick:MouseEventHandler<HTMLDivElement> = (e) => {
-    if (e.shiftKey) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      e.stopPropagation();
       if (ingredient.type !== 'bun')
         dispatch(addConstructorIngredientAction(ingredient));
       else
         dispatch(setConstructorBunAction(ingredient));
       return;
+      
     }
     dispatch(setCurrentIngredientAction(ingredient));
   }
@@ -57,7 +60,7 @@ const BurgerIngredient:FC <IBurgerIngredient> = ({ ingredient }) => {
         state={{ background: location }}
         className={burgerIngredientStyles.container}
       >
-        <div style={{ opacity: opacity }} ref={drag} onClick={handleIngredientClick} title='Зажмите SHIFT и кликните по ингридиенту, чтобы добавить в корзину'>
+        <div style={{ opacity: opacity }} ref={drag} onClick={handleIngredientClick} title='Зажмите CTRL и кликните по ингридиенту, чтобы добавить в корзину'>
           {!!count && <Counter count={count} size='default' />}
           <img src={ingredient.image} alt={ingredient.name} className='ml-4 mr-4 mb-1' />
           <div className={`${burgerIngredientStyles.currency} mb-1`}>
