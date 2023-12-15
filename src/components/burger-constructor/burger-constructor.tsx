@@ -86,7 +86,7 @@ const BurgerConstructor: FC = () => {
   }, [ingredients]);
 
   return (
-    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget}>
+    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget} data-test="constructor">
       <div>
         <div >
           <div><ConstructorElement
