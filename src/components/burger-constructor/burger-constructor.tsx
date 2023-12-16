@@ -86,7 +86,7 @@ const BurgerConstructor: FC = () => {
   }, [ingredients]);
 
   return (
-    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget}>
+    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget} data-test={"constructor"}>
       <div>
         <div >
           <div><ConstructorElement
@@ -113,9 +113,9 @@ const BurgerConstructor: FC = () => {
         </div>
       </div>
       <div className={burgerConstructorStyles.currency}>
-        <div className={burgerConstructorStyles.orderButton}>
+        <div className={burgerConstructorStyles.orderButton} data-test={"place-order"}>
           <span
-            className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon type='primary' />
+            className={`${burgerConstructorStyles.currency} text text_type_digits-medium `} data-test={"total-cost"}>{total}</span>&nbsp;<span><CurrencyIcon type='primary' />
             &nbsp;
           </span>
           <Button disabled={!bun || !bun.price} type='primary' size='large' htmlType='button' onClick={callMakeOrder}>Оформить заказ</Button>
