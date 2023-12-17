@@ -1,17 +1,17 @@
 //styles
-import orderConfirmStyles from "./order-details.module.css";
-import doneImage from "../../images/done.png";
+import orderConfirmStyles from './order-details.module.css';
+import doneImage from '../../images/done.png';
 //react, redux
-import { FC, useMemo } from "react";
+import { FC, useMemo } from 'react';
 //types
-import { useAppSelector } from "../../types/app-redux-thunk";
+import { useAppSelector } from '../../types/app-redux-thunk';
 
 const OrderDetails: FC<{}> = () => {
   const { isLoading, isFailed, order, errorMessage } = useAppSelector(store => store.order);
 
   const messages = useMemo(() => isFailed ?
-    ["Ошибка выполнения запроса", errorMessage] :
-    ["Ваш заказ начали готовить", "Дождитесь готовности на орбитальной станции"]
+    ['Ошибка выполнения запроса', errorMessage] :
+    ['Ваш заказ начали готовить', 'Дождитесь готовности на орбитальной станции']
     , [isFailed]);
 
   const labels = useMemo(() =>
@@ -24,7 +24,7 @@ const OrderDetails: FC<{}> = () => {
     <div className={orderConfirmStyles.orderCard}>
       <div className={orderConfirmStyles.topSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.orderId}>
-        {!isLoading && (<p className=" text text_type_digits-large ">{order.number}</p>)}
+        {!isLoading && (<p className=" text text_type_digits-large " data-test={"order-number"}>{order.number}</p>)}
       </div>
       <div className={orderConfirmStyles.orderIdSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.orderIdLabel}>
@@ -33,7 +33,7 @@ const OrderDetails: FC<{}> = () => {
       <div className={orderConfirmStyles.imageTopSpace}>&nbsp;</div>
       <div className={orderConfirmStyles.image}>
         {isLoading ?
-          (<div className='lds-dual-ring' />) :
+          (<div className="lds-dual-ring" />) :
           !isFailed && (<img src={doneImage} />)
         }
       </div>

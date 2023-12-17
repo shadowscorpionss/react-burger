@@ -1,13 +1,13 @@
 //styles
-import styles from "./profile.module.css";
+import styles from './profile.module.css';
 //react, router, redux
-import { NavLink, Outlet } from "react-router-dom";
-import { FC, MouseEventHandler } from "react";
+import { NavLink, Outlet } from 'react-router-dom';
+import { FC, MouseEventHandler } from 'react';
 //constants
-import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from "../pages-paths";
+import { LOGIN_PATH, PROFILE_ORDERS_PATH, PROFILE_PATH } from '../pages-paths';
 //actions
-import { userLogoutThunk } from "../../services/actions/profile/user-logout";
-import { useAppDispatch } from "../../types/app-redux-thunk";
+import { userLogoutThunk } from '../../services/actions/profile/user-logout';
+import { useAppDispatch } from '../../types/app-redux-thunk';
 
 
 export const ProfilePage: FC = () => {

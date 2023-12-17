@@ -1,15 +1,15 @@
-import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import burgerConstructorStyles from "./burger-constructor.module.css";
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from "../../services/actions/burger-constructor";
-import { makeOrderThunk } from "../../services/actions/order";
-import BurgerConstructorElement from "./burger-constructor-element";
-import { useDrop } from "react-dnd";
-import { useLocation, useNavigate } from "react-router-dom";
-import { LOGIN_PATH, ORDER_PATH } from "../../pages";
-import { ITheIngredient } from "../../types/constructor-types";
-import { IIngredient } from "../../types/ingredient-types";
-import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import burgerConstructorStyles from './burger-constructor.module.css';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { addConstructorIngredientAction, setConstructorBunAction, sortConstructorDataAction } from '../../services/actions/burger-constructor';
+import { makeOrderThunk } from '../../services/actions/order';
+import BurgerConstructorElement from './burger-constructor-element';
+import { useDrop } from 'react-dnd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { LOGIN_PATH, ORDER_PATH } from '../../pages';
+import { ITheIngredient } from '../../types/constructor-types';
+import { IIngredient } from '../../types/ingredient-types';
+import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
 
 const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const BurgerConstructor: FC = () => {
     const newCards = [...ingredients];
     // Удаляем перетаскиваемый элемент из массива
     newCards.splice(dragIndex, 1);
-    // Вставляем элемент на место того элемента, над которым мы навели мышку с "перетаскиванием"
+    // Вставляем элемент на место того элемента, над которым мы навели мышку с 'перетаскиванием'
     // создается новый массив, в котором изменен порядок элементов
     newCards.splice(hoverIndex, 0, dragCard);
     dispatch(sortConstructorDataAction(newCards));
@@ -55,10 +55,10 @@ const BurgerConstructor: FC = () => {
 
   //drop ingredients
   const [, dropTarget] = useDrop({
-    accept: "ingredient",
+    accept: 'ingredient',
     drop: (item: { ingredient: IIngredient }) => {
       const dropItem = item.ingredient;
-      if (dropItem.type !== "bun")
+      if (dropItem.type !== 'bun')
         dispatch(addConstructorIngredientAction(dropItem));
       else
         dispatch(setConstructorBunAction(dropItem));
@@ -81,44 +81,44 @@ const BurgerConstructor: FC = () => {
   useEffect(() => {
     if (lref.current && !isDragging && typeof lref.current.scrollIntoView === 'function')
       lref.current.scrollIntoView({
-        behavior: "smooth",
+        behavior: 'smooth',
       });
   }, [ingredients]);
 
   return (
-    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget}>
+    <section className={burgerConstructorStyles.bconstructor} ref={dropTarget} data-test={"constructor"}>
       <div>
         <div >
           <div><ConstructorElement
-            type="top"
+            type='top'
             isLocked={true}
-            text={bun.name ? `${bun.name} (верх)` : "Выберете булку"}
+            text={bun.name ? `${bun.name} (верх)` : 'Выберете булку'}
             price={bun.price}
             thumbnail={bun.image}
           /></div>
         </div>
-        <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
+        <ul className={`${burgerConstructorStyles.blist} custom-scroll`}>
           {ingredients && ingredients.length ?
             (
               ingredients.map((item, index) => renderConstructorElement(item, index))
-            ) : ""}
+            ) : ''}
         </ul>
         <div>
           <div><ConstructorElement
-            type="bottom"
+            type='bottom'
             isLocked={true}
-            text={bun.name ? `${bun.name} (низ)` : "Выберете булку"}
+            text={bun.name ? `${bun.name} (низ)` : 'Выберете булку'}
             price={bun.price}
             thumbnail={bun.image} /></div>
         </div>
       </div>
       <div className={burgerConstructorStyles.currency}>
-        <div className={burgerConstructorStyles.orderButton}>
+        <div className={burgerConstructorStyles.orderButton} data-test={"place-order"}>
           <span
-            className={`${burgerConstructorStyles.currency} text text_type_digits-medium `}>{total}&nbsp;<CurrencyIcon type="primary" />
+            className={`${burgerConstructorStyles.currency} text text_type_digits-medium `} data-test={"total-cost"}>{total}</span>&nbsp;<span><CurrencyIcon type='primary' />
             &nbsp;
           </span>
-          <Button disabled={!bun || !bun.price} type="primary" size="large" htmlType="button" onClick={callMakeOrder}>Оформить заказ</Button>
+          <Button disabled={!bun || !bun.price} type='primary' size='large' htmlType='button' onClick={callMakeOrder}>Оформить заказ</Button>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
-import { IRequestError } from "../../types/action-types";
-import { IProfileStorage, IUser, ResetPasswordStatus, TProfileStorage, TUser } from "../../types/profile-types";
+import { IRequestError } from '../../types/action-types';
+import { IUser, ResetPasswordStatus, TProfileStorage, TUser } from '../../types/profile-types';
 import {
     GET_PROFILE_DATA_REQUEST,
     GET_PROFILE_DATA_SUCCESS,
@@ -23,7 +23,7 @@ import {
     UPDATE_USER_DATA_SUCCESS,
     UPDATE_USER_DATA_FAILED,
     TProfileActions
-} from "../actions/profile";
+} from '../actions/profile';
 
 const defaultUser: IUser = {
     email: '',
@@ -38,7 +38,7 @@ const profileInitialState: TProfileStorage = {
     isLoading: false,
     isFailed: false,
     hasLoginError: false,
-    loginErrorMessage: ""
+    loginErrorMessage: ''
 }
 
 const updateRequest = (state: TProfileStorage): TProfileStorage => {

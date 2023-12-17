@@ -1,6 +1,6 @@
 import { IOrder, TOrder } from '../../types/order-types';
 
-import { IAction, IErrorAction, IRequestError, actionCreator, errorActionCreator, requestErrorActionCreator } from '../../types/action-types';
+import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../types/action-types';
 import { IResSuccess, postOrderRequest } from '../../utils/api';
 import { clearConstructorDataAction } from './burger-constructor';
 import { AppDispatch, AppThunk } from '../../types/app-redux-thunk';

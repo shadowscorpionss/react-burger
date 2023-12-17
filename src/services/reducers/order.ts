@@ -1,8 +1,5 @@
-import { TOrder, TOrderStorage, defaultOrder } from '../../types/order-types';
+import { TOrderStorage, defaultOrder } from '../../types/order-types';
 import { MAKE_ORDER_FAILED, MAKE_ORDER_REQUEST, MAKE_ORDER_SUCCESS, TMakeOrderActions } from '../actions/order';
-
-
-
 
 const orderInititialState: TOrderStorage = {
     order: defaultOrder,

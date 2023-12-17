@@ -1,16 +1,16 @@
 //styles
-import styles from "./profile.module.css"
-import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react";
+import styles from './profile.module.css'
+import { ChangeEvent, FC, FormEventHandler, useEffect, useState } from 'react';
 
 //components
-import { Input, EmailInput, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, EmailInput, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 //actions
-import { changeUserDataThunk } from "../../services/actions/profile/change-user-data";
+import { changeUserDataThunk } from '../../services/actions/profile/change-user-data';
 //types
 
 //custom hook
-import { useForm } from "../../hooks/useForm"
-import { useAppDispatch, useAppSelector } from "../../types/app-redux-thunk";
+import { useForm } from '../../hooks/useForm'
+import { useAppDispatch, useAppSelector } from '../../types/app-redux-thunk';
 
 
 const ProfileInfo: FC = () => {
@@ -20,7 +20,7 @@ const ProfileInfo: FC = () => {
     const { values, handleChange, setValues } = useForm({
         name: user.name,
         email: user.email,
-        password: "",
+        password: '',
     });
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const ProfileInfo: FC = () => {
         setValues({
             name: user.name,
             email: user.email,
-            password: "",
+            password: '',
         })
         setIsBottonsOpen(false);
         setNameEditDisabled(true);
@@ -65,16 +65,16 @@ const ProfileInfo: FC = () => {
                 name="name"
                 value={values.name}
                 onChange={changeInputs}
-                placeholder={"Имя"}
+                placeholder="Имя"
                 extraClass="mt-6"
-                icon={"EditIcon"}
+                icon="EditIcon"
                 onIconClick={e => setNameEditDisabled(!nameEditDisabled)}
             />
             <EmailInput
                 name="email"
                 value={values.email}
                 onChange={changeInputs}
-                placeholder={"e-mail"}
+                placeholder={"E-Mail"}
                 extraClass="mt-6"
                 isIcon={true}
             />
@@ -82,9 +82,9 @@ const ProfileInfo: FC = () => {
                 name="password"
                 value={values.password}
                 onChange={changeInputs}
-                placeholder={"Пароль"}
+                placeholder="Пароль"
                 extraClass="mt-6"
-                icon={"ShowIcon"}
+                icon="ShowIcon"
             />
             {isBottonsOpen &&
                 <div className={`${styles.inner} mt-8`}>

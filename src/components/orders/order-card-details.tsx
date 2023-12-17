@@ -48,7 +48,7 @@ export const OrderCardDetails: FC<IOrderCardDetails> = ({ order }) => {
         <div className={styles.wrapper}>
             <div className={styles.header}>
                 <h1 className={styles.name}>{name}</h1>
-                <p className={translatedStatus === 'Выполнен' ? styles.success : ''}>{translatedStatus}</p>
+                <p className={translatedStatus === "Выполнен" ? styles.success : ""}>{translatedStatus}</p>
             </div>
             <div className={styles.container}>
                 <div><h2 className={styles.content}>Состав:</h2></div>

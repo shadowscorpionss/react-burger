@@ -1,11 +1,11 @@
-import { combineReducers } from "redux";
-import { burgerIngredientsReducer } from "./burger-ingredients";
-import { burgerConstructorReducer } from "./burger-constructor";
-import { orderReducer } from "./order";
-import { profileReducer } from "./profile";
+import { combineReducers } from 'redux';
+import { burgerIngredientsReducer } from './burger-ingredients';
+import { burgerConstructorReducer } from './burger-constructor';
+import { orderReducer } from './order';
+import { profileReducer } from './profile';
 import { feedReducer } from './feed'
-import { currentOrderReducer } from "./current-order";
-import { userOrdersReducer } from "./user-orders";
+import { currentOrderReducer } from './current-order';
+import { userOrdersReducer } from './user-orders';
 
 export const rootReducer = combineReducers({
     burgerIngredients: burgerIngredientsReducer,

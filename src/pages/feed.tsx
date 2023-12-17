@@ -45,7 +45,7 @@ export const FeedPage: FC = () => {
                             userOrders={orders}
                             succession={false}
                             visibleStatus={false}
-                            page={'feed'}
+                            page="feed"
                         />
                     </div>
                     <div className={`${styles.main} custom-scroll`}>

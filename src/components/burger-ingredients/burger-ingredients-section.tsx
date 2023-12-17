@@ -1,7 +1,7 @@
-import burgerIngredientsSectionStyles from "./burger-ingredients-section.module.css";
-import BurgerIngredient from "./burger-ingredient";
-import { forwardRef, useImperativeHandle, useRef } from "react";
-import { useAppSelector } from "../../types/app-redux-thunk";
+import burgerIngredientsSectionStyles from './burger-ingredients-section.module.css';
+import BurgerIngredient from './burger-ingredient';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { useAppSelector } from '../../types/app-redux-thunk';
 
 interface IBurgerIngredientsSection {
   filter: string;
@@ -17,7 +17,7 @@ const BurgerIngredientsSection = forwardRef<HTMLElement, IBurgerIngredientsSecti
     useImperativeHandle(ref, () => sectionRef.current, [])
     return (
       <section ref={sectionRef}>
-        <h2 className="text text_type_main-medium mb-6">{title}</h2>
+        <h2 className='text text_type_main-medium mb-6'>{title}</h2>
         <ul className={`${burgerIngredientsSectionStyles.listItem} pl-4 pr-4`}>
           {
             ingredients

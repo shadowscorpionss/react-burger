@@ -1,21 +1,21 @@
 //styles
-import styles from "./burger-ingredients-container.module.css";
+import styles from './burger-ingredients-container.module.css';
 //react, redux
-import { FC, RefObject, UIEvent, useState } from "react";
-import { useRef } from "react";
+import { FC, RefObject, UIEvent, useState } from 'react';
+import { useRef } from 'react';
 //custom components
-import BurgerIngredientsSection from "./burger-ingredients-section";
-import BurgerIngredientsScrollTab from "./burger-ingredients-scroll-tab";
-import { useAppSelector } from "../../types/app-redux-thunk";
+import BurgerIngredientsSection from './burger-ingredients-section';
+import BurgerIngredientsScrollTab from './burger-ingredients-scroll-tab';
+import { useAppSelector } from '../../types/app-redux-thunk';
 
 //constants
-const sections = ["bun", "sauce", "main"] as const;
-const titles = ["Булки", "Соусы", "Начинки"] as const;
+const sections = ['bun', 'sauce', 'main'] as const;
+const titles = ['Булки', 'Соусы', 'Начинки'] as const;
 const sectionProps = sections.map((s, i) => ({
-  sid: s + "s",
+  sid: s + 's',
   filter: s,
   title: titles[i],
-  tabName: s + "Tab"
+  tabName: s + 'Tab'
 }));
 
 //types
@@ -29,7 +29,7 @@ const BurgerIngredientsContainer: FC<{}> = () => {
   //store
   const { ingredients, isLoading, isFailed, errorMessage } = useAppSelector(store => store.burgerIngredients);
 
-  const [activeTab, setActiveTab] = useState("bunTab");
+  const [activeTab, setActiveTab] = useState('bunTab');
 
   //using for scrolling
   const bunRef = useRef<HTMLElement>({} as HTMLElement);
@@ -54,11 +54,11 @@ const BurgerIngredientsContainer: FC<{}> = () => {
     const bunTabScrollHeight = (bunTab as HTMLElement).scrollHeight;
 
     if (elementScrollTop > summScrollHeight) {
-      setActiveTab("mainTab");
+      setActiveTab('mainTab');
     } else if (elementScrollTop > bunTabScrollHeight && elementScrollTop < summScrollHeight) {
-      setActiveTab("sauceTab");
+      setActiveTab('sauceTab');
     } else if (elementScrollTop <= bunTabScrollHeight) {
-      setActiveTab("bunTab");
+      setActiveTab('bunTab');
     }
 
   };
@@ -66,7 +66,7 @@ const BurgerIngredientsContainer: FC<{}> = () => {
   //scroll by click
   const onTabClick = (tabName:string) => {    
     setActiveTab(tabName);
-    tabToRef[tabName as keyof TTabs].current?.scrollIntoView({behavior:"smooth"});
+    tabToRef[tabName as keyof TTabs].current?.scrollIntoView({behavior:'smooth'});
   }
 
   //---scrolling block end---
@@ -84,8 +84,8 @@ const BurgerIngredientsContainer: FC<{}> = () => {
         })}
       </div>
       <div className={`${styles.ingredients} custom-scroll`} onScroll={onScroll}>
-        {isLoading && (<div className="lds-dual-ring" />)}
-        {isFailed && (errorMessage + " попробуйте перезагрузить страницу.")}
+        {isLoading && (<div className='lds-dual-ring' />)}
+        {isFailed && (errorMessage + ' попробуйте перезагрузить страницу.')}
 
         {!isLoading && !isFailed && ingredients && ingredients.length ? (
           sectionProps.map((s, i) => {
@@ -94,7 +94,7 @@ const BurgerIngredientsContainer: FC<{}> = () => {
               ref={tabToRef[s.tabName as keyof TTabs]}              
               {...s}
             />);
-          })) : ("")
+          })) : ('')
         }
       </div>
 

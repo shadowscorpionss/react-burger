@@ -1,7 +1,7 @@
 import {
     FEED_START, FEED_STOP,
     feedMessageAction, feedCloseAction, feedErrorAction, feedOpenAction 
-} from "../actions/feed"
+} from '../actions/feed'
 
 export const feedConfig = {
     wsStart: FEED_START,

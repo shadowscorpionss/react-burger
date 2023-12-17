@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useToggle = (initialValue: boolean | (() => boolean)) => {
   const [isOpened, setIsOpened] = useState<boolean>(() => {
-    if (typeof initialValue === "function") {
+    if (typeof initialValue === 'function') {
       return initialValue();
     }
 

@@ -1,23 +1,23 @@
 //styles
-import styles from "./profile.module.css";
+import styles from './profile.module.css';
 //react
-import { FC, FormEventHandler } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC, FormEventHandler } from 'react';
+import { useNavigate } from 'react-router-dom';
 //components
-import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 //constans
-import { LOGIN_PATH, RESET_PATH } from "../pages-paths";
+import { LOGIN_PATH, RESET_PATH } from '../pages-paths';
 //actions
-import { forgotPasswordThunk } from "../../services/actions/profile/forgot-password";
+import { forgotPasswordThunk } from '../../services/actions/profile/forgot-password';
 //custom hook
-import { useForm } from "../../hooks/useForm";
-import { useAppDispatch } from "../../types/app-redux-thunk";
+import { useForm } from '../../hooks/useForm';
+import { useAppDispatch } from '../../types/app-redux-thunk';
 
 export const ForgotPasswordPage: FC = () => {
     const { values, handleChange } = useForm({
-        email: "",
+        email: '',
     });
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ export const ForgotPasswordPage: FC = () => {
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        if (values.email === "") {
+        if (values.email === '') {
             return;
         }
 
@@ -41,7 +41,7 @@ export const ForgotPasswordPage: FC = () => {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
-                placeholder={"Укажите e-mail"}
+                placeholder="Укажите e-mail"
                 extraClass="mt-6"
                 isIcon={false}
             />

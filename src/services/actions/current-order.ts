@@ -1,7 +1,7 @@
-import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from "../../types/action-types";
-import { AppDispatch, AppThunk } from "../../types/app-redux-thunk";
-import { IOrder, TOrder } from "../../types/order-types";
-import { IResSuccess, getCurrentOrderRequest } from "../../utils/api";
+import { IAction, IErrorAction, IRequestError, actionCreator, requestErrorActionCreator } from '../../types/action-types';
+import { AppDispatch, AppThunk } from '../../types/app-redux-thunk';
+import { IOrder, TOrder } from '../../types/order-types';
+import { IResSuccess, getCurrentOrderRequest } from '../../utils/api';
 
 export const GET_CURRENT_ORDER_REQUEST: 'GET_CURRENT_ORDER_REQUEST' = 'GET_CURRENT_ORDER_REQUEST';
 export const GET_CURRENT_ORDER_SUCCESS: 'GET_CURRENT_ORDER_SUCCESS' = 'GET_CURRENT_ORDER_SUCCESS';

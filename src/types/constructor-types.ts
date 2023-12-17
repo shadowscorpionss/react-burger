@@ -1,4 +1,4 @@
-import { IIngredient } from "./ingredient-types";
+import { IIngredient } from './ingredient-types';
 
 type TBurgerConstructorStorage = {
     bun: ITheIngredient;

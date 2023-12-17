@@ -1,4 +1,4 @@
-import { TOrder } from "./order-types";
+import { TOrder } from './order-types';
 
 export interface IOrdersWSStorage {
     wsConnected: boolean;
