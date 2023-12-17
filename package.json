@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://shadowscorpionss.github.io/react-burger",
+  "homepage": "/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -33,7 +33,7 @@
     "cypress:open": "./node_modules/.bin/cypress open",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "deploy-server": "npm run build && scp -r ./build/* praktikum@grachevmi.students.nomoredomainsmonster.ru:/home/reactmx/stellar-frontend" 
+    "deploy-server": "npm run build && scp -r ./build/* reactmx@grachevmi.students.nomoredomainsmonster.ru:/home/reactmx/stellar-frontend" 
   },
   "eslintConfig": {
     "extends": [
