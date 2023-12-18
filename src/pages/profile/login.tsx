@@ -36,7 +36,7 @@ export const LoginPage: FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`}>
+        <form onSubmit={handleSubmit} className={`${styles.wrapper} pl-2`} data-test={"login-form"}>
             <h1>Вход</h1>
             <EmailInput
                 name="email"
